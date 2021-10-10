@@ -19,7 +19,7 @@ RiskFile = st.file_uploader("Upload Risk Data", type=("csv"))
 
 if HRFile is not None:
     df = pd.read_csv(HRFile)
-    df.to_csv("tmp.csv")
+    df.to_csv("./tmp.csv")
     count = df.shape[0]
     devices = []
     for i in range(count):
@@ -58,7 +58,7 @@ if HRFile is not None:
     df2.insert(0, "End_Time", end_time, True)
     df2.to_csv("tmp2.csv")
        
-    ns.getScore("tmp.csv", "tmp2.csv")
+    ns.getScore("./tmp.csv", "./tmp2.csv")
 
     
 
