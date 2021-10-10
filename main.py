@@ -11,7 +11,7 @@ from playsound import playsound
 
 HRFile = st.file_uploader("Upload Heartrate Data", type=("csv"))
 
-StepFile = st.file_uploader("Upload Step Data", type=("csv"))
+#StepFile = st.file_uploader("Upload Step Data", type=("csv"))
 
 
 RiskFile = st.file_uploader("Upload Risk Data", type=("csv"))
