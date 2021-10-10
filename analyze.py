@@ -69,7 +69,7 @@ def analyze():
         
 
         
-        f = open('NS-signals.json',)
+        f = open('/tmp/NS-signals.json',)
     
     # returns JSON object as
     # a dictionary
