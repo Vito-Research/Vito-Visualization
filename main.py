@@ -2,12 +2,15 @@
 import streamlit as st
 from analyze import analyze
 from about import about
-
+from compare import compare
+from API import API
 if 'count' not in st.session_state:
 	st.session_state.count = 0
 if 'count2' not in st.session_state:
 	st.session_state.count2 = 0
-
+if 'count3' not in st.session_state:
+	st.session_state.count3 = 0
+API()
 st.image("Vito.png")
 st.title("Detecting Infectious Diseases With Wearables")
 st.subheader("")
@@ -24,4 +27,10 @@ if learnMore:
 
 if  st.session_state.count2 > 0:
         about()
+
+if compare:
+    st.session_state.count3 += 1
+
+if  st.session_state.count3 > 0:
+        compare()
 
