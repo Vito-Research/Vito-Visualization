@@ -35,23 +35,23 @@ def analyze():
         end_time = []
         end_date = []
         start_date = []
-        # for i in range(count):
+        for i in range(count):
             
-        #     row = df.iloc[i]
+            row = df.iloc[i]
             
-        #     start = datetime.datetime.strptime( row.Start_Time, '%H:%M:%S' )
-        #     endTime = start + datetime.timedelta(minutes=1)
-        #     start = start - datetime.timedelta(minutes=1)
+            start = datetime.datetime.strptime( row.Start_Time, '%H:%M:%S' )
+            endTime = start + datetime.timedelta(minutes=30)
+            start = start - datetime.timedelta(minutes=30)
             
                         
-        #     end = datetime.datetime.strptime(endTime.strftime("%H:%M:%S"), '%H:%M:%S' )
-        #     start_time.append(start.strftime("%H:%M:%S"))
-        #     end_time.append(endTime.strftime("%H:%M:%S"))
-        #     steps.append(0)
-        #     start_date.append(row.Start_Date)
-        #     end_date.append(row.Start_Date)
+            end = datetime.datetime.strptime(endTime.strftime("%H:%M:%S"), '%H:%M:%S' )
+            start_time.append(start.strftime("%H:%M:%S"))
+            end_time.append(endTime.strftime("%H:%M:%S"))
+            steps.append(0)
+            start_date.append(row.Start_Date)
+            end_date.append(row.Start_Date)
 
-        #     i += 1
+            i += 1
             
         df2.insert(0, "Steps", steps, True)
         df2.insert(0, "Start_Date", start_date, True)
@@ -59,11 +59,11 @@ def analyze():
         df2.insert(0, "End_Date", start_date, True)
         df2.insert(0, "End_Time", end_time, True)
         df2.to_csv("/tmp/tmp2.csv")
-        #st.table(pd.read_csv("/tmp/tmp2.csv"))
+        
         col1, col2, col3 = st.columns(3)
 
-        #col1.table(df)
-        # col3.table(df)
+        # col1.table(df)
+        # col3.table(df2)
         ns.getScore("/tmp/tmp.csv", "/tmp/tmp2.csv")
 
         
