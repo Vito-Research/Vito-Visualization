@@ -89,7 +89,7 @@ def processData(HRFile, RiskFile):
         if nsAlertCount == vitoAlertCount:
             st.balloons()
             st.success("ALGORITHMS MATCH!!!!!!!!")
-            playsound("success.mp4")
+            #playsound("success.mp4")
         else:
             st.error("No Match")
 def file_selector(folder_path='.', type="Heartrate"):
