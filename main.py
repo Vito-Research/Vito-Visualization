@@ -1,10 +1,14 @@
 
+from pandas.core.frame import DataFrame
 import streamlit as st
 import pandas as pd
 import  nightsignal as ns
 import json
 import csv
 import datetime
+import audio as a
+from playsound import playsound
+
 HRFile = st.file_uploader("Upload Heartrate Data", type=("csv"))
 
 StepFile = st.file_uploader("Upload Step Data", type=("csv"))
@@ -16,33 +20,49 @@ RiskFile = st.file_uploader("Upload Risk Data", type=("csv"))
 if HRFile is not None:
     df = pd.read_csv(HRFile)
     df.to_csv("tmp.csv")
-
-    df2 = pd.read_csv("Steps.csv")
-    
-    #df2['Steps'] = []
     count = df.shape[0]
-    
+    devices = []
+    for i in range(count):
+        devices.append("HK Apple Watch")
+    df.insert(0, "Device", devices, True)
+   
+    df2 = DataFrame()
     i = 0
-    # while i < count:
-    #     row = df.iloc[i]
-    #     df2['Steps'] += 0
-    #     start = datetime.datetime.strptime( row.Start_Time, '%H:%M:%S' )
-    #     start - datetime.timedelta(minutes=5)
-    #     endTime = start + datetime.timedelta(minutes=5)
-                    
-    #     end = datetime.datetime.strptime(endTime.strftime("%H:%M:%S"), '%H:%M:%S' )
-    #     df2['Start_Date'] += row
+    steps = []
+    start_time = []
+    end_time = []
+    end_date = []
+    start_date = []
+    for i in range(count):
         
-    #     df2['End_Date'] += row.Start_Date
+        row = df.iloc[i]
+        
+        start = datetime.datetime.strptime( row.Start_Time, '%H:%M:%S' )
+        endTime = start + datetime.timedelta(minutes=30)
+        start = start - datetime.timedelta(minutes=30)
+        
+                    
+        end = datetime.datetime.strptime(endTime.strftime("%H:%M:%S"), '%H:%M:%S' )
+        start_time.append(start.strftime("%H:%M:%S"))
+        end_time.append(endTime.strftime("%H:%M:%S"))
+        steps.append(0)
+        start_date.append(row.Start_Date)
+        end_date.append(row.Start_Date)
 
-    #     df2['End_Time'] += endTime.strftime("%H:%M:%S")
-    #     df2.to_csv("StepFile.csv")
-    #     i += 1
-    ns.getScore("tmp.csv", "Steps.csv")
+        i += 1
+        
+    df2.insert(0, "Steps", steps, True)
+    df2.insert(0, "Start_Date", start_date, True)
+    df2.insert(0, "Start_Time", start_time, True)
+    df2.insert(0, "End_Date", start_date, True)
+    df2.insert(0, "End_Time", end_time, True)
+    df2.to_csv("tmp2.csv")
+       
+    ns.getScore("tmp.csv", "tmp2.csv")
 
     
 
-
+    
     f = open('NS-signals.json',)
  
 # returns JSON object as
@@ -52,10 +72,22 @@ if HRFile is not None:
     #st.write(data)
     alerts = data['nightsignal']
     if RiskFile is not None:
-        nsAlertCount = len(alerts)
+        alertVals = []
+        for item in alerts:
+            #st.write(item["val"])
+            if int(item["val"]) > 0:
+                
+                alertVals.append(item["val"])
+       
+        nsAlertCount = len(alertVals)
         df = pd.read_csv(RiskFile)
         vitoAlertCount = len(df[df['Risk'] == 1])
-        st.write(nsAlertCount)
-        st.write(vitoAlertCount)
+        # st.write(nsAlertCount)
+        # st.write(vitoAlertCount)
+        if nsAlertCount == vitoAlertCount:
+            st.balloons()
+            st.success("ALGORITHMS MATCH!!!!!!!!")
+            playsound("success.mp4")
+            
 
 

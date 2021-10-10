@@ -13,6 +13,7 @@ from itertools import tee, groupby
 from matplotlib import pyplot as plt
 from operator import itemgetter
 from datetime import date, timedelta
+import streamlit as st
 os.chdir(".")
 
 
@@ -85,7 +86,7 @@ def getScore(heartrate_file, step_file):
     medianConfig = "MedianOfAvgs" # MedianOfAvgs | AbsoluteMedian
     yellow_threshold = 3
     red_threshold = 4
-    device = "AppleWatch"
+    device = "HK Apple Watch"
                 
     #################################  Fitbit #################################
     if(device=="Fitbit"):
@@ -112,6 +113,7 @@ def getScore(heartrate_file, step_file):
         for key in date_hrs_dic:
             AVGHR = 0
             temp = date_hrs_dic[key]
+            
             numOfHRs = str(temp).count("*") + 1
             hrs = temp.split("*")
             for hr in hrs:
@@ -298,7 +300,7 @@ def getScore(heartrate_file, step_file):
         with open(step_file  , "r") as stepCSV:
             stepCSVReader = csv.DictReader(stepCSV)
             for step_rec in stepCSVReader:
-                
+                   # st.write(step_rec)
                     st_start_date = step_rec['Start_Date']
                     st_start_time = step_rec['Start_Time']
                     st_end_date = step_rec['End_Date']
@@ -318,7 +320,7 @@ def getScore(heartrate_file, step_file):
 
         
         with open('AW_rhr.csv' , "w") as rhrFile:
-            rhrFile.write("Device,Start_Date,Start_Time,Value")
+            rhrFile.write("Device,Start_Date,Start_Time,Value \n")
             with open(heartrate_file , "r") as hrCSV:
                 hrCSVReader = csv.DictReader(hrCSV)
                 for hr_rec in hrCSVReader:
@@ -333,7 +335,7 @@ def getScore(heartrate_file, step_file):
                                     rhrFile.write(device + "," + hr_start_date + "," + hr_start_time + "," + hr_value + "\n")
                             except:
                                 print(1)
-
+                        
 
         with open('AW_rhr.csv', "r") as hrFile:
             records = hrFile.readlines()
