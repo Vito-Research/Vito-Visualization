@@ -60,7 +60,7 @@ def processData(HRFile, RiskFile):
     df2.insert(0, "End_Time", end_time, True)
     df2.to_csv("tmp2.csv")
        
-    ns.getScore("tmp.csv", "tmp2.csv")
+    ns.getScore("/tmp/tmp.csv", "/tmp/tmp2.csv")
 
     
 
