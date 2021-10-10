@@ -16,12 +16,12 @@ start = col1.button("Anaylze")
 learnMore = col2.button("Learn More")
 if start:
     st.session_state.count += 1
-    if st.session_state.count > 0:
+if st.session_state.count > 0:
         analyze()
 
 if learnMore:
     st.session_state.count2 += 1
 
-    if  st.session_state.count2 > 0:
+if  st.session_state.count2 > 0:
         about()
 
