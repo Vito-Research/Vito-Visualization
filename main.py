@@ -6,20 +6,22 @@ import  nightsignal as ns
 import json
 import csv
 import datetime
-
+import os
 from playsound import playsound
+
+st.header("Add Your File")
 
 HRFile = st.file_uploader("Upload Heartrate Data", type=("csv"))
 
 #StepFile = st.file_uploader("Upload Step Data", type=("csv"))
 
-
+HRFileName = ""
+RiskFileName = ""
 RiskFile = st.file_uploader("Upload Risk Data", type=("csv"))
 
-
-if HRFile is not None:
+def processData(HRFile, RiskFile):
     df = pd.read_csv(HRFile)
-    df.to_csv("./tmp.csv")
+    df.to_csv("tmp.csv")
     count = df.shape[0]
     devices = []
     for i in range(count):
@@ -58,7 +60,7 @@ if HRFile is not None:
     df2.insert(0, "End_Time", end_time, True)
     df2.to_csv("tmp2.csv")
        
-    ns.getScore("./tmp.csv", "./tmp2.csv")
+    ns.getScore("tmp.csv", "tmp2.csv")
 
     
 
@@ -88,6 +90,36 @@ if HRFile is not None:
             st.balloons()
             st.success("ALGORITHMS MATCH!!!!!!!!")
             playsound("success.mp4")
+        else:
+            st.error("No Match")
+def file_selector(folder_path='.', type="Heartrate"):
+    filenames = os.listdir(folder_path)
+    csvFiles = []
+    for file in filenames:
+        if "csv" in file:
+            csvFiles.append(file)
+    selected_filename = st.selectbox('Select ' + type, csvFiles)
+    return os.path.join(folder_path, selected_filename)
+
+
+# if HRFile is None:
+#     st.header("Or Select A File")
+#     HRFileName = file_selector(type="Health")
+#     st.write('HR File `%s`' % HRFileName)
+#     if RiskFileName:
+#         processData(HRFileName, RiskFileName)
+        
+# if RiskFile is None:
+#     RiskFileName = file_selector(type="Risk")
+#     st.write('Risk File `%s`' % RiskFileName)
+#     if RiskFileName:
+#         processData(HRFileName, RiskFileName)
+
+
+    
+
+
             
 
-
+if HRFile and RiskFile:
+    processData(HRFile, RiskFile)
