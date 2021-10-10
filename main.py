@@ -102,18 +102,18 @@ def file_selector(folder_path='.', type="Heartrate"):
     return os.path.join(folder_path, selected_filename)
 
 
-# if HRFile is None:
-#     st.header("Or Select A File")
-#     HRFileName = file_selector(type="Health")
-#     st.write('HR File `%s`' % HRFileName)
-#     if RiskFileName:
-#         processData(HRFileName, RiskFileName)
+if HRFile is None:
+    st.header("Or Select A File")
+    HRFileName = file_selector(type="Health")
+    st.write('HR File `%s`' % HRFileName)
+    if RiskFileName:
+        processData(HRFileName, RiskFileName)
         
-# if RiskFile is None:
-#     RiskFileName = file_selector(type="Risk")
-#     st.write('Risk File `%s`' % RiskFileName)
-#     if RiskFileName:
-#         processData(HRFileName, RiskFileName)
+if RiskFile is None:
+    RiskFileName = file_selector(type="Risk")
+    st.write('Risk File `%s`' % RiskFileName)
+    if RiskFileName:
+        processData(HRFileName, RiskFileName)
 
 
     
