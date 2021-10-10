@@ -84,6 +84,7 @@ def analyze():
             for item in alerts:
                 #st.write(item["val"])
                 allAlertVals.append(item["val"])
+                
                 allDates.append(item["date"])
                 if int(item["val"]) > 0:
                     
@@ -108,12 +109,30 @@ def analyze():
         col1, col2 = st.columns(2)
 
         df = DataFrame()
-        df.insert(0, "Date", allDates, True)
-        df.insert(0, "Value", allAlertVals, True)
+        df.insert(0, "Start_Date_Risk", allDates, True)
+        df.insert(0, "NS Alerts", allAlertVals, True)
+
+        
         #col1.bar_chart(df.set_index('Value'))
-            
-        col1.table(df2)
-        col2.table(alerts)
+        
+        # st.table(df)
+        # st.table(df2)
+        frames = [df, df2]
+
+        df_merged = df2.join(df, lsuffix="Start_Date_Risk")
+        with st.expander("See full data"):
+            df_merged = df_merged.drop('Start_Date_Risk', 1)
+            #df_merged = df.append(df2)
+            st.table(df_merged)
+        #st.header("Conflicting Scores")
+        col1, col2 = st.columns(2)
+
+        df = DataFrame()
+        df.insert(0, "Start_Date_Risk", allDates, True)
+        df.insert(0, "Value", allAlertVals, True)
+    
+        # col1.table(df2)
+        # col2.table(alerts)
 
 
     def file_selector(folder_path='.', type="Heartrate"):

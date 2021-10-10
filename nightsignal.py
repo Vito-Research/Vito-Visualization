@@ -517,7 +517,7 @@ def getScore(heartrate_file, step_file):
                 alertsDic[key] = "0"
         sorted_alerts = collections.OrderedDict(sorted(alertsDic.items()))
         for key in sorted_alerts:
-            alerts['nightsignal'].append({"date": key+"   "+"07:00:00", "val": str(sorted_alerts[key])})
+            alerts['nightsignal'].append({"date": key+"   ", "val": str(sorted_alerts[key])})
         with open("/tmp/NS-signals.json", "w+") as out_file:
             json.dump(alerts, out_file)
 
