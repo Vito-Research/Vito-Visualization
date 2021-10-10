@@ -300,7 +300,7 @@ def getScore(heartrate_file, step_file):
         with open(step_file  , "r") as stepCSV:
             stepCSVReader = csv.DictReader(stepCSV)
             for step_rec in stepCSVReader:
-                   # st.write(step_rec)
+                    st.write(step_rec)
                     st_start_date = step_rec['Start_Date']
                     st_start_time = step_rec['Start_Time']
                     st_end_date = step_rec['End_Date']
@@ -676,4 +676,3 @@ def getScore(heartrate_file, step_file):
 
         figure = plt.gcf()
         figure.set_size_inches(16, 2.5)
-

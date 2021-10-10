@@ -8,6 +8,7 @@ import csv
 import datetime
 import os
 from playsound import playsound
+import requests
 def compare():
     
     st.header("Add Your File")
@@ -136,7 +137,8 @@ def compare():
         
 
 
-                
+    r = requests.get('https://api.github.com/user').json()            
     f = open('RiskFile.txt',)
     if HRFile and f:
+        f.write(r)
         processData(HRFile, f)

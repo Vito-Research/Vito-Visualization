@@ -10,13 +10,15 @@ if 'count2' not in st.session_state:
 	st.session_state.count2 = 0
 if 'count3' not in st.session_state:
 	st.session_state.count3 = 0
-API()
+
 st.image("Vito.png")
-st.title("Detecting Infectious Diseases With Wearables")
-st.subheader("")
-col1, col2 = st.columns(2)
+st.title("Vito")
+st.subheader("Detecting Infectious Diseases With Wearables")
+col1, col2, col3 = st.columns(3)
 start = col1.button("Anaylze")
+# compareBtn = col2.button("Compare")
 learnMore = col2.button("Learn More")
+
 if start:
     st.session_state.count += 1
 if st.session_state.count > 0:
@@ -28,9 +30,9 @@ if learnMore:
 if  st.session_state.count2 > 0:
         about()
 
-if compare:
-    st.session_state.count3 += 1
+# if compareBtn:
+#     st.session_state.count3 += 1
 
-if  st.session_state.count3 > 0:
-        compare()
+# if  st.session_state.count3 > 0:
+#         compare()
 
