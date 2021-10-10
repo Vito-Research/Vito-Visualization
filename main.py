@@ -21,7 +21,7 @@ RiskFile = st.file_uploader("Upload Risk Data", type=("csv"))
 
 def processData(HRFile, RiskFile):
     df = pd.read_csv(HRFile)
-    df.to_csv("tmp.csv")
+    df.to_csv("/tmp/tmp.csv")
     count = df.shape[0]
     devices = []
     for i in range(count):
@@ -58,7 +58,7 @@ def processData(HRFile, RiskFile):
     df2.insert(0, "Start_Time", start_time, True)
     df2.insert(0, "End_Date", start_date, True)
     df2.insert(0, "End_Time", end_time, True)
-    df2.to_csv("tmp2.csv")
+    df2.to_csv("/tmp/tmp2.csv")
        
     ns.getScore("/tmp/tmp.csv", "/tmp/tmp2.csv")
 
