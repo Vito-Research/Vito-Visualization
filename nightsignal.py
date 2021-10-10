@@ -438,10 +438,10 @@ def getScore(heartrate_file, step_file):
             
             if (key in date_hr_meds_dic):
                 if (date_hr_avgs_dic[key] >= date_hr_meds_dic[key] + red_threshold):
-                    with open("potenital_reds.csv" , "a") as out_file:
+                    with open("/tmp/potenital_reds.csv" , "a") as out_file:
                         out_file.write(key + "\n")
                 if (date_hr_avgs_dic[key] >= date_hr_meds_dic[key] + yellow_threshold):
-                    with open("potenital_yellows.csv" , "a") as out_file:
+                    with open("/tmp/potenital_yellows.csv" , "a") as out_file:
                         out_file.write(key + "\n")
 
         ###Red alerts (red states in NightSignal deterministic finite state machine)
