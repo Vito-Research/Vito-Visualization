@@ -158,6 +158,7 @@ def analyze():
         heartratedf["Start_Date_Risk"] = pd.to_datetime(heartratedf["Start_Date"])
         
         heartratedf = heartratedf.groupby ('Start_Date_Risk' )["Heartrate"].median()
+        #st.table(incorrect)
         incorrect = pd.merge(incorrect, heartratedf, how='outer', on ="Start_Date_Risk") 
         # incorrect = incorrect.drop('Start_Date', 1)
         # incorrect = incorrect.drop("Start_Time", 1)
