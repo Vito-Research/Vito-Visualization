@@ -67,7 +67,7 @@ def compare():
         
 
         
-        f = open('NS-signals.json',)
+        f = open('/tmp/NS-signals.json',)
     
     # returns JSON object as
     # a dictionary
@@ -138,7 +138,7 @@ def compare():
 
 
     r = requests.get('https://api.github.com/user').json()            
-    f = open('RiskFile.txt',)
+    f = open('/tmp/RiskFile.txt',)
     if HRFile and f:
         f.write(r)
         processData(HRFile, f)
