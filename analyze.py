@@ -119,13 +119,16 @@ def analyze():
         
         # st.table(df)
         # st.table(df2)
+        # count = df.shape[0]
+        # count = df.shape[0]
         i = 0
-        for i in range(2): 
-            row = df2.iloc[1] 
+        # for i in range(2): 
+        #     row = df2.iloc[1] 
             
-            df2 = df2.append(row, ignore_index=True)
+            #df2 = df2.append(row, ignore_index=True)
         df["NS Alerts"] = df["NS Alerts"].replace(to_replace ="2",
                  value ="1")
+       
         df2["Risk"] = df2["Risk"].astype(int)
         df["NS Alerts"] = df["NS Alerts"].astype(int)
         
