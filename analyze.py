@@ -8,6 +8,7 @@ import csv
 import datetime
 import os
 from playsound import playsound
+import numpy as np
 def analyze():
     st.header("Add Your File")
 
@@ -117,11 +118,53 @@ def analyze():
         
         # st.table(df)
         # st.table(df2)
-        frames = [df, df2]
+        i = 0
+       
+        
+        df2["Risk"] = df2["Risk"].astype(int)
+        df["NS Alerts"] = df["NS Alerts"].astype(int)
+        df["Start_Date_Risk"] = pd.to_datetime(df["Start_Date_Risk"])
+        df2["Start_Date_Risk"] = pd.to_datetime(df2["Start_Date_Risk"])
+        df_merged = pd.merge(df, df2, how='outer', on ="Start_Date_Risk") 
+        #df_merged = pd.merge(df, df2, right_on= "Start_Date_Risk", left_on="Start_Date_Risk")
+        df_merged = df_merged.drop('Start_Time_Risk', 1)
+       
+       
+        df_merged = df_merged[ ['Risk'] + [ col for col in df_merged.columns if col != 'Risk' ] ]
+        #st.table(df_merged)
+        
+        count = df_merged.shape[0]
+        devices = []
+        incorrect = []
+        for i in range(count):
+            row = df_merged.iloc[i]
+           
+            if row["Risk"] != row["NS Alerts"]:
+                incorrect.append(row)
 
-        df_merged = df2.join(df, lsuffix="Start_Date_Risk")
+        heartratedf = pd.read_csv("/tmp/tmp.csv")
+        
+        #heartratedf["Start_Date_Risk"] = pd.to_datetime(heartratedf["Start_Date"])
+        incorrect = pd.DataFrame(incorrect)
+        
+        count = heartratedf.shape[0]
+        devices = []
+        
+        
+        for i in range(count):
+            row = heartratedf.iloc[i]
+            start = datetime.datetime.strptime( row.Start_Date, '%Y-%m-%d' )
+            row.Start_Date = start
+        heartratedf["Start_Date_Risk"] = pd.to_datetime(heartratedf["Start_Date"])
+        
+        heartratedf = heartratedf.groupby ('Start_Date_Risk' )["Heartrate"].median()
+        incorrect = pd.merge(incorrect, heartratedf, how='outer', on ="Start_Date_Risk") 
+        # incorrect = incorrect.drop('Start_Date', 1)
+        # incorrect = incorrect.drop("Start_Time", 1)
+        st.header("Conflicting Alerts")      
+        st.table(incorrect)
         with st.expander("See full data"):
-            df_merged = df_merged.drop('Start_Date_Risk', 1)
+            
             #df_merged = df.append(df2)
             st.table(df_merged)
         #st.header("Conflicting Scores")
