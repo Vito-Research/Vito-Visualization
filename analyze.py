@@ -105,7 +105,8 @@ def analyze():
                 st.success("ALGORITHMS MATCH!!!!!!!!")
                 #playsound("success.mp4")
             else:
-                st.error("No Match")
+                st.write("")
+            
 
         col1, col2 = st.columns(2)
 
@@ -119,10 +120,15 @@ def analyze():
         # st.table(df)
         # st.table(df2)
         i = 0
-       
-        
+        for i in range(2): 
+            row = df2.iloc[1] 
+            
+            df2 = df2.append(row, ignore_index=True)
+        df["NS Alerts"] = df["NS Alerts"].replace(to_replace ="2",
+                 value ="1")
         df2["Risk"] = df2["Risk"].astype(int)
         df["NS Alerts"] = df["NS Alerts"].astype(int)
+        
         df["Start_Date_Risk"] = pd.to_datetime(df["Start_Date_Risk"])
         df2["Start_Date_Risk"] = pd.to_datetime(df2["Start_Date_Risk"])
         df_merged = pd.merge(df, df2, how='outer', on ="Start_Date_Risk") 
@@ -146,7 +152,7 @@ def analyze():
         
         #heartratedf["Start_Date_Risk"] = pd.to_datetime(heartratedf["Start_Date"])
         incorrect = pd.DataFrame(incorrect)
-        
+        incorrect.rename({"Risk": "Vito Alert"})
         count = heartratedf.shape[0]
         devices = []
         
@@ -159,11 +165,26 @@ def analyze():
         
         heartratedf = heartratedf.groupby ('Start_Date_Risk' )["Heartrate"].median()
         #st.table(incorrect)
-        incorrect = pd.merge(incorrect, heartratedf, how='outer', on ="Start_Date_Risk") 
+        #incorrect = pd.merge(incorrect, heartratedf, how='outer', on ="Start_Date_Risk") 
         # incorrect = incorrect.drop('Start_Date', 1)
         # incorrect = incorrect.drop("Start_Time", 1)
-        st.header("Conflicting Alerts")      
+        incorrect = incorrect.dropna()
+        total = df_merged.shape[0]
+        total_incorrect = incorrect.shape[0]
+        similarity = 1 - total_incorrect/total
+        st.metric("Model Similarity", f"{round(similarity, 3)} %")
+        st.header("Conflicting Alerts") 
+        col1, col2 = st.columns(2)
+        # col1.table(df)
+        # col2.table(df2) 
+        
         st.table(incorrect)
+        st.download_button(
+            "Download Alert Statistics",
+            incorrect.to_csv(line_terminator="\r\n", index=False),
+            file_name="Vito_Alert_Statistics.csv",
+            on_click=st.balloons,
+        )
         with st.expander("See full data"):
             
             #df_merged = df.append(df2)
@@ -211,3 +232,5 @@ def analyze():
 
     if HRFile and RiskFile:
         processData(HRFile, RiskFile)
+
+    
