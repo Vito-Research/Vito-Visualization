@@ -30,5 +30,5 @@ Vito takes it a step further by improving NightSignal, Stanford's model by incor
 
     with st.expander("Code Documentation"):
     
-        st.code("let code = 'coding'")
+        st.code("In Progress")
 
