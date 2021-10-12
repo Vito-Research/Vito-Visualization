@@ -306,7 +306,7 @@ def getScore(heartrate_file, step_file):
                     else:
                         st.write("OOOF")
 
-        with open('/tmp/AW_rhr.csv' , "w") as rhrFile:
+        with open('AW_rhr.csv' , "w") as rhrFile:
             rhrFile.write("Device,Start_Date,Start_Time,Value \n")
             with open(heartrate_file , "r") as hrCSV:
                 hrCSVReader = csv.DictReader(hrCSV)
@@ -321,7 +321,7 @@ def getScore(heartrate_file, step_file):
                                 rhrFile.write(device + "," + hr_start_date + "," + hr_start_time + "," + hr_value + "\n")
 
 
-        with open('/tmp/AW_rhr.csv', "r") as hrFile:
+        with open('AW_rhr.csv', "r") as hrFile:
             records = hrFile.readlines()
             
 
@@ -610,7 +610,10 @@ def getScore(heartrate_file, step_file):
         for key in clustered_alerts:
                 clustered_alerts_dic = {}
                 for d in clustered_alerts[key]:
-                    clustered_alerts_dic[d] = date_hr_avgs_dic[d]
+                    try:
+                        clustered_alerts_dic[d] = date_hr_avgs_dic[d]
+                    except:
+                        print(1)
                 sorted_res = sorted(clustered_alerts_dic.items())
                 if(len(clustered_alerts_dic)!=0):
                     if(haveClustered==1):
@@ -625,7 +628,10 @@ def getScore(heartrate_file, step_file):
         #plot red alerts
         red_alerts_dic = {}
         for d in red_alert_dates:
-                red_alerts_dic[d] = date_hr_avgs_dic[d]
+                try:
+                    red_alerts_dic[d] = date_hr_avgs_dic[d]
+                except:
+                    print(1)
         sorted_res = sorted(red_alerts_dic.items())
         if(len(red_alerts_dic)!=0):
             for key in red_alerts_dic:
@@ -637,7 +643,10 @@ def getScore(heartrate_file, step_file):
         #plot yellow alerts
         yellow_alerts_dic = {}
         for d in yellow_alert_dates:
+            try:
                 yellow_alerts_dic[d] = date_hr_avgs_dic[d]
+            except:
+                print(1)
         sorted_res = sorted(yellow_alerts_dic.items())
         if(len(yellow_alerts_dic)!=0):
             for key in yellow_alerts_dic:
