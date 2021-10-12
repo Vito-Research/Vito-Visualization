@@ -214,18 +214,18 @@ def analyze():
         return os.path.join(folder_path, selected_filename)
 
 
-    if HRFile is None:
+    if HRFile is None and RiskFile is None:
         st.header("Or Select A File")
         HRFileName = file_selector(type="Health")
+        RiskFileName = file_selector(type="Risk")
         #st.write('HR File `%s`' % HRFileName)
         if RiskFileName and HRFileName:
             processData(HRFileName, RiskFileName)
             
-    if RiskFile is None:
-        RiskFileName = file_selector(type="Risk")
+
+        
         #st.write('Risk File `%s`' % RiskFileName)
-        if RiskFileName and HRFileName:
-            processData(HRFileName, RiskFileName)
+        
 
 
 
