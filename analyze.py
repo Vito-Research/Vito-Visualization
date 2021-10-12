@@ -203,7 +203,8 @@ def analyze():
         # col2.table(alerts)
 
 
-    def file_selector(folder_path='.', type="Heartrate"):
+    def file_selector(folder_path='./sample_data/', type="Health"):
+        folder_path = folder_path + type
         filenames = os.listdir(folder_path)
         csvFiles = []
         for file in filenames:
@@ -216,14 +217,14 @@ def analyze():
     if HRFile is None:
         st.header("Or Select A File")
         HRFileName = file_selector(type="Health")
-        st.write('HR File `%s`' % HRFileName)
-        if RiskFileName:
+        #st.write('HR File `%s`' % HRFileName)
+        if RiskFileName and HRFileName:
             processData(HRFileName, RiskFileName)
             
     if RiskFile is None:
         RiskFileName = file_selector(type="Risk")
-        st.write('Risk File `%s`' % RiskFileName)
-        if RiskFileName:
+        #st.write('Risk File `%s`' % RiskFileName)
+        if RiskFileName and HRFileName:
             processData(HRFileName, RiskFileName)
 
 
