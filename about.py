@@ -25,10 +25,32 @@ Vito takes it a step further by improving NightSignal, Stanford's model by incor
     #     st.write("Roadmap")
 
     with st.expander("Research"):
-        st.write("Research")
-     
+        st.subheader("Heartrate")
+        link = '[Stanford Code](https://github.com/StanfordBioinformatics/wearable-infection)'
+        st.markdown(link, unsafe_allow_html=True)
 
-    with st.expander("Code Documentation"):
+        link = '[Stanford General Info](https://med.stanford.edu/news/all-news/2020/12/smartwatch-can-detect-early-signs-of-illness.html)'
+        st.markdown(link, unsafe_allow_html=True)
+
+        link = '[Stanford Data](https://us10.campaign-archive.com/?u=7009b0b0171f7f3d47cfa11d1&id=327f4f582f)'
+        st.markdown(link, unsafe_allow_html=True)
+
+        link = '[Stanford Research Paper](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8240687/)'
+        st.markdown(link, unsafe_allow_html=True)
+
+        st.subheader("Respiratory Rate")
+        link = '[Respiratory Rate Info](https://www.healio.com/news/primary-care/20210527/oxygen-saturation-respiratory-rate-predict-covid19-mortality)'
+        st.markdown(link, unsafe_allow_html=True)
+
+        link = '[Respiratory Rate Study](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0243693)'
+        st.markdown(link, unsafe_allow_html=True)
+
+        st.subheader("Blood Oxygen")
+        link = '[UW Study](https://newsroom.uw.edu/news/covid-19-mortality-linked-signs-easily-measured-home)'
+        st.markdown(link, unsafe_allow_html=True)
+
+        
+    with st.expander("Risk Documentation (Heartrate)"):
     
         st.write("1) Get active energy when its below or equal to 1  (indicates you are asleep) ")
             
