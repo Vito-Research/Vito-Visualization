@@ -46,5 +46,13 @@ Vito takes it a step further by improving NightSignal, Stanford's model by incor
           
 
         st.write("6) If two consecutive days are in red, then an alert is sent")
+    with st.expander("Github Links"):
+        col1, col2, col3 = st.columns(3)
+        link = '[Visualization App](https://github.com/AndreasInk/Vito-Visualization)'
+        link2 = '[New iOS App](https://github.com/AndreasInk/Vito)'
+        link3 = '[Old iOS App](https://github.com/AndreasInk/Rhythm)'
+        col1.markdown(link, unsafe_allow_html=True)
+        col2.markdown(link2, unsafe_allow_html=True)
+        col3.markdown(link3, unsafe_allow_html=True)
            
 
