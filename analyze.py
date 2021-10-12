@@ -10,15 +10,15 @@ import os
 from playsound import playsound
 import numpy as np
 def analyze():
-   
-    with st.expander("Add Files To Test"):
-        HRFile = st.file_uploader("Upload Heartrate Data", type=("csv"))
+    st.header("Add Your File")
+
+    HRFile = st.file_uploader("Upload Heartrate Data", type=("csv"))
 
     #StepFile = st.file_uploader("Upload Step Data", type=("csv"))
 
-        HRFileName = ""
-        RiskFileName = ""
-        RiskFile = st.file_uploader("Upload Risk Data", type=("csv"))
+    HRFileName = ""
+    RiskFileName = ""
+    RiskFile = st.file_uploader("Upload Risk Data", type=("csv"))
 
     def processData(HRFile, RiskFile):
         df = pd.read_csv(HRFile)
@@ -215,7 +215,7 @@ def analyze():
 
 
     if HRFile is None and RiskFile is None:
-        st.header("Select Files")
+        st.header("Or Select A File")
         HRFileName = file_selector(type="Health")
         RiskFileName = file_selector(type="Risk")
         #st.write('HR File `%s`' % HRFileName)
