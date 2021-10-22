@@ -226,8 +226,8 @@ def analyze():
 
     if HRFile is None and RiskFile is None:
         st.header("Or Select A File")
-        HRFileName = file_selector(type="Health")
-        RiskFileName = file_selector(type="Risk")
+        #HRFileName = file_selector(type="Health")
+        #RiskFileName = file_selector(type="Risk")
         #st.write('HR File `%s`' % HRFileName)
         if RiskFileName and HRFileName:
             processData(HRFileName, RiskFileName)
