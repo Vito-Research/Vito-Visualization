@@ -115,7 +115,7 @@ def analyze():
         df = DataFrame()
         df.insert(0, "Start_Date_Risk", allDates, True)
         df.insert(0, "NS Alerts", allAlertVals, True)
-
+        df = df.remove_duplicates()
         
         #col1.bar_chart(df.set_index('Value'))
         
