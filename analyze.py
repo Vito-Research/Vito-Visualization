@@ -8,6 +8,8 @@ import datetime
 import os
 from playsound import playsound
 import numpy as np
+from datetime import timedelta
+
 def analyze():
     st.header("Add Your File")
 
@@ -40,8 +42,8 @@ def analyze():
             row = df.iloc[i]
             
             start = datetime.datetime.strptime( row.Start_Time, '%H:%M:%S' )
-            endTime = start + datetime.timedelta(minutes=30)
-            start = start - datetime.timedelta(minutes=30)
+            endTime = start # + datetime.timedelta(minutes=5)
+            start = start #- datetime.timedelta(minutes=5)
             
                         
             end = datetime.datetime.strptime(endTime.strftime("%H:%M:%S"), '%H:%M:%S' )
@@ -92,7 +94,8 @@ def analyze():
         
             nsAlertCount = len(alertVals)
             df2 = pd.read_csv(RiskFile)
-            vitoAlertCount = len(df2[df2['Risk'] == 1])
+            df2 = df2.drop_duplicates()
+            vitoAlertCount = len(df2[df2['Risk'] > 0.9])
             
             # st.write(nsAlertCount)
             # st.write(vitoAlertCount)
@@ -148,13 +151,21 @@ def analyze():
             row = df_merged.iloc[i]
            
             if row["Risk"] != row["NS Alerts"]:
-                incorrect.append(row)
+                if i > 2 and i < count - 1 :
+                    rowBefore = df_merged.iloc[i - 1]
+                    rowAfter = df_merged.iloc[i + 1]
+                    if rowBefore["Start_Date_Risk"] + timedelta(days=1) == row["Start_Date_Risk"] and rowAfter["Start_Date_Risk"] + timedelta(days=-1) == row["Start_Date_Risk"]:
+                        if rowBefore["Risk"] != row["NS Alerts"] and rowAfter["Risk"] != row["NS Alerts"]:
+                        
+                            incorrect.append(row)
+                    else:
+                         incorrect.append(row)
 
         heartratedf = pd.read_csv("/tmp/tmp.csv")
         
         #heartratedf["Start_Date_Risk"] = pd.to_datetime(heartratedf["Start_Date"])
         incorrect = pd.DataFrame(incorrect)
-        incorrect.rename({"Risk": "Vito Alert"})
+        incorrect = incorrect.rename({"Risk": "Vito Alert"})
         count = heartratedf.shape[0]
         devices = []
         
