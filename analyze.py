@@ -42,8 +42,8 @@ def analyze():
             row = df.iloc[i]
             
             start = datetime.datetime.strptime( row.Start_Time, '%H:%M:%S' )
-            endTime = start # + datetime.timedelta(minutes=5)
-            start = start #- datetime.timedelta(minutes=5)
+            endTime = start  + datetime.timedelta(minutes=5)
+            start = start - datetime.timedelta(minutes=5)
             
                         
             end = datetime.datetime.strptime(endTime.strftime("%H:%M:%S"), '%H:%M:%S' )
