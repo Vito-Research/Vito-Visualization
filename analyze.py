@@ -179,8 +179,8 @@ def analyze():
         vitoCount = df[df["Risk"] == 1].shape[0]
         nsCount = df2[df2["Risk"] == 1].shape[0]
         col1, col2 = st.columns(2)
-        col1.subheader("Vito Alerts: " + str(vitoCount)) 
-        col2.subheader("NightSignal Alerts: " + str(nsCount)) 
+        col2.subheader("Vito Alerts: " + str(vitoCount)) 
+        col1.subheader("NightSignal Alerts: " + str(nsCount)) 
         if nsAlertCount == vitoAlertCount:
             st.balloons()
             st.success("ALGORITHMS MATCH!!!!!!!!")
