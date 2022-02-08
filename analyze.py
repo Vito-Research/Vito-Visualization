@@ -116,7 +116,7 @@ def analyze():
         df2 = DataFrame()
         for i in range(len(allDates)):
            
-                if pd.to_datetime(allDates[i]).year in pd.to_datetime(df["Start_Date"]).year:
+                if allDates[i][:4] in df["Start_Date"][:4]:
                     newDates.append(allDates[i])
                     newAlerts.append(allAlertVals[i])
            
