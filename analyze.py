@@ -248,9 +248,9 @@ def analyze():
         total_incorrect = incorrect.shape[0]
         similarity = 1 - total_incorrect/total
         #st.metric("Model Similarity", f"{round(similarity, 3)} %")
-        col1, col2 = st.columns(2)
-        col1.header("NightSignal") 
-        col2.header("Vito") 
+        # col1, col2 = st.columns(2)
+        # col1.header("NightSignal") 
+        # col2.header("Vito") 
         col1, col2 = st.columns(2)
         col1.table(df)
         col2.table(df2) 
