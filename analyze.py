@@ -189,8 +189,8 @@ def analyze():
         #df = add_blank_rows(df, count)
         df["Start_Date"] = pd.to_datetime(df["Start_Date"])
         df2["Start_Date"] = pd.to_datetime(df2["Start_Date"])
-        st.table(df)
-        st.table(df2)
+        # st.table(df)
+        # st.table(df2)
         # for i in range(df2.shape[0]):
         #     if df2.Start_Date[i] not in df.Start_Date:
 
