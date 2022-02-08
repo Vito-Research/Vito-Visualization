@@ -121,8 +121,8 @@ def analyze():
                     newAlerts.append(allAlertVals[i])
            
                
-        df2.insert(0, "Start_Date_Risk", allDates, True)
-        df2.insert(0, "NS Alerts", allAlertVals, True)
+        df2.insert(0, "Start_Date_Risk", newDates, True)
+        df2.insert(0, "NS Alerts", newAlerts, True)
         #df = df.remove_duplicates()
         
         #col1.bar_chart(df.set_index('Value'))
