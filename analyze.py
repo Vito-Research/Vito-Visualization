@@ -120,7 +120,7 @@ def analyze():
                 for date in df["Start_Date"]:
                     targetDates.append(date[:7])
                 #st.write(df["Start_Date"][:7])
-                if allDates[i][:4] in targetDates:
+                if allDates[i][:7] in targetDates:
                     newDates.append(allDates[i])
                     newAlerts.append(allAlertVals[i])
            
