@@ -115,8 +115,12 @@ def analyze():
         newAlerts = []
         df2 = DataFrame()
         for i in range(len(allDates)):
-           
-                if allDates[i][:4] in df["Start_Date"][:4]:
+                st.write(allDates[i][:4])
+                targetDates = []
+                for date in df["Start_Date"]:
+                    targetDates.append(date[:4])
+                st.write(df["Start_Date"][:4])
+                if allDates[i][:4] in targetDates:
                     newDates.append(allDates[i])
                     newAlerts.append(allAlertVals[i])
            
