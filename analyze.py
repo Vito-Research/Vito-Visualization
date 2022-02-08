@@ -153,18 +153,19 @@ def analyze():
         df2.rename(columns={"Start_Date_Risk": "Start_Date"}, inplace=True)
         #df2.rename(columns={'Start_Date_Risk': 'Start_Date'}, inplace=True)
         # st.table(df2)
-        #df["Start_Date"] = pd.to_datetime(df["Start_Date"])
+        df["Start_Date"] = pd.to_datetime(df["Start_Date"])
+        df2["Start_Date"] = pd.to_datetime(df2["Start_Date"])
         # df2["Start_Date_Risk"] = pd.to_datetime(df2["Start_Date_Risk"])
-        #df_merged = pd.merge(df, df2, how='outer', on ="Start_Date") 
+        df_merged = pd.merge(df, df2, how='outer', on ="Start_Date") 
         #df_merged = pd.merge(df, df2, right_on= "Start_Date", left_on="Start_Date")
-        #df_merged = df_merged.drop('Start_Time_Risk', 1)
+       # df_merged = df_merged.drop('Start_Time_Risk', 1)
        
        
         #df_merged = df_merged[ ['Risk'] + [ col for col in df_merged.columns if col != 'Risk' ] ]
         
         #df_merged = pd.concat([df,df2], join='inner', axis=1)
-        # df_merged = pd.concat([df.set_index('Start_Date'), df2.set_index('Start_Date_Risk')], 
-        #            axis='columns', keys=['First', 'Second'], join="outer" )
+        #df_merged = pd.concat([df.set_index('Start_Date'), df2.set_index('Start_Date')], 
+                #   axis='columns', keys=['First', 'Second'], join="outer" )
         # df_merged.swaplevel(axis='columns')[df_merged.columns[1:]]
         df = df.drop('Heartrate', 1)
         df = df.drop('Start_Time', 1)
@@ -254,7 +255,7 @@ def analyze():
         col1.table(df)
         col2.table(df2) 
         
-        st.table(incorrect)
+        #st.table(incorrect)
         st.download_button(
             "Download Alert Statistics",
             incorrect.to_csv(line_terminator="\r\n", index=False),
@@ -264,7 +265,7 @@ def analyze():
         with st.expander("See full data"):
             
             #df_merged = df.append(df2)
-            st.table(df)
+            st.table(df_merged)
         #st.header("Conflicting Scores")
         col1, col2 = st.columns(2)
 
