@@ -9,7 +9,13 @@ import os
 from playsound import playsound
 import numpy as np
 from datetime import timedelta
-
+def add_blank_rows(df, no_rows):
+    df_new = pd.DataFrame(columns=df.columns)
+    for idx in range(len(df)):
+        df_new = df_new.append(df.iloc[idx])
+        for _ in range(no_rows):
+            df_new=df_new.append(pd.Series(), ignore_index=True)
+    return df_new
 def analyze():
     st.header("Add Your File")
 
@@ -21,7 +27,8 @@ def analyze():
     RiskFileName = ""
     RiskFile = st.file_uploader("Upload Risk Data", type=("csv"))
 
-    def processData(HRFile, RiskFile):
+    def processData(HRFile):
+        df = pd.DataFrame()
         df = pd.read_csv(HRFile)
         df.to_csv("/tmp/tmp.csv")
         count = df.shape[0]
@@ -79,7 +86,7 @@ def analyze():
         
         #st.write(data)
         alerts = data['nightsignal']
-        if RiskFile is not None:
+        if HRFile is not None:
             alertVals = []
             allAlertVals = []
             allDates = []
@@ -88,33 +95,26 @@ def analyze():
                 allAlertVals.append(item["val"])
                 
                 allDates.append(item["date"])
-                if int(item["val"]) > 0:
+                if int(item["val"]) > 1:
                     
                     alertVals.append(item["val"])
         
             nsAlertCount = len(alertVals)
-            df2 = pd.read_csv(RiskFile)
-            df2 = df2.drop_duplicates()
-            vitoAlertCount = len(df2[df2['Risk'] > 0.9])
+            st.write(alertVals)
+            # df2 = pd.read_csv(HRFile)
+            # df2 = df2.drop_duplicates()
+            vitoAlertCount = len(df[df['Risk'] > 0.9])
             
             # st.write(nsAlertCount)
             # st.write(vitoAlertCount)
-            col1, col2 = st.columns(2)
-            col1.subheader("Vito Alerts: " + str(vitoAlertCount)) 
-            col2.subheader("NightSignal Alerts: " + str(nsAlertCount)) 
-            if nsAlertCount == vitoAlertCount:
-                st.balloons()
-                st.success("ALGORITHMS MATCH!!!!!!!!")
-                #playsound("success.mp4")
-            else:
-                st.write("")
+           
             
 
         col1, col2 = st.columns(2)
 
-        df = DataFrame()
-        df.insert(0, "Start_Date_Risk", allDates, True)
-        df.insert(0, "NS Alerts", allAlertVals, True)
+        df2 = DataFrame()
+        df2.insert(0, "Start_Date_Risk", allDates, True)
+        df2.insert(0, "NS Alerts", allAlertVals, True)
         #df = df.remove_duplicates()
         
         #col1.bar_chart(df.set_index('Value'))
@@ -128,38 +128,87 @@ def analyze():
         #     row = df2.iloc[1] 
             
             #df2 = df2.append(row, ignore_index=True)
-        df["NS Alerts"] = df["NS Alerts"].replace(to_replace ="2",
+        df2["NS Alerts"] = df2["NS Alerts"].replace(to_replace ="1",
+                 value ="0")
+        df2["NS Alerts"] = df2["NS Alerts"].replace(to_replace ="2",
                  value ="1")
        
-        df2["Risk"] = df2["Risk"].astype(int)
-        df["NS Alerts"] = df["NS Alerts"].astype(int)
-        
-        df["Start_Date_Risk"] = pd.to_datetime(df["Start_Date_Risk"])
-        df2["Start_Date_Risk"] = pd.to_datetime(df2["Start_Date_Risk"])
-        df_merged = pd.merge(df, df2, how='outer', on ="Start_Date_Risk") 
-        #df_merged = pd.merge(df, df2, right_on= "Start_Date_Risk", left_on="Start_Date_Risk")
-        df_merged = df_merged.drop('Start_Time_Risk', 1)
+        df["Risk"] = df["Risk"].astype(int)
+        df2["NS Alerts"] = df2["NS Alerts"].astype(int)
+        # st.table(df2)
+        # st.table(df)
+        df2.rename(columns={"NS Alerts": "Risk"}, inplace=True)
+        df2.rename(columns={"Start_Date_Risk": "Start_Date"}, inplace=True)
+        #df2.rename(columns={'Start_Date_Risk': 'Start_Date'}, inplace=True)
+        # st.table(df2)
+        #df["Start_Date"] = pd.to_datetime(df["Start_Date"])
+        # df2["Start_Date_Risk"] = pd.to_datetime(df2["Start_Date_Risk"])
+        #df_merged = pd.merge(df, df2, how='outer', on ="Start_Date") 
+        #df_merged = pd.merge(df, df2, right_on= "Start_Date", left_on="Start_Date")
+        #df_merged = df_merged.drop('Start_Time_Risk', 1)
        
        
-        df_merged = df_merged[ ['Risk'] + [ col for col in df_merged.columns if col != 'Risk' ] ]
-        #st.table(df_merged)
+        #df_merged = df_merged[ ['Risk'] + [ col for col in df_merged.columns if col != 'Risk' ] ]
         
-        count = df_merged.shape[0]
+        #df_merged = pd.concat([df,df2], join='inner', axis=1)
+        # df_merged = pd.concat([df.set_index('Start_Date'), df2.set_index('Start_Date_Risk')], 
+        #            axis='columns', keys=['First', 'Second'], join="outer" )
+        # df_merged.swaplevel(axis='columns')[df_merged.columns[1:]]
+        df = df.drop('Heartrate', 1)
+        df = df.drop('Start_Time', 1)
+        df = df.drop('Device', 1)
+        column_names = ["Risk", "Start_Date"]
+
+        #df = df.reindex(columns=column_names)
+        # df = df.fillna(df2['Start_Date'])
+        # df2 = df2.fillna(df['Start_Date'])
+        count = (df2.shape[0] - df.shape[0])
+        vitoCount = df[df["Risk"] == 1].shape[0]
+        nsCount = df2[df2["Risk"] == 1].shape[0]
+        col1, col2 = st.columns(2)
+        col1.subheader("Vito Alerts: " + str(vitoCount)) 
+        col2.subheader("NightSignal Alerts: " + str(nsCount)) 
+        if nsAlertCount == vitoAlertCount:
+            st.balloons()
+            st.success("ALGORITHMS MATCH!!!!!!!!")
+            #playsound("success.mp4")
+        else:
+            st.write("")
+        #df = add_blank_rows(df, count)
+        df["Start_Date"] = pd.to_datetime(df["Start_Date"])
+        df2["Start_Date"] = pd.to_datetime(df2["Start_Date"])
+        st.table(df)
+        st.table(df2)
+        # for i in range(df2.shape[0]):
+        #     if df2.Start_Date[i] not in df.Start_Date:
+
+        #         df1 = pd.DataFrame([[np.nan] * len(df.columns)], columns=df.columns)
+        #         df.loc[i] = df1.loc[0]
+        # ne = (df1 != df2).any(1)
+        df.append(df2)
+        
+ 
+        # df_merge = df.groupby("Start_Date")
+        # df_merged = pd.DataFrame().append(df_merge.first())
+        # df_merged.append(df_merge.last())
+        # st.table(df_merged)
+        #st.write(df_merged["Start_Date"].unique())
+        count = df.shape[0]
         devices = []
         incorrect = []
-        for i in range(count):
-            row = df_merged.iloc[i]
+        # for i in range(len(df_merged)):
+        #     row = df_merged.iloc[i]
            
-            if row["Risk"] != row["NS Alerts"]:
-                if i > 2 and i < count - 1 :
-                    rowBefore = df_merged.iloc[i - 1]
-                    rowAfter = df_merged.iloc[i + 1]
-                    if rowBefore["Start_Date_Risk"] + timedelta(days=1) == row["Start_Date_Risk"] and rowAfter["Start_Date_Risk"] + timedelta(days=-1) == row["Start_Date_Risk"]:
-                        if rowBefore["Risk"] != row["NS Alerts"] and rowAfter["Risk"] != row["NS Alerts"]:
+        #     if row["Risk"] != row["NS Alerts"]:
+        #         if i > 2 and i < count - 1 :
+        #             # rowBefore = df.iloc[i - 1]
+        #             # rowAfter = df.iloc[i + 1]
+        #             # if rowBefore["Start_Date_Risk"] + timedelta(days=1) == row["Start_Date_Risk"] and rowAfter["Start_Date_Risk"] + timedelta(days=-1) == row["Start_Date_Risk"]:
+        #             #     if rowBefore["Risk"] != row["NS Alerts"] and rowAfter["Risk"] != row["NS Alerts"]:
                         
-                            incorrect.append(row)
-                    else:
-                         incorrect.append(row)
+        #             incorrect.append(row)
+        #             # else:
+        #             #      incorrect.append(row)
 
         heartratedf = pd.read_csv("/tmp/tmp.csv")
         
@@ -182,14 +231,14 @@ def analyze():
         # incorrect = incorrect.drop('Start_Date', 1)
         # incorrect = incorrect.drop("Start_Time", 1)
         incorrect = incorrect.dropna()
-        total = df_merged.shape[0]
+        total = df.shape[0]
         total_incorrect = incorrect.shape[0]
         similarity = 1 - total_incorrect/total
         st.metric("Model Similarity", f"{round(similarity, 3)} %")
         st.header("Conflicting Alerts") 
         col1, col2 = st.columns(2)
-        # col1.table(df)
-        # col2.table(df2) 
+        col1.table(df)
+        col2.table(df2) 
         
         st.table(incorrect)
         st.download_button(
@@ -201,7 +250,7 @@ def analyze():
         with st.expander("See full data"):
             
             #df_merged = df.append(df2)
-            st.table(df_merged)
+            st.table(df)
         #st.header("Conflicting Scores")
         col1, col2 = st.columns(2)
 
@@ -229,8 +278,8 @@ def analyze():
         #HRFileName = file_selector(type="Health")
         #RiskFileName = file_selector(type="Risk")
         #st.write('HR File `%s`' % HRFileName)
-        if RiskFileName and HRFileName:
-            processData(HRFileName, RiskFileName)
+        if HRFileName:
+            processData(HRFileName)
             
 
         
@@ -244,7 +293,7 @@ def analyze():
 
                 
 
-    if HRFile and RiskFile:
-        processData(HRFile, RiskFile)
+    if HRFile:
+        processData(HRFile)
 
     
