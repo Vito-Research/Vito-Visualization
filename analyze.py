@@ -111,16 +111,15 @@ def analyze():
             
 
         col1, col2 = st.columns(2)
-
+        newDates = []
+        newAlerts = []
         df2 = DataFrame()
         for i in range(len(allDates)):
-            try:
-                if allDates[i] not in df["Start_Date"]:
-                
-                    allDates.remove(allDates[i])
-                    allAlertVals.remove(allAlertVals[i])
-            except:
-                    print()
+           
+                if allDates[i] in df["Start_Date"]:
+                    newDates.append(allDates[i])
+                    newAlerts.append(allAlertVals[i])
+           
                
         df2.insert(0, "Start_Date_Risk", allDates, True)
         df2.insert(0, "NS Alerts", allAlertVals, True)
