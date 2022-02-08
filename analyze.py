@@ -25,7 +25,7 @@ def analyze():
 
     HRFileName = ""
     RiskFileName = ""
-    RiskFile = st.file_uploader("Upload Risk Data", type=("csv"))
+   # RiskFile = st.file_uploader("Upload Risk Data", type=("csv"))
 
     def processData(HRFile):
         df = pd.DataFrame()
@@ -100,7 +100,7 @@ def analyze():
                     alertVals.append(item["val"])
         
             nsAlertCount = len(alertVals)
-            st.write(alertVals)
+            #st.write(alertVals)
             # df2 = pd.read_csv(HRFile)
             # df2 = df2.drop_duplicates()
             vitoAlertCount = len(df[df['Risk'] > 0.9])
@@ -287,9 +287,9 @@ def analyze():
         return os.path.join(folder_path, selected_filename)
 
 
-    if HRFile is None and RiskFile is None:
+    if HRFile is None:
         st.header("Or Select A File")
-        #HRFileName = file_selector(type="Health")
+        HRFileName = file_selector(type="Health")
         #RiskFileName = file_selector(type="Risk")
         #st.write('HR File `%s`' % HRFileName)
         if HRFileName:
