@@ -5,6 +5,7 @@ import  nightsignal as ns
 import json
 import datetime
 import os
+
 def add_blank_rows(df, no_rows):
     df_new = pd.DataFrame(columns=df.columns)
     for idx in range(len(df)):
@@ -95,7 +96,7 @@ def analyze():
                     
                     alertVals.append(item["val"])
         
-            nsAlertCount = len(df2[df2['Risk'] > 1])
+            nsAlertCount = len(alertVals)
             #st.write(alertVals)
             # df2 = pd.read_csv(HRFile)
             # df2 = df2.drop_duplicates()
