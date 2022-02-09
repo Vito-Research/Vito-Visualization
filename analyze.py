@@ -137,10 +137,10 @@ def analyze():
         #     row = df2.iloc[1] 
             
             #df2 = df2.append(row, ignore_index=True)
-        df2["NS Alerts"] = df2["NS Alerts"].replace(to_replace ="1",
-                 value ="0")
-        df2["NS Alerts"] = df2["NS Alerts"].replace(to_replace ="2",
-                 value ="1")
+        # df2["NS Alerts"] = df2["NS Alerts"].replace(to_replace ="1",
+        #          value ="0")
+        # df2["NS Alerts"] = df2["NS Alerts"].replace(to_replace ="2",
+        #          value ="1")
        
         df["Risk"] = df["Risk"].astype(int)
         df2["NS Alerts"] = df2["NS Alerts"].astype(int)
