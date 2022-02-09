@@ -137,10 +137,10 @@ def analyze():
         #     row = df2.iloc[1] 
             
             #df2 = df2.append(row, ignore_index=True)
-        # df2["NS Alerts"] = df2["NS Alerts"].replace(to_replace ="1",
-        #          value ="0")
-        # df2["NS Alerts"] = df2["NS Alerts"].replace(to_replace ="2",
-        #          value ="1")
+        df2["NS Alerts"] = df2["NS Alerts"].replace(to_replace ="1",
+                 value ="0")
+        df2["NS Alerts"] = df2["NS Alerts"].replace(to_replace ="2",
+                 value ="1")
        
         df["Risk"] = df["Risk"].astype(int)
         df2["NS Alerts"] = df2["NS Alerts"].astype(int)
@@ -174,7 +174,7 @@ def analyze():
         # df2 = df2.fillna(df['Start_Date'])
         count = (df2.shape[0] - df.shape[0])
         vitoCount = df[df["Risk"] == 1].shape[0]
-        nsCount = df2[df2["Risk"] > 1].shape[0]
+        nsCount = df2[df2["Risk"] == 1].shape[0]
         col1, col2 = st.columns(2)
         col1.subheader("Vito Alerts: " + str(vitoCount)) 
         col2.subheader("NightSignal Alerts: " + str(nsCount)) 
