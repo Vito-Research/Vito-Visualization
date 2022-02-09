@@ -174,7 +174,7 @@ def analyze():
         # df2 = df2.fillna(df['Start_Date'])
         count = (df2.shape[0] - df.shape[0])
         vitoCount = df[df["Risk"] == 1].shape[0]
-        nsCount = df2[df2["Risk"] == 1].shape[0]
+        nsCount = df2[df2["Risk"] == 2].shape[0]
         col1, col2 = st.columns(2)
         col1.subheader("Vito Alerts: " + str(vitoCount)) 
         col2.subheader("NightSignal Alerts: " + str(nsCount)) 
