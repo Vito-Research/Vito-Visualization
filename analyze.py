@@ -95,7 +95,7 @@ def analyze():
                     
                     alertVals.append(item["val"])
         
-            nsAlertCount = len(alertVals)
+            nsAlertCount = len(df2[df2['Risk'] > 1])
             #st.write(alertVals)
             # df2 = pd.read_csv(HRFile)
             # df2 = df2.drop_duplicates()
