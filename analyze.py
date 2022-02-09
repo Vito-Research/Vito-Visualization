@@ -138,7 +138,7 @@ def analyze():
             
             #df2 = df2.append(row, ignore_index=True)
         df2["NS Alerts"] = df2["NS Alerts"].replace(to_replace ="1",
-                 value ="21")
+                 value ="0")
         df2["NS Alerts"] = df2["NS Alerts"].replace(to_replace ="2",
                  value ="1")
        
