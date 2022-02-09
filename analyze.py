@@ -3,12 +3,8 @@ import streamlit as st
 import pandas as pd
 import  nightsignal as ns
 import json
-import csv
 import datetime
 import os
-from playsound import playsound
-import numpy as np
-from datetime import timedelta
 def add_blank_rows(df, no_rows):
     df_new = pd.DataFrame(columns=df.columns)
     for idx in range(len(df)):
