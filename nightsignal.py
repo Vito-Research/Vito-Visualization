@@ -306,19 +306,19 @@ def getScore(heartrate_file, step_file):
                     else:
                         st.write("OOOF")
 
-        with open('/tmp/AW_rhr.csv' , "w") as rhrFile:
-            rhrFile.write("Device,Start_Date,Start_Time,Value \n")
-            with open(heartrate_file , "r") as hrCSV:
-                hrCSVReader = csv.DictReader(hrCSV)
-                for hr_rec in hrCSVReader:
-                        hr_start_date = hr_rec['Start_Date']
-                        hr_start_time = hr_rec['Start_Time']
-                        hr_value = hr_rec['Heartrate']
-                        if (hr_start_date in dateTimes):
-                            arrayForThisDay = dateTimes[hr_start_date]
-                            hr_time  = datetime.datetime.strptime( hr_start_time, '%H:%M:%S' )
-                        if ( datetime.datetime.strftime(hr_time, '%H:%M') not in arrayForThisDay):
-                            rhrFile.write(device + "," + hr_start_date + "," + hr_start_time + "," + hr_value + "\n")
+        # with open('/tmp/AW_rhr.csv' , "w") as rhrFile:
+        #     rhrFile.write("Device,Start_Date,Start_Time,Value \n")
+        #     with open(heartrate_file , "r") as hrCSV:
+        #         hrCSVReader = csv.DictReader(hrCSV)
+        #         for hr_rec in hrCSVReader:
+        #                 hr_start_date = hr_rec['Start_Date']
+        #                 hr_start_time = hr_rec['Start_Time']
+        #                 hr_value = hr_rec['Heartrate']
+        #                 if (hr_start_date in dateTimes):
+        #                     arrayForThisDay = dateTimes[hr_start_date]
+        #                     hr_time  = datetime.datetime.strptime( hr_start_time, '%H:%M:%S' )
+        #                 if ( datetime.datetime.strftime(hr_time, '%H:%M') not in arrayForThisDay):
+        #                     rhrFile.write(device + "," + hr_start_date + "," + hr_start_time + "," + hr_value + "\n")
 
 
         with open('/tmp/tmp.csv', "r") as hrFile:
