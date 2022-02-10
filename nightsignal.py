@@ -337,7 +337,7 @@ def getScore(heartrate_file, step_file):
                 #if ((rec_time.startswith("00:")) or (rec_time.startswith("01:")) or (rec_time.startswith("02:")) or (rec_time.startswith("03:")) or (rec_time.startswith("04:")) or (rec_time.startswith("05:")) or (rec_time.startswith("06:"))):
                 if (rec_date not in date_hrs_dic):
                     date_hrs_dic[rec_date] = rec_hr
-                else:
+                #else:
                     ## date_hrs_dic[rec_date] = date_hrs_dic[rec_date] + "*" + rec_hr
 
         ###Calculate AVGs , Imputation, Healthy baseline Median, and Alerts
