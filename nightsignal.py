@@ -324,19 +324,23 @@ def getScore(heartrate_file, step_file):
         with open('/tmp/tmp.csv', "r") as hrFile:
             records = hrFile.readlines()
             
+            
 
         date_hrs_dic = {}
         for record in records:
-           
-            if ("Device" not in record):
-                record_elements = record.split(",")
-                rec_date = record_elements[1]
-                rec_time = record_elements[2]
-                rec_hr = record_elements[3].strip(' \t\n\r')
-                #st.write(rec_date)
-                #if ((rec_time.startswith("00:")) or (rec_time.startswith("01:")) or (rec_time.startswith("02:")) or (rec_time.startswith("03:")) or (rec_time.startswith("04:")) or (rec_time.startswith("05:")) or (rec_time.startswith("06:"))):
-                if (rec_date not in date_hrs_dic):
-                    date_hrs_dic[rec_date] = rec_hr
+            if "Heartrate" not in record:
+                #st.write(record)
+                if ("Device" not in record):
+                    record_elements = record.split(",")
+                    rec_date = record_elements[1]
+                    
+                    rec_time = record_elements[2]
+                    rec_hr = record_elements[3].strip(' \t\n\r')
+                    st.write(rec_hr)
+                    #st.write(rec_date)
+                    #if ((rec_time.startswith("00:")) or (rec_time.startswith("01:")) or (rec_time.startswith("02:")) or (rec_time.startswith("03:")) or (rec_time.startswith("04:")) or (rec_time.startswith("05:")) or (rec_time.startswith("06:"))):
+                    if (rec_date not in date_hrs_dic):
+                        date_hrs_dic[rec_date] = rec_hr
                 #else:
                     ## date_hrs_dic[rec_date] = date_hrs_dic[rec_date] + "*" + rec_hr
 
@@ -349,8 +353,9 @@ def getScore(heartrate_file, step_file):
             numOfHRs = str(temp).count("*") + 1
             hrs = temp.split("*")
             for hr in hrs:
-                st.write(hr)
+                
                 AVGHR = AVGHR + int(float(hr))
+                st.write(AVGHR)
             AVGHR = int(AVGHR/numOfHRs)
             date_hr_avgs_dic[key] = AVGHR
 
