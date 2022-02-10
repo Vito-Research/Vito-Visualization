@@ -321,7 +321,7 @@ def getScore(heartrate_file, step_file):
                             rhrFile.write(device + "," + hr_start_date + "," + hr_start_time + "," + hr_value + "\n")
 
 
-        with open('/tmp/AW_rhr.csv', "r") as hrFile:
+        with open('/tmp/tmp.csv', "r") as hrFile:
             records = hrFile.readlines()
             
 
@@ -338,7 +338,7 @@ def getScore(heartrate_file, step_file):
                 if (rec_date not in date_hrs_dic):
                     date_hrs_dic[rec_date] = rec_hr
                 else:
-                    date_hrs_dic[rec_date] = date_hrs_dic[rec_date] + "*" + rec_hr
+                    # date_hrs_dic[rec_date] = date_hrs_dic[rec_date] + "*" + rec_hr
 
         ###Calculate AVGs , Imputation, Healthy baseline Median, and Alerts
         date_hr_avgs_dic = {}
