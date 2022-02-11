@@ -173,8 +173,8 @@ def analyze():
         # df = df.fillna(df2['Start_Date'])
         # df2 = df2.fillna(df['Start_Date'])
         count = (df2.shape[0] - df.shape[0])
-        vitoCount = df[df["Risk"] == 1].shape[0]
-        nsCount = df2[df2["Risk"] == 1].shape[0]
+        vitoCount = df_merged[df_merged["Risk_x"] == 1].shape[0]
+        nsCount = df2[df2["Risk_y"] == 1].shape[0]
         col1, col2 = st.columns(2)
         col1.subheader("Vito Alerts: " + str(vitoCount)) 
         col2.subheader("NightSignal Alerts: " + str(nsCount)) 
@@ -249,9 +249,9 @@ def analyze():
         # col1.header("NightSignal") 
         # col2.header("Vito") 
         col1, col2 = st.columns(2)
-        col1.table(df)
-        col2.table(df2) 
-        
+        # col1.table(df)
+        # col2.table(df2) 
+        st.table(df_merged)
         #st.table(incorrect)
         st.download_button(
             "Download Alert Statistics",
