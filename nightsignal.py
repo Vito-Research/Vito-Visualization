@@ -593,7 +593,10 @@ def getScore(heartrate_file, step_file):
         for key in clustered_alerts:
                 clustered_alerts_dic = {}
                 for d in clustered_alerts[key]:
-                    clustered_alerts_dic[d] = date_hr_avgs_dic[d]
+                    try:
+                        clustered_alerts_dic[d] = date_hr_avgs_dic[d]
+                    except:
+                        print()
                 sorted_res = sorted(clustered_alerts_dic.items())
                 if(len(clustered_alerts_dic)!=0):
                     if(haveClustered==1):
