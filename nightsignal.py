@@ -626,7 +626,10 @@ def getScore(heartrate_file, step_file):
         #plot yellow alerts
         yellow_alerts_dic = {}
         for d in yellow_alert_dates:
+            try:
                 yellow_alerts_dic[d] = date_hr_avgs_dic[d]
+            except:
+                print()
         sorted_res = sorted(yellow_alerts_dic.items())
         if(len(yellow_alerts_dic)!=0):
             for key in yellow_alerts_dic:
