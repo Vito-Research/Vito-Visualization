@@ -70,8 +70,8 @@ def getScore(heartrate_file, step_file):
  
     ###nightsignal configs
     medianConfig = "MedianOfAvgs" # MedianOfAvgs | AbsoluteMedian
-    yellow_threshold = 3
-    red_threshold = 4
+    yellow_threshold = 4
+    red_threshold = 5
 
                 
     #################################  Fitbit #################################
@@ -279,7 +279,7 @@ def getScore(heartrate_file, step_file):
     else:
 
         ###Preprocess to get resting heartrate
-        delta = datetime.timedelta(minutes=0)
+        delta = datetime.timedelta(minutes=5)
 
         dateTimes = {}
         with open(step_file  , "r") as stepCSV:
