@@ -611,7 +611,10 @@ def getScore(heartrate_file, step_file):
         #plot red alerts
         red_alerts_dic = {}
         for d in red_alert_dates:
-                red_alerts_dic[d] = date_hr_avgs_dic[d]
+                try:
+                    red_alerts_dic[d] = date_hr_avgs_dic[d]
+                except:
+                    print()
         sorted_res = sorted(red_alerts_dic.items())
         if(len(red_alerts_dic)!=0):
             for key in red_alerts_dic:
