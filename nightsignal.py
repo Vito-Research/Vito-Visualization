@@ -338,9 +338,9 @@ def getScore(heartrate_file, step_file):
                     rec_hr = record_elements[3].strip(' \t\n\r')
                     # st.write(rec_hr)
                     #st.write(rec_date)
-                    #if ((rec_time.startswith("00:")) or (rec_time.startswith("01:")) or (rec_time.startswith("02:")) or (rec_time.startswith("03:")) or (rec_time.startswith("04:")) or (rec_time.startswith("05:")) or (rec_time.startswith("06:"))):
-                    if (rec_date not in date_hrs_dic):
-                        date_hrs_dic[rec_date] = rec_hr
+                    if ((rec_time.startswith("00:")) or (rec_time.startswith("01:")) or (rec_time.startswith("02:")) or (rec_time.startswith("03:")) or (rec_time.startswith("04:")) or (rec_time.startswith("05:")) or (rec_time.startswith("06:"))):
+                        if (rec_date not in date_hrs_dic):
+                            date_hrs_dic[rec_date] = rec_hr
                 #else:
                     ## date_hrs_dic[rec_date] = date_hrs_dic[rec_date] + "*" + rec_hr
 
