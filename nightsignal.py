@@ -282,26 +282,26 @@ def getScore(heartrate_file, step_file):
         delta = datetime.timedelta(minutes=1)
 
         dateTimes = {}
-        # with open(step_file  , "r") as stepCSV:
-        #     stepCSVReader = csv.DictReader(stepCSV)
-        #     for step_rec in stepCSVReader:
+        with open(step_file  , "r") as stepCSV:
+            stepCSVReader = csv.DictReader(stepCSV)
+            for step_rec in stepCSVReader:
                 
-        #             st_start_date = step_rec['Start_Date']
-        #             st_start_time = step_rec['Start_Time']
-        #             st_end_date = step_rec['End_Date']
-        #             st_end_time = step_rec['End_Time']
-        #             #We need to add handler for the other one
-        #             if(st_start_date == st_end_date):
-        #                 start = datetime.datetime.strptime( st_start_time, '%H:%M:%S' )
-        #                 end = datetime.datetime.strptime( st_end_time, '%H:%M:%S' )
-        #                 t = start
-        #                 while t <= end :
-        #                     tempArray = []
-        #                     if(st_start_date in dateTimes):
-        #                         tempArray = dateTimes[st_start_date]
-        #                     tempArray.append(datetime.datetime.strftime(t, '%H:%M'))
-        #                     dateTimes[st_start_date] = tempArray
-        #                     t += delta
+                    st_start_date = step_rec['Start_Date']
+                    st_start_time = step_rec['Start_Time']
+                    st_end_date = step_rec['End_Date']
+                    st_end_time = step_rec['End_Time']
+                    #We need to add handler for the other one
+                    if(st_start_date == st_end_date):
+                        start = datetime.datetime.strptime( st_start_time, '%H:%M:%S' )
+                        end = datetime.datetime.strptime( st_end_time, '%H:%M:%S' )
+                        t = start
+                        while t <= end :
+                            tempArray = []
+                            if(st_start_date in dateTimes):
+                                tempArray = dateTimes[st_start_date]
+                            tempArray.append(datetime.datetime.strftime(t, '%H:%M'))
+                            dateTimes[st_start_date] = tempArray
+                            t += delta
 
         # with open('/tmp/AW_rhr.csv' , "w") as rhrFile:
         #     rhrFile.write("Device,Start_Date,Start_Time,Value")
