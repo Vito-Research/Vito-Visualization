@@ -305,7 +305,7 @@ def getScore(heartrate_file, step_file):
 
         with open('/tmp/AW_rhr.csv' , "w") as rhrFile:
             rhrFile.write("Device,Start_Date,Start_Time,Value")
-            with open(heartrate_file , "r") as hrCSV:
+            with open("/tmp/tmp.csv" , "r") as hrCSV:
                 hrCSVReader = csv.DictReader(hrCSV)
                 for hr_rec in hrCSVReader:
                         hr_start_date = hr_rec['Start_Date']
