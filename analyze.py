@@ -102,8 +102,8 @@ def analyze():
             # df2 = df2.drop_duplicates()
             vitoAlertCount = len(df[df['Risk'] > 0.9])
             
-            # st.write(nsAlertCount)
-            # st.write(vitoAlertCount)
+            st.write(nsAlertCount)
+            st.write(vitoAlertCount)
            
             
 
