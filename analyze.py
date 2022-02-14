@@ -250,8 +250,8 @@ def analyze():
         # col1.header("NightSignal") 
         # col2.header("Vito") 
         col1, col2 = st.columns(2)
-        # col1.table(df)
-        # col2.table(df2) 
+        col1.table(df)
+        col2.table(df2) 
         st.table(df_merged)
         #st.table(incorrect)
         st.download_button(
