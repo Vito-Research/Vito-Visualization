@@ -279,7 +279,7 @@ def getScore(heartrate_file, step_file):
     else:
 
         ###Preprocess to get resting heartrate
-        delta = datetime.timedelta(minutes=30)
+        delta = datetime.timedelta(minutes=5)
 
         dateTimes = {}
         with open(step_file  , "r") as stepCSV:
