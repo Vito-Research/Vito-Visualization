@@ -72,7 +72,7 @@ def getScore(heartrate_file, step_file):
     medianConfig = "MedianOfAvgs" # MedianOfAvgs | AbsoluteMedian
     yellow_threshold = 3
     red_threshold = 4
-
+    records = {}
                 
     #################################  Fitbit #################################
     if(device=="Fitbit"):
