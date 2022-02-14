@@ -303,7 +303,7 @@ def getScore(heartrate_file, step_file):
                             dateTimes[st_start_date] = tempArray
                             t += delta
 
-        with open('tmp/AW_rhr.csv' , "w") as rhrFile:
+        with open('/tmp/AW_rhr.csv' , "w") as rhrFile:
             rhrFile.write("Device,Start_Date,Start_Time,Value")
             with open(heartrate_file , "r") as hrCSV:
                 hrCSVReader = csv.DictReader(hrCSV)
@@ -318,7 +318,7 @@ def getScore(heartrate_file, step_file):
                                 rhrFile.write(device + "," + hr_start_date + "," + hr_start_time + "," + hr_value + "\n")
 
 
-        with open('tmp/AW_rhr.csv', "r") as hrFile:
+        with open('/tmp/AW_rhr.csv', "r") as hrFile:
             records = hrFile.readlines()
 
         date_hrs_dic = {}
@@ -422,10 +422,10 @@ def getScore(heartrate_file, step_file):
         for key in date_hr_avgs_dic:
             if (key in date_hr_meds_dic):
                 if (date_hr_avgs_dic[key] >= date_hr_meds_dic[key] + red_threshold):
-                    with open("tmp/potenital_reds.csv" , "a") as out_file:
+                    with open("/tmp/potenital_reds.csv" , "a") as out_file:
                         out_file.write(key + "\n")
                 if (date_hr_avgs_dic[key] >= date_hr_meds_dic[key] + yellow_threshold):
-                    with open("tmp/potenital_yellows.csv" , "a") as out_file:
+                    with open("/tmp/potenital_yellows.csv" , "a") as out_file:
                         out_file.write(key + "\n")
 
         ###Red alerts (red states in NightSignal deterministic finite state machine)
@@ -433,7 +433,7 @@ def getScore(heartrate_file, step_file):
         red_alert_dates = []
         dates_array = []
         try:
-            with open("tmp/potenital_reds.csv", "r") as my_file:
+            with open("/tmp/potenital_reds.csv", "r") as my_file:
                 for line in my_file:
                     dates_array.append(line.strip(' \t\n\r'))
             track = []
@@ -457,7 +457,7 @@ def getScore(heartrate_file, step_file):
         yellow_alert_dates = []
         dates_array = []
         try:
-            with open("tmp/potenital_yellows.csv", "r") as my_file:
+            with open("/tmp/potenital_yellows.csv", "r") as my_file:
                 for line in my_file:
                     dates_array.append(line.strip(' \t\n\r'))
             track = []
@@ -501,7 +501,7 @@ def getScore(heartrate_file, step_file):
         sorted_alerts = collections.OrderedDict(sorted(alertsDic.items()))
         for key in sorted_alerts:
             alerts['nightsignal'].append({"date": key+"   "+"07:00:00", "val": str(sorted_alerts[key])})
-        with open("tmp/NS-signals.json", "w+") as out_file:
+        with open("/tmp/NS-signals.json", "w+") as out_file:
             json.dump(alerts, out_file)
 
 
