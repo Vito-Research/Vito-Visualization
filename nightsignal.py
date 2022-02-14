@@ -65,7 +65,7 @@ except getopt.error as err:
 heartrate_file = ""
 step_file = ""
 restinghr_file = ""
-device = "h"
+device = "Fitbit"
 def getScore(heartrate_file, step_file):
  
     ###nightsignal configs
@@ -76,7 +76,7 @@ def getScore(heartrate_file, step_file):
                 
     #################################  Fitbit #################################
     if(device=="Fitbit"):
-        with open(restinghr_file , "r") as rhrFile:
+        with open("/tmp/tmp.csv" , "r") as rhrFile:
             records = rhrFile.readlines()
         
         date_hrs_dic = {}
