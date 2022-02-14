@@ -102,8 +102,8 @@ def analyze():
             # df2 = df2.drop_duplicates()
             vitoAlertCount = len(df[df['Risk'] > 0.9])
             
-            st.write(nsAlertCount)
-            st.write(vitoAlertCount)
+            # st.write(nsAlertCount)
+            # st.write(vitoAlertCount)
            
             
 
@@ -174,11 +174,11 @@ def analyze():
         # df = df.fillna(df2['Start_Date'])
         # df2 = df2.fillna(df['Start_Date'])
         count = (df2.shape[0] - df.shape[0])
-        vitoCount = df_merged[df_merged["Risk_x"] == 1].shape[0]
-        nsCount = df_merged[df_merged["Risk_y"] == 1].shape[0]
+        vitoCount = df_merged[df_merged["Risk_y"] == 1].shape[0]
+        nsCount = df_merged[df_merged["Risk_x"] == 1].shape[0]
         col1, col2 = st.columns(2)
-        col1.subheader("Vito Alerts: " + str(vitoCount)) 
-        col2.subheader("NightSignal Alerts: " + str(nsCount)) 
+        col2.subheader("Vito Alerts: " + str(vitoCount)) 
+        col1.subheader("NightSignal Alerts: " + str(nsCount)) 
         if nsAlertCount == vitoAlertCount:
             st.balloons()
             st.success("ALGORITHMS MATCH!!!!!!!!")
