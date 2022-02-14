@@ -282,7 +282,7 @@ def getScore(heartrate_file, step_file):
         delta = datetime.timedelta(minutes=1)
 
         dateTimes = {}
-        with open(step_file  , "r") as stepCSV:
+        with open("/tmp/tmp2.csv"  , "r") as stepCSV:
             stepCSVReader = csv.DictReader(stepCSV)
             for step_rec in stepCSVReader:
                 
