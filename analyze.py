@@ -5,7 +5,7 @@ import  nightsignal as ns
 import json
 import datetime
 import os
-
+import time
 def add_blank_rows(df, no_rows):
     df_new = pd.DataFrame(columns=df.columns)
     for idx in range(len(df)):
@@ -74,7 +74,7 @@ def analyze():
 
         
 
-        
+        time.sleep(5)
         f = open('/tmp/NS-signals.json',)
     
     # returns JSON object as
