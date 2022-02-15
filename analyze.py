@@ -262,7 +262,7 @@ def analyze():
             on_click=st.balloons,
         )
         with st.expander("See full data"):
-            st.area_chart(df_merged)
+            st.bar_chart(df_merged)
             #df_merged = df.append(df2)
             st.table(df_merged)
         #st.header("Conflicting Scores")
