@@ -177,8 +177,8 @@ def analyze():
         vitoCount = df_merged[df_merged["Risk_y"] == 1].shape[0]
         nsCount = df_merged[df_merged["Risk_x"] == 1].shape[0]
         col1, col2 = st.columns(2)
-        col2.subheader("Vito Alerts: " + str(vitoCount)) 
-        col1.subheader("NightSignal Alerts: " + str(nsCount)) 
+        col1.subheader("Vito Alerts: " + str(vitoCount)) 
+        col2.subheader("NightSignal Alerts: " + str(nsCount)) 
         if nsAlertCount == vitoAlertCount:
             st.balloons()
             st.success("ALGORITHMS MATCH!!!!!!!!")
