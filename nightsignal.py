@@ -342,7 +342,7 @@ def getScore(heartrate_file, step_file):
             numOfHRs = str(temp).count("*") + 1
             hrs = temp.split("*")
             for hr in hrs:
-                AVGHR = AVGHR + int(float(hr))
+                AVGHR = AVGHR + int((hr))
             AVGHR = int(AVGHR/numOfHRs)
             date_hr_avgs_dic[key] = AVGHR
 
