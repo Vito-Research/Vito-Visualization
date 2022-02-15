@@ -257,7 +257,7 @@ def analyze():
         #st.table(incorrect)
         st.download_button(
             "Download Alert Statistics",
-            incorrect.to_csv(line_terminator="\r\n", index=False),
+            df_merged.to_csv(line_terminator="\r\n", index=False),
             file_name="/tmp/Vito_Alert_Statistics.csv",
             on_click=st.balloons,
         )
