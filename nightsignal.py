@@ -303,6 +303,8 @@ def getScore(heartrate_file, step_file):
                             dateTimes[st_start_date] = tempArray
                             t += delta
 
+                    
+
         with open('/tmp/AW_rhr.csv' , "w") as rhrFile:
             rhrFile.write("Device,Start_Date,Start_Time,Value")
             with open("/tmp/tmp.csv" , "r") as hrCSV:
