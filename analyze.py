@@ -253,11 +253,12 @@ def analyze():
         # col1.table(df)
         # col2.table(df2) 
         st.table(df_merged)
+        df_merged.to_csv("/tmp/Vito_Alert_Statistics.csv")
         #st.table(incorrect)
         st.download_button(
             "Download Alert Statistics",
             incorrect.to_csv(line_terminator="\r\n", index=False),
-            file_name="Vito_Alert_Statistics.csv",
+            file_name="/tmp/Vito_Alert_Statistics.csv",
             on_click=st.balloons,
         )
         with st.expander("See full data"):
