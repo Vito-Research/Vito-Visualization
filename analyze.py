@@ -255,12 +255,13 @@ def analyze():
         st.table(df_merged)
         df_merged.to_csv("/tmp/Vito_Alert_Statistics.csv")
         #st.table(incorrect)
-        st.download_button(
-            "Download Alert Statistics",
-            df_merged.to_csv(line_terminator="\r\n", index=False),
-            file_name=os.path.join("/tmp/NightSignalResult" +'.pdf'),
-            on_click=st.balloons,
-        )
+        with open(os.path.join("/tmp/NightSignalResult" +'.pdf'), "rb") as file:
+            st.download_button(
+                "Download Alert Statistics",
+                file,
+                file_name=os.path.join("/tmp/NightSignalResult" +'.pdf'),
+                on_click=st.balloons,
+            )
         with st.expander("See full data"):
             #st.bar_chart(df_merged)
             #df_merged = df.append(df2)
