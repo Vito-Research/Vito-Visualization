@@ -70,7 +70,7 @@ def analyze():
 
         # col1.table(df)
         # col3.table(df2)
-        ns.getScore("/tmp/tmp.csv", "/tmp/tmp2.csv")
+        ns.getScore(os.path.join("/tmp/tmp.csv"), "/tmp/tmp2.csv")
 
         
 

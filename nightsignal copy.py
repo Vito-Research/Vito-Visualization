@@ -76,7 +76,7 @@ def getScore(heartrate_file, step_file):
                 
     #################################  Fitbit #################################
     if(device=="Fitbit"):
-        with open(restinghr_file , "wb") as rhrFile:
+        with open(restinghr_file , "r") as rhrFile:
             records = rhrFile.readlines()
         
         date_hrs_dic = {}
@@ -200,7 +200,7 @@ def getScore(heartrate_file, step_file):
         red_alert_dates = []
         dates_array = []
         try:
-            with open("/tmp/potenital_reds.csv" , "wb") as my_file:
+            with open("/tmp/potenital_reds.csv" , "r") as my_file:
                 for line in my_file:
                     dates_array.append(line.strip(' \t\n\r'))
             track = []
@@ -224,7 +224,7 @@ def getScore(heartrate_file, step_file):
         yellow_alert_dates = []
         dates_array = []
         try:
-            with open("/tmp/potenital_yellows.csv" , "wb") as my_file:
+            with open("/tmp/potenital_yellows.csv" , "r") as my_file:
                 for line in my_file:
                     dates_array.append(line.strip(' \t\n\r'))
             track = []
@@ -282,7 +282,7 @@ def getScore(heartrate_file, step_file):
         delta = datetime.timedelta(minutes=30)
 
         dateTimes = {}
-        with open(step_file  , "wb") as stepCSV:
+        with open(step_file  , "r") as stepCSV:
             stepCSVReader = csv.DictReader(stepCSV)
             for step_rec in stepCSVReader:
                 
@@ -306,9 +306,9 @@ def getScore(heartrate_file, step_file):
                     else:
                         st.write("OOOF")
 
-        with open('/tmp/AW_rhr.csv' , "wb") as rhrFile:
+        with open('/tmp/AW_rhr.csv' , "w") as rhrFile:
             rhrFile.write("Device,Start_Date,Start_Time,Value \n")
-            with open(heartrate_file , "wb") as hrCSV:
+            with open(heartrate_file , "r") as hrCSV:
                 hrCSVReader = csv.DictReader(hrCSV)
                 for hr_rec in hrCSVReader:
                         hr_start_date = hr_rec['Start_Date']
@@ -321,7 +321,7 @@ def getScore(heartrate_file, step_file):
                                 rhrFile.write(device + "," + hr_start_date + "," + hr_start_time + "," + hr_value + "\n")
 
 
-        with open('/tmp/AW_rhr.csv', "wb") as hrFile:
+        with open('/tmp/AW_rhr.csv', "r") as hrFile:
             records = hrFile.readlines()
             
 
@@ -449,7 +449,7 @@ def getScore(heartrate_file, step_file):
         red_alert_dates = []
         dates_array = []
         try:
-            with open("/tmp/potenital_reds.csv", "wb") as my_file:
+            with open("/tmp/potenital_reds.csv", "r") as my_file:
                 for line in my_file:
                     dates_array.append(line.strip(' \t\n\r'))
             track = []
@@ -473,7 +473,7 @@ def getScore(heartrate_file, step_file):
         yellow_alert_dates = []
         dates_array = []
         try:
-            with open("/tmp/potenital_yellows.csv", "wb") as my_file:
+            with open("/tmp/potenital_yellows.csv", "r") as my_file:
                 for line in my_file:
                     dates_array.append(line.strip(' \t\n\r'))
             track = []
