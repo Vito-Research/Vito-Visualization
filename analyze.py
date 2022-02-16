@@ -74,8 +74,8 @@ def analyze():
 
         
 
-        time.sleep(5)
-        f = open(os.path.join('tmp/NS-signals.json'),)
+        
+        f = open(os.path.join('/tmp/NS-signals.json'), "r")
     
     # returns JSON object as
     # a dictionary
@@ -221,7 +221,7 @@ def analyze():
         #             # else:
         #             #      incorrect.append(row)
 
-        heartratedf = pd.read_csv(os.path.join("tmp/tmp.csv"))
+        heartratedf = pd.read_csv(os.path.join("/tmp/tmp.csv"))
         
         #heartratedf["Start_Date_Risk"] = pd.to_datetime(heartratedf["Start_Date"])
         incorrect = pd.DataFrame(incorrect)
