@@ -26,5 +26,5 @@ def file_selector(folder_path='./COVID-19-Phase2-Wearables'):
 
 file_selector()
         #selected_filename = st.selectbox('Select ' + type, csvFiles)
-       # return os.path.join(folder_path, selected_filename)
+       # return os.path.join.join(folder_path, selected_filename)
 

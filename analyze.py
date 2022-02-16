@@ -27,7 +27,7 @@ def analyze():
     def processData(HRFile):
         df = pd.DataFrame()
         df = pd.read_csv(HRFile)
-        df.to_csv("/tmp/tmp.csv")
+        df.to_csv(os.path.join("/tmp/tmp.csv"))
         count = df.shape[0]
         devices = []
         for i in range(count):
@@ -64,7 +64,7 @@ def analyze():
         df2.insert(0, "Start_Time", start_time, True)
         df2.insert(0, "End_Date", start_date, True)
         df2.insert(0, "End_Time", end_time, True)
-        df2.to_csv("/tmp/tmp2.csv")
+        df2.to_csv(os.path.join("/tmp/tmp2.csv"))
         
         col1, col2, col3 = st.columns(3)
 
@@ -75,7 +75,7 @@ def analyze():
         
 
         time.sleep(5)
-        f = open('/tmp/NS-signals.json',)
+        f = open(os.path.join('/tmp/NS-signals.json'),)
     
     # returns JSON object as
     # a dictionary
@@ -221,7 +221,7 @@ def analyze():
         #             # else:
         #             #      incorrect.append(row)
 
-        heartratedf = pd.read_csv("/tmp/tmp.csv")
+        heartratedf = pd.read_csv(os.path.join("/tmp/tmp.csv"))
         
         #heartratedf["Start_Date_Risk"] = pd.to_datetime(heartratedf["Start_Date"])
         incorrect = pd.DataFrame(incorrect)
@@ -284,7 +284,7 @@ def analyze():
             if "csv" in file:
                 csvFiles.append(file)
         selected_filename = st.selectbox('Select ' + type, csvFiles)
-        return os.path.join(folder_path, selected_filename)
+        return os.path.join.join(folder_path, selected_filename)
 
 
     if HRFile is None:

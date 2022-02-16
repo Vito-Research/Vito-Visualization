@@ -120,7 +120,7 @@ def compare():
             if "csv" in file:
                 csvFiles.append(file)
         selected_filename = st.selectbox('Select ' + type, csvFiles)
-        return os.path.join(folder_path, selected_filename)
+        return os.path.join.join(folder_path, selected_filename)
 
 
     if HRFile is None:
