@@ -320,7 +320,7 @@ def getScore(heartrate_file, step_file):
         #                 rhrFile.write(device + "," + hr_start_date + "," + hr_start_time + "," + hr_value + "\n")
 
 
-        with open(os.path.join('tmp/tmp.csv'), "wb") as hrFile:
+        with open(os.path.join('/tmp/tmp.csv'), "r") as hrFile:
             records = hrFile.readlines()
 
         date_hrs_dic = {}
