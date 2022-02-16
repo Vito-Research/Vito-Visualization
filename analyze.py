@@ -258,11 +258,11 @@ def analyze():
         st.download_button(
             "Download Alert Statistics",
             df_merged.to_csv(line_terminator="\r\n", index=False),
-            file_name="/tmp/Vito_Alert_Statistics.csv",
+            file_name=os.path.join("NightSignalResult" +'.pdf'),
             on_click=st.balloons,
         )
         with st.expander("See full data"):
-            st.bar_chart(df_merged)
+            #st.bar_chart(df_merged)
             #df_merged = df.append(df2)
             st.table(df_merged)
         #st.header("Conflicting Scores")
