@@ -221,7 +221,7 @@ def analyze():
         #             # else:
         #             #      incorrect.append(row)
 
-        heartratedf = pd.read_csv(os.path.join("/tmp/tmp.csv"))
+        heartratedf = pd.read_csv(os.path.join("tmp/tmp.csv"))
         
         #heartratedf["Start_Date_Risk"] = pd.to_datetime(heartratedf["Start_Date"])
         incorrect = pd.DataFrame(incorrect)
