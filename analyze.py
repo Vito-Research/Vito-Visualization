@@ -253,13 +253,13 @@ def analyze():
         # col1.table(df)
         # col2.table(df2) 
         st.table(df_merged)
-        df_merged.to_csv("/tmp/Vito_Alert_Statistics.csv")
+        df_merged.to_csv(os.path.join("/tmp/Vito_Alert_Statistics.csv"))
         #st.table(incorrect)
         with open(os.path.join("/tmp/NightSignalResult" +'.pdf'), "rb") as file:
             st.download_button(
                 "Download Alert Statistics",
                 file,
-                file_name=os.path.join("/tmp/NightSignalResult" +'.pdf'),
+                file_name=os.path.join("/tmp/Vito_Alert_Statistics.csv"),
                 on_click=st.balloons,
             )
         with st.expander("See full data"):
