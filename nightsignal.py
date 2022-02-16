@@ -76,7 +76,7 @@ def getScore(heartrate_file, step_file):
                 
     #################################  Fitbit #################################
     if(device=="Fitbit"):
-        with open(restinghr_file , "r") as rhrFile:
+        with open(restinghr_file , "wb") as rhrFile:
             records = rhrFile.readlines()
         
         date_hrs_dic = {}
@@ -200,7 +200,7 @@ def getScore(heartrate_file, step_file):
         red_alert_dates = []
         dates_array = []
         try:
-            with open(os.path.join("tmp/potenital_reds.csv") , "r") as my_file:
+            with open(os.path.join("tmp/potenital_reds.csv") , "wb") as my_file:
                 for line in my_file:
                     dates_array.append(line.strip(' \t\n\r'))
             track = []
@@ -224,7 +224,7 @@ def getScore(heartrate_file, step_file):
         yellow_alert_dates = []
         dates_array = []
         try:
-            with open(os.path.join("tmp/potenital_yellows.csv") , "r") as my_file:
+            with open(os.path.join("tmp/potenital_yellows.csv") , "wb") as my_file:
                 for line in my_file:
                     dates_array.append(line.strip(' \t\n\r'))
             track = []
@@ -282,7 +282,7 @@ def getScore(heartrate_file, step_file):
         delta = datetime.timedelta(hours=1)
 
         dateTimes = {}
-        with open(os.path.join("/tmp/tmp2.csv")  , "r") as stepCSV:
+        with open(os.path.join("/tmp/tmp2.csv")  , "wb") as stepCSV:
             stepCSVReader = csv.DictReader(stepCSV)
             for step_rec in stepCSVReader:
                 
@@ -305,9 +305,9 @@ def getScore(heartrate_file, step_file):
 
                     
 
-        with open(os.path.join('/tmp/AW_rhr.csv') , "w") as rhrFile:
+        with open(os.path.join('/tmp/AW_rhr.csv') , "wb") as rhrFile:
             rhrFile.write("Device,Start_Date,Start_Time,Value")
-            with open(os.path.join("/tmp/tmp.csv") , "r") as hrCSV:
+            with open(os.path.join("/tmp/tmp.csv") , "wb") as hrCSV:
                 hrCSVReader = csv.DictReader(hrCSV)
                 for hr_rec in hrCSVReader:
                         hr_start_date = hr_rec['Start_Date']
@@ -320,7 +320,7 @@ def getScore(heartrate_file, step_file):
                         rhrFile.write(device + "," + hr_start_date + "," + hr_start_time + "," + hr_value + "\n")
 
 
-        with open(os.path.join('/tmp/tmp.csv'), "r") as hrFile:
+        with open(os.path.join('/tmp/tmp.csv'), "wb") as hrFile:
             records = hrFile.readlines()
 
         date_hrs_dic = {}
@@ -435,7 +435,7 @@ def getScore(heartrate_file, step_file):
         red_alert_dates = []
         dates_array = []
         try:
-            with open(os.path.join("/tmp/potenital_reds.csv"), "r") as my_file:
+            with open(os.path.join("/tmp/potenital_reds.csv"), "wb") as my_file:
                 for line in my_file:
                     dates_array.append(line.strip(' \t\n\r'))
             track = []
@@ -459,7 +459,7 @@ def getScore(heartrate_file, step_file):
         yellow_alert_dates = []
         dates_array = []
         try:
-            with open(os.path.join("/tmp/potenital_yellows.csv"), "r") as my_file:
+            with open(os.path.join("/tmp/potenital_yellows.csv"), "wb") as my_file:
                 for line in my_file:
                     dates_array.append(line.strip(' \t\n\r'))
             track = []
