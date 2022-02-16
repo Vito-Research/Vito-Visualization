@@ -618,8 +618,10 @@ def getScore(heartrate_file, step_file):
                 except:
                     print()
         sorted_res = sorted(red_alerts_dic.items())
+        
         if(len(red_alerts_dic)!=0):
             for key in red_alerts_dic:
+
                 plt.axvline(x=key , linestyle='-' , color='red' , linewidth=1)
             x, y = zip(*sorted_res)
             plt.plot(x, y , color='white' , marker='o' , linestyle='' , markersize=3.5 , markerfacecolor='red' , markeredgecolor='red' , label="Red alert")
