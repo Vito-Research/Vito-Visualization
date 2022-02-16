@@ -669,5 +669,5 @@ def getScore(heartrate_file, step_file):
         figure = plt.gcf()
         figure.set_size_inches(16, 2.5)
 
-        plt.savefig(os.path.join("NightSignalResult" +'.pdf'), dpi=300, bbox_inches = "tight")
+        plt.savefig(os.path.join("/tmp/NightSignalResult" +'.pdf'), dpi=300, bbox_inches = "tight")
         plt.close()

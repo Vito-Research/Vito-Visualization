@@ -258,7 +258,7 @@ def analyze():
         st.download_button(
             "Download Alert Statistics",
             df_merged.to_csv(line_terminator="\r\n", index=False),
-            file_name=os.path.join("NightSignalResult" +'.pdf'),
+            file_name=os.path.join("/tmp/NightSignalResult" +'.pdf'),
             on_click=st.balloons,
         )
         with st.expander("See full data"):
