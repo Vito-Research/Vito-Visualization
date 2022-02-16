@@ -224,7 +224,7 @@ def getScore(heartrate_file, step_file):
         yellow_alert_dates = []
         dates_array = []
         try:
-            with open(os.path.join("tmp/potenital_yellows.csv") , "wb") as my_file:
+            with open(os.path.join("/tmp/potenital_yellows.csv") , "wb") as my_file:
                 for line in my_file:
                     dates_array.append(line.strip(' \t\n\r'))
             track = []

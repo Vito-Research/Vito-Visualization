@@ -75,7 +75,7 @@ def analyze():
         
 
         time.sleep(5)
-        f = open(os.path.join('/tmp/NS-signals.json'),)
+        f = open(os.path.join('tmp/NS-signals.json'),)
     
     # returns JSON object as
     # a dictionary
