@@ -255,7 +255,7 @@ def analyze():
         st.table(df_merged)
         df_merged.to_csv(os.path.join("/tmp/Vito_Alert_Statistics.csv"))
         #st.table(incorrect)
-        with open(os.path.join("/tmp/NightSignalResult" +'.pdf'), "rb") as file:
+        with open(os.path.join("/tmp/Vito_Alert_Statistics.csv"), "rb") as file:
             st.download_button(
                 "Download Alert Statistics",
                 file,
