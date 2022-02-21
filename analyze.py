@@ -24,7 +24,7 @@ def analyze():
     RiskFileName = ""
    # RiskFile = st.file_uploader("Upload Risk Data", type=("csv"))
 
-    def processData(HRFile):
+    def processData():
         df = pd.DataFrame()
         df = pd.read_csv(HRFile)
         df.to_csv(os.path.join("/tmp/tmp.csv"))
