@@ -2,6 +2,7 @@ import glob, os, getopt, sys
 import csv, json
 from os import walk
 import statistics
+from unittest import expectedFailure
 import pandas as pd
 import numpy as np
 import matplotlib.pylab as plt
@@ -279,45 +280,45 @@ def getScore(heartrate_file, step_file):
     else:
 
         ###Preprocess to get resting heartrate
-        delta = datetime.timedelta(hours=1)
+        # delta = datetime.timedelta(hours=1)
 
-        dateTimes = {}
-        with open(os.path.join("/tmp/tmp2.csv")  , "r") as stepCSV:
-            stepCSVReader = csv.DictReader(stepCSV)
-            for step_rec in stepCSVReader:
+        # dateTimes = {}
+        # with open(os.path.join("/tmp/tmp2.csv")  , "r") as stepCSV:
+        #     stepCSVReader = csv.DictReader(stepCSV)
+        #     for step_rec in stepCSVReader:
                 
-                    st_start_date = step_rec['Start_Date']
-                    st_start_time = step_rec['Start_Time']
-                    st_end_date = step_rec['End_Date']
-                    st_end_time = step_rec['End_Time']
-                    #We need to add handler for the other one
-                    if(st_start_date == st_end_date):
-                        start = datetime.datetime.strptime( st_start_time, '%H:%M:%S' )
-                        end = datetime.datetime.strptime( st_end_time, '%H:%M:%S' )
-                        t = start
-                        while t <= end :
-                            tempArray = []
-                            if(st_start_date in dateTimes):
-                                tempArray = dateTimes[st_start_date]
-                            tempArray.append(datetime.datetime.strftime(t, '%H:%M'))
-                            dateTimes[st_start_date] = tempArray
-                            t += delta
+        #             st_start_date = step_rec['Start_Date']
+        #             st_start_time = step_rec['Start_Time']
+        #             st_end_date = step_rec['End_Date']
+        #             st_end_time = step_rec['End_Time']
+        #             #We need to add handler for the other one
+        #             if(st_start_date == st_end_date):
+        #                 start = datetime.datetime.strptime( st_start_time, '%H:%M:%S' )
+        #                 end = datetime.datetime.strptime( st_end_time, '%H:%M:%S' )
+        #                 t = start
+        #                 while t <= end :
+        #                     tempArray = []
+        #                     if(st_start_date in dateTimes):
+        #                         tempArray = dateTimes[st_start_date]
+        #                     tempArray.append(datetime.datetime.strftime(t, '%H:%M'))
+        #                     dateTimes[st_start_date] = tempArray
+        #                     t += delta
 
                     
 
-        with open(os.path.join('/tmp/AW_rhr.csv') , "w") as rhrFile:
-            rhrFile.write("Device,Start_Date,Start_Time,Value")
-            with open(os.path.join("/tmp/tmp.csv") , "r") as hrCSV:
-                hrCSVReader = csv.DictReader(hrCSV)
-                for hr_rec in hrCSVReader:
-                        hr_start_date = hr_rec['Start_Date']
-                        hr_start_time = hr_rec['Start_Time']
-                        hr_value = hr_rec['Heartrate']
-                        # if (hr_start_date in dateTimes):
-                        #     arrayForThisDay = dateTimes[hr_start_date]
-                        #     hr_time  = datetime.datetime.strptime( hr_start_time, '%H:%M:%S' )
-                        #     if ( datetime.datetime.strftime(hr_time, '%H:%M') not in arrayForThisDay):
-                        rhrFile.write(device + "," + hr_start_date + "," + hr_start_time + "," + hr_value + "\n")
+        # with open(os.path.join('/tmp/AW_rhr.csv') , "w") as rhrFile:
+        #     rhrFile.write("Device,Start_Date,Start_Time,Value")
+        #     with open(os.path.join("/tmp/tmp.csv") , "r") as hrCSV:
+        #         hrCSVReader = csv.DictReader(hrCSV)
+        #         for hr_rec in hrCSVReader:
+        #                 hr_start_date = hr_rec['Start_Date']
+        #                 hr_start_time = hr_rec['Start_Time']
+        #                 hr_value = hr_rec['Heartrate']
+        #                 # if (hr_start_date in dateTimes):
+        #                 #     arrayForThisDay = dateTimes[hr_start_date]
+        #                 #     hr_time  = datetime.datetime.strptime( hr_start_time, '%H:%M:%S' )
+        #                 #     if ( datetime.datetime.strftime(hr_time, '%H:%M') not in arrayForThisDay):
+        #                 rhrFile.write(device + "," + hr_start_date + "," + hr_start_time + "," + hr_value + "\n")
 
 
         with open(os.path.join('/tmp/tmp.csv'), "r") as hrFile:
@@ -330,11 +331,11 @@ def getScore(heartrate_file, step_file):
                 rec_date = record_elements[1]
                 rec_time = record_elements[2]
                 rec_hr = record_elements[3].strip(' \t\n\r')
-                if ((rec_time.startswith("00:")) or (rec_time.startswith("01:")) or (rec_time.startswith("02:")) or (rec_time.startswith("03:")) or (rec_time.startswith("04:")) or (rec_time.startswith("05:")) or (rec_time.startswith("06:"))):
-                    if (rec_date not in date_hrs_dic):
-                        date_hrs_dic[rec_date] = rec_hr
-                    else:
-                        date_hrs_dic[rec_date] = date_hrs_dic[rec_date] + "*" + rec_hr
+                #if ((rec_time.startswith("00:")) or (rec_time.startswith("01:")) or (rec_time.startswith("02:")) or (rec_time.startswith("03:")) or (rec_time.startswith("04:")) or (rec_time.startswith("05:")) or (rec_time.startswith("06:"))):
+                if (rec_date not in date_hrs_dic):
+                    date_hrs_dic[rec_date] = rec_hr
+                else:
+                    date_hrs_dic[rec_date] = date_hrs_dic[rec_date] + "*" + rec_hr
 
         ###Calculate AVGs , Imputation, Healthy baseline Median, and Alerts
         date_hr_avgs_dic = {}
@@ -344,7 +345,11 @@ def getScore(heartrate_file, step_file):
             numOfHRs = str(temp).count("*") + 1
             hrs = temp.split("*")
             for hr in hrs:
-                AVGHR = AVGHR + int(float(hr))
+                #st.write(hr)
+                try:
+                    AVGHR = AVGHR + int(float(hr))
+                except:
+                    print()
             AVGHR = int(AVGHR/numOfHRs)
             date_hr_avgs_dic[key] = AVGHR
 
@@ -353,12 +358,18 @@ def getScore(heartrate_file, step_file):
         sorted_avgs = sorted(date_hr_avgs_dic.items())
         for i,v in enumerate(sorted_keys):
             if(i!=0 and i!=len(sorted_keys)-1):
-                today = datetime.datetime.strptime(sorted_keys[i] , "%Y-%m-%d")
-                nextDay = datetime.datetime.strptime(sorted_keys[i+1] , "%Y-%m-%d")
-                prevDay = datetime.datetime.strptime(sorted_keys[i-1] , "%Y-%m-%d")
+                try:
+                    today = datetime.datetime.strptime(sorted_keys[i] , "%Y-%m-%d")
+                    nextDay = datetime.datetime.strptime(sorted_keys[i+1] , "%Y-%m-%d")
+                    prevDay = datetime.datetime.strptime(sorted_keys[i-1] , "%Y-%m-%d")
+                except:
+                    print()
                 if ( (nextDay-today).days==1 and (today-prevDay).days==2):
                     missDate = today - datetime.timedelta(days=1)
-                    missed_days_avg_dic[missDate.strftime("%Y-%m-%d")] = round((date_hr_avgs_dic[sorted_keys[i]] + date_hr_avgs_dic[sorted_keys[i-1]])/2 , 1)
+                    try:
+                        missed_days_avg_dic[missDate.strftime("%Y-%m-%d")] = round((date_hr_avgs_dic[sorted_keys[i]] + date_hr_avgs_dic[sorted_keys[i-1]])/2 , 1)
+                    except:
+                        print()
         for key in missed_days_avg_dic:
             if key not in date_hr_avgs_dic:
                 date_hr_avgs_dic[key] = missed_days_avg_dic[key]
@@ -495,7 +506,7 @@ def getScore(heartrate_file, step_file):
             alertsDic[key] = "2"
             red_alerted.append(key)
         for key in yellow_alert_dates:
-            alertsDic[key] = "1"
+            alertsDic[key] = "0"
             yellow_alerted.append(key)
         for key in date_hr_avgs_dic:
             if (key not in red_alerted) and (key not in yellow_alerted):
@@ -521,6 +532,7 @@ def getScore(heartrate_file, step_file):
         min = 300
         max = 0
         for key in date_hr_avgs_dic:
+         try:
             date_time_obj = datetime.datetime.strptime(key, '%Y-%m-%d')
             haveData.append(date_time_obj)
             allX.append(key)
@@ -529,6 +541,8 @@ def getScore(heartrate_file, step_file):
                 min = int(date_hr_avgs_dic[key])
             if(int(date_hr_avgs_dic[key])>max):
                 max = int(date_hr_avgs_dic[key])
+         except:
+             print()
 
         date_set = set(haveData[0] + timedelta(x) for x in range((haveData[-1] - haveData[0]).days))
         missings = sorted(date_set - set(haveData))

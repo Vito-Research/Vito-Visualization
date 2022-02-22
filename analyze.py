@@ -13,7 +13,12 @@ def add_blank_rows(df, no_rows):
         for _ in range(no_rows):
             df_new=df_new.append(pd.Series(), ignore_index=True)
     return df_new
+
 def analyze():
+    
+    nsTotal = { 'nsTotal': 0 }
+    vitoTotal = { 'vitoTotal': 0 }
+  
     st.header("Add Your File")
 
     HRFile = st.file_uploader("Upload Heartrate Data", type=("csv"))
@@ -23,8 +28,9 @@ def analyze():
     HRFileName = ""
     RiskFileName = ""
    # RiskFile = st.file_uploader("Upload Risk Data", type=("csv"))
-
-    def processData():
+    
+    def processData(HRFile):
+        
         df = pd.DataFrame()
         df = pd.read_csv(HRFile)
         df.to_csv(os.path.join("/tmp/tmp.csv"))
@@ -115,9 +121,9 @@ def analyze():
                 #st.write(allDates[i][:7])
                 targetDates = []
                 for date in df["Start_Date"]:
-                    targetDates.append(date[:7])
+                    targetDates.append(date)
                 #st.write(df["Start_Date"][:7])
-                if allDates[i][:7] in targetDates:
+                if allDates[i] in targetDates:
                     newDates.append(allDates[i])
                     newAlerts.append(allAlertVals[i])
            
@@ -178,7 +184,9 @@ def analyze():
         nsCount = df_merged[df_merged["Risk_y"] == 1].shape[0]
         col1, col2 = st.columns(2)
         col1.subheader("Vito Alerts: " + str(vitoCount)) 
+        vitoTotal["vitoTotal"] += vitoCount
         col2.subheader("NightSignal Alerts: " + str(nsCount)) 
+        nsTotal["nsTotal"] += nsCount
         if nsAlertCount == vitoAlertCount:
             st.balloons()
             st.success("ALGORITHMS MATCH!!!!!!!!")
@@ -252,7 +260,7 @@ def analyze():
         col1, col2 = st.columns(2)
         # col1.table(df)
         # col2.table(df2) 
-        st.table(df_merged)
+        #st.table(df_merged)
         df_merged.to_csv(os.path.join("/tmp/Vito_Alert_Statistics.csv"))
         #st.table(incorrect)
         with open(os.path.join("/tmp/Vito_Alert_Statistics.csv"), "rb") as file:
@@ -267,7 +275,7 @@ def analyze():
             #df_merged = df.append(df2)
             st.table(df_merged)
         #st.header("Conflicting Scores")
-        col1, col2 = st.columns(2)
+        
 
         df = DataFrame()
         df.insert(0, "Start_Date_Risk", allDates, True)
@@ -275,7 +283,7 @@ def analyze():
     
         # col1.table(df2)
         # col2.table(alerts)
-
+        
 
     def file_selector(folder_path='./sample_data/', type="Health"):
         folder_path = folder_path + type
@@ -286,17 +294,38 @@ def analyze():
                 csvFiles.append(file)
         selected_filename = st.selectbox('Select ' + type, csvFiles)
         return os.path.join(folder_path, selected_filename)
+    def processAll(folder_path='./sample_data/', type="Health2"):
+        folder_path = folder_path + type
+        filenames = os.listdir(folder_path)
+        csvFiles = []
+        for file in filenames:
+            if "csv" in file:
+                
+                try:
+                    processData(os.path.join(folder_path, file))
+                except:
+                    print()
+                # except:
+                #     print(file)
+                
+       
+        
 
 
-    if HRFile is None:
-        st.header("Or Select A File")
-        HRFileName = file_selector(type="Health")
-        #RiskFileName = file_selector(type="Risk")
-        #st.write('HR File `%s`' % HRFileName)
-        if HRFileName:
-            processData(HRFileName)
+    # if HRFile is None:
+    #     st.header("Or Select A File")
+    #     HRFileName = file_selector(type="Health")
+    #     #RiskFileName = file_selector(type="Risk")
+    #     #st.write('HR File `%s`' % HRFileName)
+    #     if HRFileName:
+    #         processData(os.path.join(HRFileName))
+    
+    processAll()
+    col1, col2 = st.columns(2)
+
+    col1.subheader("Vito Alerts: " + str(vitoTotal)) 
             
-
+    col2.subheader("NightSignal Alerts: " + str(nsTotal)) 
         
         #st.write('Risk File `%s`' % RiskFileName)
         
@@ -308,7 +337,7 @@ def analyze():
 
                 
 
-    if HRFile:
-        processData(HRFile)
+    # if HRFile:
+    #     processData(HRFile)
 
     
