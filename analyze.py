@@ -159,7 +159,7 @@ def analyze():
         df["Start_Date"] = pd.to_datetime(df["Start_Date"])
         df2["Start_Date"] = pd.to_datetime(df2["Start_Date"])
         # df2["Start_Date_Risk"] = pd.to_datetime(df2["Start_Date_Risk"])
-        df_merged = pd.merge(df, df2, how='outer', on ="Start_Date")
+        df_merged = pd.merge(df, df2, how='inner', on ="Start_Date")
         df_merged = df_merged.dropna() 
         #df_merged = pd.merge(df, df2, right_on= "Start_Date", left_on="Start_Date")
        # df_merged = df_merged.drop('Start_Time_Risk', 1)
