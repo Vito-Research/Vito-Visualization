@@ -512,7 +512,7 @@ def getScore(heartrate_file, step_file):
             if (key not in red_alerted) and (key not in yellow_alerted):
                 alertsDic[key] = "0"
         sorted_alerts = collections.OrderedDict(sorted(alertsDic.items()))
-        for key in alertsDic:
+        for key in sorted_alerts:
             alerts['nightsignal'].append({"date": key, "val": str(sorted_alerts[key])})
         with open(os.path.join("/tmp/NS-signals.json"), "w+") as out_file:
             json.dump(alerts, out_file)
