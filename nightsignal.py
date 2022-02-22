@@ -345,7 +345,7 @@ def getScore(heartrate_file, step_file):
             numOfHRs = str(temp).count("*") + 1
             hrs = temp.split("*")
             for hr in hrs:
-                st.write(hr)
+                #st.write(hr)
                 try:
                     AVGHR = (float(hr))
                 except:
@@ -512,7 +512,7 @@ def getScore(heartrate_file, step_file):
             if (key not in red_alerted) and (key not in yellow_alerted):
                 alertsDic[key] = "0"
         sorted_alerts = collections.OrderedDict(sorted(alertsDic.items()))
-        for key in sorted_alerts:
+        for key in alertsDic:
             alerts['nightsignal'].append({"date": key, "val": str(sorted_alerts[key])})
         with open(os.path.join("/tmp/NS-signals.json"), "w+") as out_file:
             json.dump(alerts, out_file)
@@ -520,170 +520,170 @@ def getScore(heartrate_file, step_file):
 
 
     #################################  Plot  #################################
-    print("Plotting...")
+    # print("Plotting...")
 
-    figure = plt.gcf()
-    ax = plt.gca()
-
-
-    if (len(date_hr_avgs_dic.keys())>1):
-        haveData = []
-        allX = []
-        min = 300
-        max = 0
-        for key in date_hr_avgs_dic:
-         try:
-            date_time_obj = datetime.datetime.strptime(key, '%Y-%m-%d')
-            haveData.append(date_time_obj)
-            allX.append(key)
-            allX_value = date_hr_avgs_dic[key]
-            if(int(date_hr_avgs_dic[key])<min):
-                min = int(date_hr_avgs_dic[key])
-            if(int(date_hr_avgs_dic[key])>max):
-                max = int(date_hr_avgs_dic[key])
-         except:
-             print()
-
-        date_set = set(haveData[0] + timedelta(x) for x in range((haveData[-1] - haveData[0]).days))
-        missings = sorted(date_set - set(haveData))
-
-        for missedDate in missings:
-            allX.append(missedDate.strftime("%Y-%m-%d"))
-
-        sorted_allX = sorted(allX)
-        plt.plot(sorted_allX, range(len(sorted_allX)) , color='white')
-
-        #plot average rhr per night
-        sorted_res = sorted(date_hr_avgs_dic.items())
-        x, y = zip(*sorted_res)
-        plt.plot(x, y , color='black' ,  marker='o' ,  markersize=2.5 , linewidth=1.5, label="Avg RHR over night")
-
-        #plot average rhr per night for missing nights
-        sorted_res = sorted(missed_days_avg_dic.items())
-        if(len(missed_days_avg_dic)!=0):
-            x, y = zip(*sorted_res)
-            plt.plot(x, y , color='white' , marker='o' , linestyle='' , markersize=3 , markerfacecolor='gray' , markeredgecolor='gray' , label="Imputed Avg RHR \n over night")
-
-        #plot median rhr per night
-        sorted_res = sorted(date_hr_meds_dic.items())
-        x, y = zip(*sorted_res)
-        plt.plot(x, y , color='green' , linewidth=1.5 , linestyle='dashed', label="Med RHR over night")
-
-        #plot yellow threshold
-        date_hr_meds_dic_plus2 = {}
-        for key in date_hr_meds_dic:
-            date_hr_meds_dic_plus2[key] = date_hr_meds_dic[key] + yellow_threshold
-        sorted_res = sorted(date_hr_meds_dic_plus2.items())
-        x, y = zip(*sorted_res)
-        plt.plot(x, y , color='yellow' , linewidth=1 , linestyle='dashed', label="Med RHR over night + 3")
+    # figure = plt.gcf()
+    # ax = plt.gca()
 
 
-        #plot red threshold
-        date_hr_meds_dic_plus3 = {}
-        for key in date_hr_meds_dic:
-            date_hr_meds_dic_plus3[key] = date_hr_meds_dic[key] + red_threshold
-        sorted_res = sorted(date_hr_meds_dic_plus3.items())
-        x, y = zip(*sorted_res)
-        plt.plot(x, y , color='red' , linewidth=1 , linestyle='dashed', label="Med RHR over night + 4")
+    # if (len(date_hr_avgs_dic.keys())>1):
+    #     haveData = []
+    #     allX = []
+    #     min = 300
+    #     max = 0
+    #     for key in date_hr_avgs_dic:
+    #      try:
+    #         date_time_obj = datetime.datetime.strptime(key, '%Y-%m-%d')
+    #         haveData.append(date_time_obj)
+    #         allX.append(key)
+    #         allX_value = date_hr_avgs_dic[key]
+    #         if(int(date_hr_avgs_dic[key])<min):
+    #             min = int(date_hr_avgs_dic[key])
+    #         if(int(date_hr_avgs_dic[key])>max):
+    #             max = int(date_hr_avgs_dic[key])
+    #      except:
+    #          print()
+
+    #     date_set = set(haveData[0] + timedelta(x) for x in range((haveData[-1] - haveData[0]).days))
+    #     missings = sorted(date_set - set(haveData))
+
+    #     for missedDate in missings:
+    #         allX.append(missedDate.strftime("%Y-%m-%d"))
+
+    #     sorted_allX = sorted(allX)
+    #     plt.plot(sorted_allX, range(len(sorted_allX)) , color='white')
+
+    #     #plot average rhr per night
+    #     sorted_res = sorted(date_hr_avgs_dic.items())
+    #     x, y = zip(*sorted_res)
+    #     plt.plot(x, y , color='black' ,  marker='o' ,  markersize=2.5 , linewidth=1.5, label="Avg RHR over night")
+
+    #     #plot average rhr per night for missing nights
+    #     sorted_res = sorted(missed_days_avg_dic.items())
+    #     if(len(missed_days_avg_dic)!=0):
+    #         x, y = zip(*sorted_res)
+    #         plt.plot(x, y , color='white' , marker='o' , linestyle='' , markersize=3 , markerfacecolor='gray' , markeredgecolor='gray' , label="Imputed Avg RHR \n over night")
+
+    #     #plot median rhr per night
+    #     sorted_res = sorted(date_hr_meds_dic.items())
+    #     x, y = zip(*sorted_res)
+    #     plt.plot(x, y , color='green' , linewidth=1.5 , linestyle='dashed', label="Med RHR over night")
+
+    #     #plot yellow threshold
+    #     date_hr_meds_dic_plus2 = {}
+    #     for key in date_hr_meds_dic:
+    #         date_hr_meds_dic_plus2[key] = date_hr_meds_dic[key] + yellow_threshold
+    #     sorted_res = sorted(date_hr_meds_dic_plus2.items())
+    #     x, y = zip(*sorted_res)
+    #     plt.plot(x, y , color='yellow' , linewidth=1 , linestyle='dashed', label="Med RHR over night + 3")
 
 
-        #find consecutive red and yellow days
-        red_and_yellow_alert_dates = []
-        for d1 in red_alert_dates:
-                red_and_yellow_alert_dates.append(d1)
-        for d2 in yellow_alert_dates:
-            if d2 not in red_and_yellow_alert_dates:
-                red_and_yellow_alert_dates.append(d2)
-        sorted_red_and_yellow_alert_dates = sorted(red_and_yellow_alert_dates)
-
-        clustered_alerts = {}
-        cluster_counter = 0
-        for g in consecutive_groups(sorted_red_and_yellow_alert_dates, lambda x: datetime.datetime.strptime(x, '%Y-%m-%d').toordinal()):
-            temp = list(g)
-            if(len(temp)>=3):
-                clustered_alerts[str(cluster_counter)] = temp
-                cluster_counter = cluster_counter + 1
-
-        #handle one label for all clustered alerts
-        haveClustered = 0
-        for key in clustered_alerts:
-                clustered_alerts_dic = {}
-                for d in clustered_alerts[key]:
-                    try:
-                        clustered_alerts_dic[d] = date_hr_avgs_dic[d]
-                    except:
-                        print()
-                sorted_res = sorted(clustered_alerts_dic.items())
-                if(len(clustered_alerts_dic)!=0):
-                    if(haveClustered==1):
-                        x, y = zip(*sorted_res)
-                        plt.plot(x, y , color='salmon' , linestyle='-' , linewidth=3)
-                    else:
-                        haveClustered = 1
-                        x, y = zip(*sorted_res)
-                        plt.plot(x, y , color='salmon' , linestyle='-' , linewidth=3 , label="Clustered alerts \n (>3 consecutive alerts)" )
+    #     #plot red threshold
+    #     date_hr_meds_dic_plus3 = {}
+    #     for key in date_hr_meds_dic:
+    #         date_hr_meds_dic_plus3[key] = date_hr_meds_dic[key] + red_threshold
+    #     sorted_res = sorted(date_hr_meds_dic_plus3.items())
+    #     x, y = zip(*sorted_res)
+    #     plt.plot(x, y , color='red' , linewidth=1 , linestyle='dashed', label="Med RHR over night + 4")
 
 
-        #plot red alerts
-        red_alerts_dic = {}
-        for d in red_alert_dates:
-                try:
-                    red_alerts_dic[d] = date_hr_avgs_dic[d]
-                except:
-                    print()
-        sorted_res = sorted(red_alerts_dic.items())
+    #     #find consecutive red and yellow days
+    #     red_and_yellow_alert_dates = []
+    #     for d1 in red_alert_dates:
+    #             red_and_yellow_alert_dates.append(d1)
+    #     for d2 in yellow_alert_dates:
+    #         if d2 not in red_and_yellow_alert_dates:
+    #             red_and_yellow_alert_dates.append(d2)
+    #     sorted_red_and_yellow_alert_dates = sorted(red_and_yellow_alert_dates)
+
+    #     clustered_alerts = {}
+    #     cluster_counter = 0
+    #     for g in consecutive_groups(sorted_red_and_yellow_alert_dates, lambda x: datetime.datetime.strptime(x, '%Y-%m-%d').toordinal()):
+    #         temp = list(g)
+    #         if(len(temp)>=3):
+    #             clustered_alerts[str(cluster_counter)] = temp
+    #             cluster_counter = cluster_counter + 1
+
+    #     #handle one label for all clustered alerts
+    #     haveClustered = 0
+    #     for key in clustered_alerts:
+    #             clustered_alerts_dic = {}
+    #             for d in clustered_alerts[key]:
+    #                 try:
+    #                     clustered_alerts_dic[d] = date_hr_avgs_dic[d]
+    #                 except:
+    #                     print()
+    #             sorted_res = sorted(clustered_alerts_dic.items())
+    #             if(len(clustered_alerts_dic)!=0):
+    #                 if(haveClustered==1):
+    #                     x, y = zip(*sorted_res)
+    #                     plt.plot(x, y , color='salmon' , linestyle='-' , linewidth=3)
+    #                 else:
+    #                     haveClustered = 1
+    #                     x, y = zip(*sorted_res)
+    #                     plt.plot(x, y , color='salmon' , linestyle='-' , linewidth=3 , label="Clustered alerts \n (>3 consecutive alerts)" )
+
+
+    #     #plot red alerts
+    #     red_alerts_dic = {}
+    #     for d in red_alert_dates:
+    #             try:
+    #                 red_alerts_dic[d] = date_hr_avgs_dic[d]
+    #             except:
+    #                 print()
+    #     sorted_res = sorted(red_alerts_dic.items())
         
-        if(len(red_alerts_dic)!=0):
-            for key in red_alerts_dic:
+    #     if(len(red_alerts_dic)!=0):
+    #         for key in red_alerts_dic:
 
-                plt.axvline(x=key , linestyle='-' , color='red' , linewidth=1)
-            x, y = zip(*sorted_res)
-            plt.plot(x, y , color='white' , marker='o' , linestyle='' , markersize=3.5 , markerfacecolor='red' , markeredgecolor='red' , label="Red alert")
-
-
-        #plot yellow alerts
-        yellow_alerts_dic = {}
-        for d in yellow_alert_dates:
-            try:
-                yellow_alerts_dic[d] = date_hr_avgs_dic[d]
-            except:
-                print()
-        sorted_res = sorted(yellow_alerts_dic.items())
-        if(len(yellow_alerts_dic)!=0):
-            for key in yellow_alerts_dic:
-                plt.axvline(x=key , linestyle='-' , color='orange' , linewidth=1)
-            x, y = zip(*sorted_res)
-            plt.plot(x, y , color='white' , marker='o' , linestyle='' , markersize=3.5 , markerfacecolor='yellow' , markeredgecolor='yellow', label="Yellow alert")
+    #             plt.axvline(x=key , linestyle='-' , color='red' , linewidth=1)
+    #         x, y = zip(*sorted_res)
+    #         plt.plot(x, y , color='white' , marker='o' , linestyle='' , markersize=3.5 , markerfacecolor='red' , markeredgecolor='red' , label="Red alert")
 
 
-        #Title & Symptom Onset & Save plot
-        plt.xticks(rotation=90)
-        plt.ylim(int(min-1), int(max+1))
-        h = plt.ylabel('Resting\n heart rate\n over night' , fontsize=12)
-        plt.xlabel('    Day' , fontsize=12)
-        h.set_rotation(90)
-        plt.yticks(np.arange(round10Base(min), round10Base(max), 10))
+    #     #plot yellow alerts
+    #     yellow_alerts_dic = {}
+    #     for d in yellow_alert_dates:
+    #         try:
+    #             yellow_alerts_dic[d] = date_hr_avgs_dic[d]
+    #         except:
+    #             print()
+    #     sorted_res = sorted(yellow_alerts_dic.items())
+    #     if(len(yellow_alerts_dic)!=0):
+    #         for key in yellow_alerts_dic:
+    #             plt.axvline(x=key , linestyle='-' , color='orange' , linewidth=1)
+    #         x, y = zip(*sorted_res)
+    #         plt.plot(x, y , color='white' , marker='o' , linestyle='' , markersize=3.5 , markerfacecolor='yellow' , markeredgecolor='yellow', label="Yellow alert")
 
-        for index, label in enumerate(ax.xaxis.get_ticklabels()):
-                if index % 3 == 0 :
-                    label.set_visible(True)
-                else :
-                    label.set_visible(False)
 
-        #uncomment for legend
-        #lgd = ax.legend(prop={'size': 8.5}, bbox_to_anchor= (1.0, 1.0), loc="upper left", frameon=False)
-        plt.grid(False)
-        ax.spines["bottom"].set_color('black')
-        ax.spines["bottom"].set_linewidth(1.5)
-        ax.spines["top"].set_color('black')
-        ax.spines["top"].set_linewidth(1.5)
-        ax.spines["right"].set_color('black')
-        ax.spines["right"].set_linewidth(1.5)
-        ax.spines["left"].set_color('black')
-        ax.spines["left"].set_linewidth(1.5)
+    #     #Title & Symptom Onset & Save plot
+    #     plt.xticks(rotation=90)
+    #     plt.ylim(int(min-1), int(max+1))
+    #     h = plt.ylabel('Resting\n heart rate\n over night' , fontsize=12)
+    #     plt.xlabel('    Day' , fontsize=12)
+    #     h.set_rotation(90)
+    #     plt.yticks(np.arange(round10Base(min), round10Base(max), 10))
 
-        figure = plt.gcf()
-        figure.set_size_inches(16, 2.5)
+    #     for index, label in enumerate(ax.xaxis.get_ticklabels()):
+    #             if index % 3 == 0 :
+    #                 label.set_visible(True)
+    #             else :
+    #                 label.set_visible(False)
 
-        plt.savefig(os.path.join("/tmp/NightSignalResult" +'.pdf'), dpi=300, bbox_inches = "tight")
-        plt.close()
+    #     #uncomment for legend
+    #     #lgd = ax.legend(prop={'size': 8.5}, bbox_to_anchor= (1.0, 1.0), loc="upper left", frameon=False)
+    #     plt.grid(False)
+    #     ax.spines["bottom"].set_color('black')
+    #     ax.spines["bottom"].set_linewidth(1.5)
+    #     ax.spines["top"].set_color('black')
+    #     ax.spines["top"].set_linewidth(1.5)
+    #     ax.spines["right"].set_color('black')
+    #     ax.spines["right"].set_linewidth(1.5)
+    #     ax.spines["left"].set_color('black')
+    #     ax.spines["left"].set_linewidth(1.5)
+
+    #     figure = plt.gcf()
+    #     figure.set_size_inches(16, 2.5)
+
+    #     plt.savefig(os.path.join("/tmp/NightSignalResult" +'.pdf'), dpi=300, bbox_inches = "tight")
+    #     plt.close()
