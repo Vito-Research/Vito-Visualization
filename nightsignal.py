@@ -332,10 +332,10 @@ def getScore(heartrate_file, step_file):
                 rec_time = record_elements[2]
                 rec_hr = record_elements[3].strip(' \t\n\r')
                 #if ((rec_time.startswith("00:")) or (rec_time.startswith("01:")) or (rec_time.startswith("02:")) or (rec_time.startswith("03:")) or (rec_time.startswith("04:")) or (rec_time.startswith("05:")) or (rec_time.startswith("06:"))):
-                if (rec_date not in date_hrs_dic):
-                    date_hrs_dic[rec_date] = rec_hr
-                else:
-                    date_hrs_dic[rec_date] = date_hrs_dic[rec_date] + "*" + rec_hr
+                #if (rec_date not in date_hrs_dic):
+                date_hrs_dic[rec_date] = rec_hr
+                # else:
+                #     date_hrs_dic[rec_date] = date_hrs_dic[rec_date] + "*" + rec_hr
 
         ###Calculate AVGs , Imputation, Healthy baseline Median, and Alerts
         date_hr_avgs_dic = {}
@@ -345,14 +345,14 @@ def getScore(heartrate_file, step_file):
             numOfHRs = str(temp).count("*") + 1
             hrs = temp.split("*")
             for hr in hrs:
-                #st.write(hr)
+                st.write(hr)
                 try:
-                    AVGHR = AVGHR + int(float(hr))
+                    AVGHR = (float(hr))
                 except:
                     print()
-            AVGHR = int(AVGHR/numOfHRs)
+            #AVGHR = int(AVGHR/numOfHRs)
             date_hr_avgs_dic[key] = AVGHR
-
+        
         missed_days_avg_dic = {}
         sorted_keys = sorted(date_hr_avgs_dic.keys())
         sorted_avgs = sorted(date_hr_avgs_dic.items())
