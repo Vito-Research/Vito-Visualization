@@ -162,7 +162,7 @@ def analyze():
         df_merged = pd.merge(df, df2, how='inner', on ="Start_Date")
         df = df.set_index("Start_Date")
         df2 = df2.set_index("Start_Date")
-        
+    
         #df_merged = pd.concat([df, df2], axis=0)
         #st.table(df_merged)
         df_merged = df_merged.dropna() 
@@ -199,70 +199,70 @@ def analyze():
         else:
             st.write("")
         #df = add_blank_rows(df, count)
-        df["Start_Date"] = pd.to_datetime(df["Start_Date"])
-        df2["Start_Date"] = pd.to_datetime(df2["Start_Date"])
-        # st.table(df)
-        # st.table(df2)
-        # for i in range(df2.shape[0]):
-        #     if df2.Start_Date[i] not in df.Start_Date:
+        # df["Start_Date"] = pd.to_datetime(df["Start_Date"])
+        # df2["Start_Date"] = pd.to_datetime(df2["Start_Date"])
+        # # st.table(df)
+        # # st.table(df2)
+        # # for i in range(df2.shape[0]):
+        # #     if df2.Start_Date[i] not in df.Start_Date:
 
-        #         df1 = pd.DataFrame([[np.nan] * len(df.columns)], columns=df.columns)
-        #         df.loc[i] = df1.loc[0]
-        # ne = (df1 != df2).any(1)
-        df.append(df2)
+        # #         df1 = pd.DataFrame([[np.nan] * len(df.columns)], columns=df.columns)
+        # #         df.loc[i] = df1.loc[0]
+        # # ne = (df1 != df2).any(1)
+        # df.append(df2)
         
  
-        # df_merge = df.groupby("Start_Date")
-        # df_merged = pd.DataFrame().append(df_merge.first())
-        # df_merged.append(df_merge.last())
-        # st.table(df_merged)
-        #st.write(df_merged["Start_Date"].unique())
-        count = df.shape[0]
-        devices = []
-        incorrect = []
-        # for i in range(len(df_merged)):
-        #     row = df_merged.iloc[i]
+        # # df_merge = df.groupby("Start_Date")
+        # # df_merged = pd.DataFrame().append(df_merge.first())
+        # # df_merged.append(df_merge.last())
+        # # st.table(df_merged)
+        # #st.write(df_merged["Start_Date"].unique())
+        # count = df.shape[0]
+        # devices = []
+        # incorrect = []
+        # # for i in range(len(df_merged)):
+        # #     row = df_merged.iloc[i]
            
-        #     if row["Risk"] != row["NS Alerts"]:
-        #         if i > 2 and i < count - 1 :
-        #             # rowBefore = df.iloc[i - 1]
-        #             # rowAfter = df.iloc[i + 1]
-        #             # if rowBefore["Start_Date_Risk"] + timedelta(days=1) == row["Start_Date_Risk"] and rowAfter["Start_Date_Risk"] + timedelta(days=-1) == row["Start_Date_Risk"]:
-        #             #     if rowBefore["Risk"] != row["NS Alerts"] and rowAfter["Risk"] != row["NS Alerts"]:
+        # #     if row["Risk"] != row["NS Alerts"]:
+        # #         if i > 2 and i < count - 1 :
+        # #             # rowBefore = df.iloc[i - 1]
+        # #             # rowAfter = df.iloc[i + 1]
+        # #             # if rowBefore["Start_Date_Risk"] + timedelta(days=1) == row["Start_Date_Risk"] and rowAfter["Start_Date_Risk"] + timedelta(days=-1) == row["Start_Date_Risk"]:
+        # #             #     if rowBefore["Risk"] != row["NS Alerts"] and rowAfter["Risk"] != row["NS Alerts"]:
                         
-        #             incorrect.append(row)
-        #             # else:
-        #             #      incorrect.append(row)
+        # #             incorrect.append(row)
+        # #             # else:
+        # #             #      incorrect.append(row)
 
-        heartratedf = pd.read_csv(os.path.join("/tmp/tmp.csv"))
+        # heartratedf = pd.read_csv(os.path.join("/tmp/tmp.csv"))
         
-        #heartratedf["Start_Date_Risk"] = pd.to_datetime(heartratedf["Start_Date"])
-        incorrect = pd.DataFrame(incorrect)
-        incorrect = incorrect.rename({"Risk": "Vito Alert"})
-        count = heartratedf.shape[0]
-        devices = []
+        # #heartratedf["Start_Date_Risk"] = pd.to_datetime(heartratedf["Start_Date"])
+        # incorrect = pd.DataFrame(incorrect)
+        # incorrect = incorrect.rename({"Risk": "Vito Alert"})
+        # count = heartratedf.shape[0]
+        # devices = []
         
         
-        for i in range(count):
-            row = heartratedf.iloc[i]
-            start = datetime.datetime.strptime( row.Start_Date, '%Y-%m-%d' )
-            row.Start_Date = start
-        heartratedf["Start_Date_Risk"] = pd.to_datetime(heartratedf["Start_Date"])
+        # for i in range(count):
+        #     row = heartratedf.iloc[i]
+        #     start = datetime.datetime.strptime( row.Start_Date, '%Y-%m-%d' )
+        #     row.Start_Date = start
+        # heartratedf["Start_Date_Risk"] = pd.to_datetime(heartratedf["Start_Date"])
         
-        heartratedf = heartratedf.groupby ('Start_Date_Risk' )["Heartrate"].median()
-        #st.table(incorrect)
-        #incorrect = pd.merge(incorrect, heartratedf, how='outer', on ="Start_Date_Risk") 
-        # incorrect = incorrect.drop('Start_Date', 1)
-        # incorrect = incorrect.drop("Start_Time", 1)
-        incorrect = incorrect.dropna()
-        # total = df.shape[0]
-        # total_incorrect = incorrect.shape[0]
-        #similarity = 1 - total_incorrect/total
-        #st.metric("Model Similarity", f"{round(similarity, 3)} %")
+        # heartratedf = heartratedf.groupby ('Start_Date_Risk' )["Heartrate"].median()
+        # #st.table(incorrect)
+        # #incorrect = pd.merge(incorrect, heartratedf, how='outer', on ="Start_Date_Risk") 
+        # # incorrect = incorrect.drop('Start_Date', 1)
+        # # incorrect = incorrect.drop("Start_Time", 1)
+        # incorrect = incorrect.dropna()
+        # # total = df.shape[0]
+        # # total_incorrect = incorrect.shape[0]
+        # #similarity = 1 - total_incorrect/total
+        # #st.metric("Model Similarity", f"{round(similarity, 3)} %")
+        # # col1, col2 = st.columns(2)
+        # # col1.header("NightSignal") 
+        # # col2.header("Vito") 
         # col1, col2 = st.columns(2)
-        # col1.header("NightSignal") 
-        # col2.header("Vito") 
-        col1, col2 = st.columns(2)
         # col1.table(df)
         # col2.table(df2) 
         #st.table(df_merged)
@@ -278,6 +278,9 @@ def analyze():
         with st.expander("See full data"):
             #st.bar_chart(df_merged)
             #df_merged = df.append(df2)
+            col, col2 = st.columns(2)
+            col.table(df)
+            col2.table(df2)
             st.table(df_merged)
         #st.header("Conflicting Scores")
         
