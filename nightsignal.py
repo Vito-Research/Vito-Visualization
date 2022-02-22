@@ -502,9 +502,12 @@ def getScore(heartrate_file, step_file):
         red_alerted = []
         yellow_alerted = []
         alertsDic = {}
+        count = 0
         for key in red_alert_dates:
             alertsDic[key] = "2"
             red_alerted.append(key)
+            count += 1
+           
         for key in yellow_alert_dates:
             alertsDic[key] = "0"
             yellow_alerted.append(key)
@@ -518,7 +521,7 @@ def getScore(heartrate_file, step_file):
             json.dump(alerts, out_file)
 
 
-
+    st.write(count)
     #################################  Plot  #################################
     # print("Plotting...")
 
