@@ -152,17 +152,19 @@ def analyze():
         df2["NS Alerts"] = df2["NS Alerts"].astype(int)
         # st.table(df2)
         # st.table(df)
-        df2.rename(columns={"NS Alerts": "Risk"}, inplace=True)
+        # df2.rename(columns={"NS Alerts": "Risk"}, inplace=True)
         df2.rename(columns={"Start_Date_Risk": "Start_Date"}, inplace=True)
         #df2.rename(columns={'Start_Date_Risk': 'Start_Date'}, inplace=True)
         # st.table(df2)
         df["Start_Date"] = pd.to_datetime(df["Start_Date"])
         df2["Start_Date"] = pd.to_datetime(df2["Start_Date"])
         # df2["Start_Date_Risk"] = pd.to_datetime(df2["Start_Date_Risk"])
-       # df_merged = pd.merge(df, df2, how='inner', on ="Start_Date")
+        df_merged = pd.merge(df, df2, how='inner', on ="Start_Date")
         df = df.set_index("Start_Date")
         df2 = df2.set_index("Start_Date")
-        df_merged = pd.concat([df, df2], axis=1)
+        
+        #df_merged = pd.concat([df, df2], axis=0)
+        #st.table(df_merged)
         df_merged = df_merged.dropna() 
         #df_merged = pd.merge(df, df2, right_on= "Start_Date", left_on="Start_Date")
        # df_merged = df_merged.drop('Start_Time_Risk', 1)
@@ -183,8 +185,8 @@ def analyze():
         # df = df.fillna(df2['Start_Date'])
         # df2 = df2.fillna(df['Start_Date'])
         count = (df2.shape[0] - df.shape[0])
-        vitoCount = df_merged[df_merged["Risk_x"] == 1].shape[0]
-        nsCount = df_merged[df_merged["Risk_y"] == 1].shape[0]
+        vitoCount = df_merged[df_merged["Risk"] == 1].shape[0]
+        nsCount = df_merged[df_merged["NS Alerts"] == 1].shape[0]
         col1, col2 = st.columns(2)
         col1.subheader("Vito Alerts: " + str(vitoCount)) 
         vitoTotal["vitoTotal"] += vitoCount
