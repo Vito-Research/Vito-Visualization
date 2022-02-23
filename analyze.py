@@ -23,7 +23,7 @@ def analyze():
 
     HRFile = st.file_uploader("Upload Heartrate Data", type=("csv"))
 
-    #StepFile = st.file_uploader("Upload Step Data", type=("csv"))
+    # StepFile = st.file_uploader("Upload Step Data", type=("csv"))
 
     HRFileName = ""
     RiskFileName = ""
@@ -81,11 +81,11 @@ def analyze():
         
 
         
-        f = open(os.path.join('/tmp/NS-signals.json'), "r")
+        with open(os.path.join('/tmp/NS-signals.json'), "r") as f:
     
     # returns JSON object as
     # a dictionary
-        data = json.load(f)
+            data = json.load(f)
         
         #st.write(data)
         alerts = data['nightsignal']
@@ -159,9 +159,11 @@ def analyze():
         df["Start_Date"] = pd.to_datetime(df["Start_Date"])
         df2["Start_Date"] = pd.to_datetime(df2["Start_Date"])
         # df2["Start_Date_Risk"] = pd.to_datetime(df2["Start_Date_Risk"])
+        # Make it a unique id not date
+        # df = df.set_index("Start_Date")
+        # df2 = df2.set_index("Start_Date")
         df_merged = pd.merge(df, df2, how='inner', on ="Start_Date")
-        df = df.set_index("Start_Date")
-        df2 = df2.set_index("Start_Date")
+        
     
         #df_merged = pd.concat([df, df2], axis=0)
         #st.table(df_merged)
