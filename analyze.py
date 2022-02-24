@@ -304,7 +304,7 @@ def analyze():
                 csvFiles.append(file)
         selected_filename = st.selectbox('Select ' + type, csvFiles)
         return os.path.join(folder_path, selected_filename)
-    def processAll(folder_path='./sample_data/', type="Health2"):
+    def processAll(folder_path='./sample_data/', type="Healthv3"):
         folder_path = folder_path + type
         filenames = os.listdir(folder_path)
         csvFiles = []
