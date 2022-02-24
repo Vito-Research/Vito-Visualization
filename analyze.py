@@ -40,7 +40,7 @@ def analyze():
             devices.append("HK Apple Watch")
         df.insert(0, "Device", devices, True)
     
-        df2 = DataFrame()
+        dfSteps = DataFrame()
         i = 0
         steps = []
         start_time = []
@@ -65,12 +65,12 @@ def analyze():
 
             i += 1
             
-        df2.insert(0, "Steps", steps, True)
-        df2.insert(0, "Start_Date", start_date, True)
-        df2.insert(0, "Start_Time", start_time, True)
-        df2.insert(0, "End_Date", start_date, True)
-        df2.insert(0, "End_Time", end_time, True)
-        df2.to_csv(os.path.join("/tmp/tmp2.csv"))
+        dfSteps.insert(0, "Steps", steps, True)
+        dfSteps.insert(0, "Start_Date", start_date, True)
+        dfSteps.insert(0, "Start_Time", start_time, True)
+        dfSteps.insert(0, "End_Date", start_date, True)
+        dfSteps.insert(0, "End_Time", end_time, True)
+        dfSteps.to_csv(os.path.join("/tmp/tmp2.csv"))
         
         col1, col2, col3 = st.columns(3)
 
@@ -295,7 +295,7 @@ def analyze():
         # col2.table(alerts)
         
 
-    def file_selector(folder_path='./sample_data/', type="Health"):
+    def file_selector(folder_path='./sample_data/', type="Health3"):
         folder_path = folder_path + type
         filenames = os.listdir(folder_path)
         csvFiles = []
