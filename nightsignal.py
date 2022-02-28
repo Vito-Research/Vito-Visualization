@@ -15,7 +15,7 @@ from matplotlib import pyplot as plt
 from operator import itemgetter
 from datetime import date, timedelta
 import streamlit as st
-os.chdir(".")
+
 
 
 ### EXAMPLE RUN: python3 nighsignal.py --device=AppleWatch --heartrate=P355472-AppleWatch-hr.csv  --step=P355472-AppleWatch-st.csv
@@ -73,7 +73,7 @@ def getScore(heartrate_file, step_file):
     medianConfig = "MedianOfAvgs" # MedianOfAvgs | AbsoluteMedian
     yellow_threshold = 3
     red_threshold = 4
-    records = {}
+    
                 
     #################################  Fitbit #################################
     if(device=="Fitbit"):
@@ -331,11 +331,11 @@ def getScore(heartrate_file, step_file):
                 rec_date = record_elements[1]
                 rec_time = record_elements[2]
                 rec_hr = record_elements[3].strip(' \t\n\r')
-                #if ((rec_time.startswith("00:")) or (rec_time.startswith("01:")) or (rec_time.startswith("02:")) or (rec_time.startswith("03:")) or (rec_time.startswith("04:")) or (rec_time.startswith("05:")) or (rec_time.startswith("06:"))):
-                #if (rec_date not in date_hrs_dic):
-                date_hrs_dic[rec_date] = rec_hr
-                # else:
-                #     date_hrs_dic[rec_date] = date_hrs_dic[rec_date] + "*" + rec_hr
+                if ((rec_time.startswith("00:")) or (rec_time.startswith("01:")) or (rec_time.startswith("02:")) or (rec_time.startswith("03:")) or (rec_time.startswith("04:")) or (rec_time.startswith("05:")) or (rec_time.startswith("06:"))):
+                    if (rec_date not in date_hrs_dic):
+                        date_hrs_dic[rec_date] = rec_hr
+                    else:
+                        date_hrs_dic[rec_date] = date_hrs_dic[rec_date] + "*" + rec_hr
 
         ###Calculate AVGs , Imputation, Healthy baseline Median, and Alerts
         date_hr_avgs_dic = {}
@@ -350,7 +350,7 @@ def getScore(heartrate_file, step_file):
                     AVGHR = (float(hr))
                 except:
                     print()
-            #AVGHR = int(AVGHR/numOfHRs)
+            AVGHR = int(AVGHR/numOfHRs)
             date_hr_avgs_dic[key] = AVGHR
         
         missed_days_avg_dic = {}
@@ -427,7 +427,7 @@ def getScore(heartrate_file, step_file):
                 hrs = temp.split("*")
                 med_list = []
                 for hr in hrs:
-                    med_list.append(int(float(hr)))
+                    med_list.append(float(hr))
                 MEDHR = int(statistics.median(med_list))
                 date_hr_meds_dic[key] = MEDHR
 
@@ -506,8 +506,8 @@ def getScore(heartrate_file, step_file):
         for key in red_alert_dates:
             alertsDic[key] = "2"
             red_alerted.append(key)
-            counting += 1
-        st.write(counting)
+            
+        
            
         for key in yellow_alert_dates:
             alertsDic[key] = "0"
@@ -520,6 +520,7 @@ def getScore(heartrate_file, step_file):
             alerts['nightsignal'].append({"date": key, "val": str(sorted_alerts[key])})
         with open(os.path.join("/tmp/NS-signals.json"), "w+") as out_file:
             json.dump(alerts, out_file)
+            #st.write(red_alerted)
 
 
         
