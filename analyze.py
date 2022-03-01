@@ -18,6 +18,7 @@ def analyze():
     
     nsTotal = { 'nsTotal': 0 }
     vitoTotal = { 'vitoTotal': 0 }
+    matchingTotal = { 'matchingTotal': 0 }
   
     st.header("Add Your File")
 
@@ -86,7 +87,8 @@ def analyze():
     # returns JSON object as
     # a dictionary
             data = json.load(f)
-        
+            os.system("rm " + os.path.join("/tmp/NS-signals.json") )
+            os.system("rm " + os.path.join("/tmp/tmp.csv") )
         #st.write(data)
         alerts = data['nightsignal']
         if HRFile is not None:
@@ -194,6 +196,8 @@ def analyze():
         vitoTotal["vitoTotal"] += vitoCount
         col2.subheader("NightSignal Alerts: " + str(nsCount)) 
         nsTotal["nsTotal"] += nsCount
+        if abs(vitoCount - nsCount) < 4:
+            matchingTotal["matchingTotal"] += 1 
         if nsAlertCount == vitoAlertCount:
             st.balloons()
             st.success("ALGORITHMS MATCH!!!!!!!!")
@@ -336,6 +340,10 @@ def analyze():
     col1.subheader("Vito Alerts: " + str(vitoTotal)) 
             
     col2.subheader("NightSignal Alerts: " + str(nsTotal)) 
+
+    col2.subheader("Matching Alerts: " + str(matchingTotal)) 
+
+    
         
         #st.write('Risk File `%s`' % RiskFileName)
         

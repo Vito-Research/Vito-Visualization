@@ -490,8 +490,9 @@ def getScore(heartrate_file, step_file):
         except:
             print("no yellow file")
 
-        # os.system("rm potenital_reds.csv" )
-        # os.system("rm potenital_yellows.csv" )
+ 
+        os.system("rm " + os.path.join("/tmp/potenital_reds.csv") )
+        os.system("rm " + os.path.join("/tmp/potenital_yellows.csv") )
 
         ###Generating alerts file
         ### 0 indicates green alert
