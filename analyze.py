@@ -48,23 +48,23 @@ def analyze():
         end_time = []
         end_date = []
         start_date = []
-        for i in range(count):
+        # for i in range(count):
             
-            row = df.iloc[i]
+        #     row = df.iloc[i]
             
-            start = datetime.datetime.strptime( row.Start_Time, '%H:%M:%S' )
-            endTime = start  + datetime.timedelta(minutes=30)
-            start = start - datetime.timedelta(minutes=30)
+        #     start = datetime.datetime.strptime( row.Start_Time, '%H:%M:%S' )
+        #     endTime = start  + datetime.timedelta(minutes=30)
+        #     start = start - datetime.timedelta(minutes=30)
             
                         
-            end = datetime.datetime.strptime(endTime.strftime("%H:%M:%S"), '%H:%M:%S' )
-            start_time.append(start.strftime("%H:%M:%S"))
-            end_time.append(endTime.strftime("%H:%M:%S"))
-            steps.append(0)
-            start_date.append(row.Start_Date)
-            end_date.append(row.Start_Date)
+        #     end = datetime.datetime.strptime(endTime.strftime("%H:%M:%S"), '%H:%M:%S' )
+        #     start_time.append(start.strftime("%H:%M:%S"))
+        #     end_time.append(endTime.strftime("%H:%M:%S"))
+        #     steps.append(0)
+        #     start_date.append(row.Start_Date)
+        #     end_date.append(row.Start_Date)
 
-            i += 1
+        #     i += 1
             
         dfSteps.insert(0, "Steps", steps, True)
         dfSteps.insert(0, "Start_Date", start_date, True)
