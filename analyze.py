@@ -19,6 +19,7 @@ def analyze():
     nsTotal = { 'nsTotal': 0 }
     vitoTotal = { 'vitoTotal': 0 }
     matchingTotal = { 'matchingTotal': 0 }
+    total = { 'total': 0 }
   
     st.header("Add Your File")
 
@@ -191,19 +192,24 @@ def analyze():
         count = (df2.shape[0] - df.shape[0])
         vitoCount = df_merged[df_merged["Risk"] == 1].shape[0]
         nsCount = df_merged[df_merged["NS Alerts"] == 1].shape[0]
+        
         col1, col2 = st.columns(2)
         col1.subheader("Vito Alerts: " + str(vitoCount)) 
         vitoTotal["vitoTotal"] += vitoCount
         col2.subheader("NightSignal Alerts: " + str(nsCount)) 
         nsTotal["nsTotal"] += nsCount
-        if abs(vitoCount - nsCount) < 4:
-            matchingTotal["matchingTotal"] += 1 
-        if nsAlertCount == vitoAlertCount:
-            st.balloons()
-            st.success("ALGORITHMS MATCH!!!!!!!!")
-            #playsound("success.mp4")
-        else:
-            st.write("")
+        for i in range(df_merged.shape[0]):
+           total["total"] += 1 
+           if df_merged["Risk"][i] == df_merged["NS Alerts"][i]:
+               matchingTotal["matchingTotal"] += 1 
+        # if abs(vitoCount - nsCount) < 4:
+            
+        # if nsCount == vitoCount:
+        #     st.balloons()
+        #     st.success("ALGORITHMS MATCH!!!!!!!!")
+        #     #playsound("success.mp4")
+        # else:
+        #     st.write("")
         #df = add_blank_rows(df, count)
         # df["Start_Date"] = pd.to_datetime(df["Start_Date"])
         # df2["Start_Date"] = pd.to_datetime(df2["Start_Date"])
@@ -285,8 +291,8 @@ def analyze():
             #st.bar_chart(df_merged)
             #df_merged = df.append(df2)
             col, col2 = st.columns(2)
-            col.table(df)
-            col2.table(df2)
+            # col.table(df)
+            # col2.table(df2)
             st.table(df_merged)
         #st.header("Conflicting Scores")
         
@@ -308,7 +314,7 @@ def analyze():
                 csvFiles.append(file)
         selected_filename = st.selectbox('Select ' + type, csvFiles)
         return os.path.join(folder_path, selected_filename)
-    def processAll(folder_path='./sample_data/', type="Healthv3"):
+    def processAll(folder_path='./sample_data/', type="Healthv4"):
         folder_path = folder_path + type
         filenames = os.listdir(folder_path)
         csvFiles = []
@@ -342,6 +348,8 @@ def analyze():
     col2.subheader("NightSignal Alerts: " + str(nsTotal)) 
 
     col2.subheader("Matching Alerts: " + str(matchingTotal)) 
+    col2.subheader("Total Alerts: " + str((matchingTotal["matchingTotal"]/total["total"]) * 100)) 
+    
 
     
         
