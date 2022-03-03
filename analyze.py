@@ -1,3 +1,4 @@
+from numpy import average
 from pandas.core.frame import DataFrame
 import streamlit as st
 import pandas as pd
@@ -6,6 +7,7 @@ import json
 import datetime
 import os
 import time
+import statistics
 def add_blank_rows(df, no_rows):
     df_new = pd.DataFrame(columns=df.columns)
     for idx in range(len(df)):
@@ -19,7 +21,7 @@ def analyze():
     nsTotal = { 'nsTotal': 0 }
     vitoTotal = { 'vitoTotal': 0 }
     matchingTotal = { 'matchingTotal': 0 }
-    total = { 'total': 0 }
+    averages = { 'averages': [] }
   
     st.header("Add Your File")
 
@@ -198,10 +200,27 @@ def analyze():
         vitoTotal["vitoTotal"] += vitoCount
         col2.subheader("NightSignal Alerts: " + str(nsCount)) 
         nsTotal["nsTotal"] += nsCount
-        for i in range(df_merged.shape[0]):
-           total["total"] += 1 
-           if df_merged["Risk"][i] == df_merged["NS Alerts"][i]:
-               matchingTotal["matchingTotal"] += 1 
+
+        # df_merged["correct"] = df_merged["Risk"] == df_merged["NS Alerts"]
+        # accuracy = sum(df_merged["correct"] / len(df_merged["correct"]))
+        # averages["averages"].append(accuracy)
+        # st.header(accuracy * 100)
+
+        df_alerts = df_merged[df_merged["Risk"] == 1]
+        df_alerts2 = df_merged[df_merged["NS Alerts"] == 1]
+        
+        df_alerts["correct"] = df_alerts["Risk"] == df_alerts["NS Alerts"]
+        df_alerts2["correct"] = df_alerts2["Risk"] == df_alerts2["NS Alerts"]
+        accuracy1 = sum(df_alerts["correct"] / len(df_alerts["correct"]))
+        accuracy2 = sum(df_alerts["correct"] / len(df_alerts["correct"]))
+        accuracy = (accuracy1 + accuracy2) / 2
+      
+        if accuracy != 0:
+        
+            averages["averages"].append(accuracy)
+            st.header(accuracy * 100)
+
+        
         # if abs(vitoCount - nsCount) < 4:
             
         # if nsCount == vitoCount:
@@ -314,7 +333,7 @@ def analyze():
                 csvFiles.append(file)
         selected_filename = st.selectbox('Select ' + type, csvFiles)
         return os.path.join(folder_path, selected_filename)
-    def processAll(folder_path='./sample_data/', type="Healthv4"):
+    def processAll(folder_path='./sample_data/', type="Healthv5"):
         folder_path = folder_path + type
         filenames = os.listdir(folder_path)
         csvFiles = []
@@ -347,9 +366,8 @@ def analyze():
             
     col2.subheader("NightSignal Alerts: " + str(nsTotal)) 
 
-    col2.subheader("Matching Alerts: " + str(matchingTotal)) 
-    col2.subheader("Total Alerts: " + str((matchingTotal["matchingTotal"]/total["total"]) * 100)) 
-    
+
+    st.header(statistics.mean(averages["averages"]))
 
     
         
