@@ -192,6 +192,7 @@ def analyze():
         # df = df.fillna(df2['Start_Date'])
         # df2 = df2.fillna(df['Start_Date'])
         count = (df2.shape[0] - df.shape[0])
+        
         vitoCount = df_merged[df_merged["Risk"] == 1].shape[0]
         nsCount = df_merged[df_merged["NS Alerts"] == 1].shape[0]
         
@@ -201,24 +202,25 @@ def analyze():
         col2.subheader("NightSignal Alerts: " + str(nsCount)) 
         nsTotal["nsTotal"] += nsCount
 
-        # df_merged["correct"] = df_merged["Risk"] == df_merged["NS Alerts"]
-        # accuracy = sum(df_merged["correct"] / len(df_merged["correct"]))
-        # averages["averages"].append(accuracy)
-        # st.header(accuracy * 100)
-
-        df_alerts = df_merged[df_merged["Risk"] == 1]
-        df_alerts2 = df_merged[df_merged["NS Alerts"] == 1]
-        
-        df_alerts["correct"] = df_alerts["Risk"] == df_alerts["NS Alerts"]
-        df_alerts2["correct"] = df_alerts2["Risk"] == df_alerts2["NS Alerts"]
-        accuracy1 = sum(df_alerts["correct"] / len(df_alerts["correct"]))
-        accuracy2 = sum(df_alerts["correct"] / len(df_alerts["correct"]))
-        accuracy = (accuracy1 + accuracy2) / 2
-      
-        if accuracy != 0:
-        
+        df_merged["correct"] = df_merged["Risk"] == df_merged["NS Alerts"]
+        accuracy = sum(df_merged["correct"] / len(df_merged["correct"]))
+        if df_merged.shape[0] > 5:
             averages["averages"].append(accuracy)
             st.header(accuracy * 100)
+
+        # df_alerts = df_merged[df_merged["Risk"] == 1]
+        # df_alerts2 = df_merged[df_merged["NS Alerts"] == 1]
+        
+        # df_alerts["correct"] = df_alerts["Risk"] == df_alerts["NS Alerts"]
+        # df_alerts2["correct"] = df_alerts2["Risk"] == df_alerts2["NS Alerts"]
+        # accuracy1 = sum(df_alerts["correct"] / len(df_alerts["correct"]))
+        # accuracy2 = sum(df_alerts["correct"] / len(df_alerts["correct"]))
+        # accuracy = (accuracy1 + accuracy2) / 2
+      
+        # if df_alerts.shape[0] > 5:
+        
+        #     averages["averages"].append(accuracy)
+        #     st.header(accuracy * 100)
 
         
         # if abs(vitoCount - nsCount) < 4:
@@ -333,7 +335,7 @@ def analyze():
                 csvFiles.append(file)
         selected_filename = st.selectbox('Select ' + type, csvFiles)
         return os.path.join(folder_path, selected_filename)
-    def processAll(folder_path='./sample_data/', type="Healthv5"):
+    def processAll(folder_path='./sample_data/', type="Healthv6v2"):
         folder_path = folder_path + type
         filenames = os.listdir(folder_path)
         csvFiles = []
@@ -359,7 +361,8 @@ def analyze():
     #     if HRFileName:
     #         processData(os.path.join(HRFileName))
     
-    processAll()
+    # processAll()
+    processAll(type="Healthv6")
     col1, col2 = st.columns(2)
 
     col1.subheader("Vito Alerts: " + str(vitoTotal)) 
