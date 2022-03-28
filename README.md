@@ -4,16 +4,15 @@
 
 ## Goals
 
-- Reduce spread of COVID-19 via smartwatches
-- More efficient and convenient algorithms 
-- Analyze the results of the Vito iOS and Android Apps
-- Compare NightSignal (an algorithm developed by Stanford University) to Vito
+- > Reduce spread of COVID-19 via smartwatches
+- > More efficient and convenient algorithms 
+- > Analyze the results of the Vito iOS and Android Apps
+- > Compare NightSignal (an algorithm developed by Stanford University) to Vito
 
 ## Contributing
 
-- Find an issue
-- Fix the issue
-- Submit a pull request
-- Make any revisions suggested by anyone else
-- Done :)
-
+- > * Find an issue
+- > Fix the issue
+- > Submit a pull request
+- > Make any revisions suggested by anyone else
+- > Done :)
