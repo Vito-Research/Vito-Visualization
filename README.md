@@ -11,7 +11,7 @@
 
 ## Contributing
 
-- > * Find an issue
+- > Find an issue
 - > Fix the issue
 - > Submit a pull request
 - > Make any revisions suggested by anyone else
