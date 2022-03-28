@@ -1,7 +1,6 @@
 # Vito Visualization
 
-![IMG_0474.png](https://res.craft.do/user/full/23a03a79-af5e-1af9-b4ff-27170389b6b1/A189BFA9-3A66-4031-B80A-6FBC1DD871DD_2/pV4Q4IOCOPzY7lhycc8unxymCZ4xX6Nxi2NGPAahnzcz/IMG_0474.png)
-
+![Slide 16_9 - 5.png](craftdocs://open?blockId=A6BA068B-263A-494E-9C6A-5773F1AADA1D&spaceId=23a03a79-af5e-1af9-b4ff-27170389b6b1)
 ## Goals
 
 - Reduce spread of COVID-19 via smartwatches
