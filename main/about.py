@@ -59,20 +59,10 @@ def about():
     with st.expander("Risk Documentation (Heartrate)"):
     
         st.write("1) Get active energy when its below or equal to 1  (indicates you are asleep) ")
-            
-
         st.write("2) Get average heartrate from the start date of the active energy below and end date")
-            
-
         st.write("3) Filter the averages into days")
-           
-
         st.write("4) Get average for each day (expect for the last/current) day store in an array")
-           
-        
         st.write("5) If the median + 3 is less than average for last night/current day then the day is categorized as red")
-          
-
         st.write("6) If two consecutive days are in red, then an alert is sent")
         
     with st.expander("Github Links"):
