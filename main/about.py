@@ -57,7 +57,6 @@ def about():
 
         
     with st.expander("Risk Documentation (Heartrate)"):
-    
         st.write("1) Get active energy when its below or equal to 1  (indicates you are asleep) ")
         st.write("2) Get average heartrate from the start date of the active energy below and end date")
         st.write("3) Filter the averages into days")
