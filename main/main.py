@@ -3,11 +3,7 @@ import streamlit as st
 
 from analyze import analyze
 
-from pydantic import 
-
 from about import about
-
-from typing import list 
 
 import os
 
