@@ -13,6 +13,7 @@ from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
 from sklearn.metrics import accuracy_score
 
+
 def add_blank_rows(df, no_rows):
     df_new = pd.DataFrame(columns=df.columns)
     for idx in range(len(df)):
@@ -20,10 +21,6 @@ def add_blank_rows(df, no_rows):
         for _ in range(no_rows):
             df_new = df_new.append(pd.Series(), ignore_index=True)
     return df_new
-
-
-
-
 
 
 def analyze():
@@ -38,17 +35,12 @@ def analyze():
 
     all = {'all': pd.DataFrame()}
 
-    st.header("Add Your File")			
+    st.header("Add Your File")
 
     HRFile = st.file_uploader("Upload Heartrate Data", type=("csv"))
 
     HRFileName = ""
     RiskFileName = ""
- 
-   
-   
-   
-   
 
     def processData(HRFile):
 
@@ -69,7 +61,6 @@ def analyze():
         end_date = []
         start_date = []
 
-
         dfSteps.insert(0, "Steps", steps, True)
         dfSteps.insert(0, "Start_Date", start_date, True)
         dfSteps.insert(0, "Start_Time", start_time, True)
@@ -79,11 +70,9 @@ def analyze():
 
         col1, col2, col3 = st.columns(3)
 
-
         ns.getScore(os.path.join("/tmp/tmp.csv"), "/tmp/tmp2.csv")
 
         with open(os.path.join('/tmp/NS-signals.json'), "r") as f:
-
 
             data = json.load(f)
             os.system("rm " + os.path.join("/tmp/NS-signals.json"))
@@ -95,7 +84,7 @@ def analyze():
             allAlertVals = []
             allDates = []
             for item in alerts:
- 
+
                 allAlertVals.append(item["val"])
 
                 allDates.append(item["date"])
@@ -107,8 +96,6 @@ def analyze():
 
             vitoAlertCount = len(df[df['Risk'] > 0.9])
 
-
-
         col1, col2 = st.columns(2)
         newDates = []
         newAlerts = []
@@ -118,7 +105,7 @@ def analyze():
             targetDates = []
             for date in df["Start_Date"]:
                 targetDates.append(date)
-  
+
             if allDates[i] in targetDates:
                 newDates.append(allDates[i])
                 newAlerts.append(allAlertVals[i])
@@ -137,13 +124,11 @@ def analyze():
         df2["Start_Date"] = pd.to_datetime(df2["Start_Date"])
         df_merged = pd.merge(df, df2, how='inner', on="Start_Date")
 
-
         df_merged = df_merged.dropna()
         df = df.drop('Heartrate', 1)
         df = df.drop('Start_Time', 1)
         df = df.drop('Device', 1)
         column_names = ["Risk", "Start_Date"]
-
 
         count = (df2.shape[0] - df.shape[0])
 
@@ -192,8 +177,7 @@ def analyze():
         df.insert(0, "Start_Date_Risk", allDates, True)
         df.insert(0, "Value", allAlertVals, True)
 
-        # col1.table(df2)
-        # col2.table(alerts)
+
 
     def file_selector(folder_path='./sample_data/', type="Health3"):
         folder_path = folder_path + type
@@ -217,14 +201,12 @@ def analyze():
                 except:
                     print()
 
-
     processAll(type="Healthv8")
     col1, col2 = st.columns(2)
 
     col1.subheader("Vito Alerts: " + str(vitoTotal))
 
     col2.subheader("NightSignal Alerts: " + str(nsTotal))
-
 
     allDF = all["all"]
 
