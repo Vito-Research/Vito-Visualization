@@ -16,3 +16,9 @@
 - Submit a pull request
 - Make any revisions suggested by anyone else
 - Done :)
+
+## Getting Started
+1. Clone the repository
+2. If your IDE does not do this for you, create a Virtual Environment using `python3 -m venv {your-env-name}`
+3. Install the project dependencies using `pip install -r requirements.txt`
+4. Run the project using `streamlit run vito_visualization_tools/main.py`
