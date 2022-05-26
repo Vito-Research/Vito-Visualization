@@ -1,6 +1,7 @@
-import pandas as pd
 import os
-import streamlit as st
+
+import pandas as pd
+
 
 def file_selector(folder_path='./COVID-19-Phase2-Wearables'):
         df = pd.DataFrame()
