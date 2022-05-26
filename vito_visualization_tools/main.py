@@ -32,8 +32,7 @@ st.subheader("Detecting Infectious Diseases With Wearables")
 ##############################################################################################################
 st.caption(
                 """
-                We at Vito believe you its vital to be able to learn more about your health without invading 
-                privacy.  Vito empowers you to explore your health via your vitals and on-device machine 
+                Learning more about health while maintaining privacy is vital.  Vito empowers you to explore your health and possibly detect infection via your vitals and on-device machine 
                 learning.
 
                 """

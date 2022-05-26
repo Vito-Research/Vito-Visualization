@@ -14,7 +14,7 @@ import nightsignal as ns
 def compare():
     
     st.header("Add Your File")
-
+    
     HRFile = st.file_uploader("Upload Heartrate Data", type=("csv"))
 
     #StepFile = st.file_uploader("Upload Step Data", type=("csv"))

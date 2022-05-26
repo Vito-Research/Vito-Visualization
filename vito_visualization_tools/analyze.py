@@ -198,21 +198,21 @@ def analyze():
                     processData(os.path.join(folder_path, file))
                 except:
                     print()
+    if st.button("Process All"):
+        processAll(type="Healthv8")
+        col1, col2 = st.columns(2)
 
-    processAll(type="Healthv8")
-    col1, col2 = st.columns(2)
+        col1.subheader("Vito Alerts: " + str(vitoTotal))
 
-    col1.subheader("Vito Alerts: " + str(vitoTotal))
+        col2.subheader("NightSignal Alerts: " + str(nsTotal))
 
-    col2.subheader("NightSignal Alerts: " + str(nsTotal))
+        allDF = all["all"]
 
-    allDF = all["all"]
-
-    st.sidebar.header(
-        "Accuracy: " + str(accuracy_score(allDF["Risk"], allDF["NS Alerts"])))
-    st.sidebar.header(
-        "Kappa: " + str(cohen_kappa_score(allDF["Risk"], allDF["NS Alerts"])))
-    st.sidebar.header(
-        "Precision: " + str(precision_score(allDF["Risk"], allDF["NS Alerts"])))
-    st.sidebar.header(
-        "Recall: " + str(recall_score(allDF["Risk"], allDF["NS Alerts"])))
+        st.sidebar.header(
+            "Accuracy: " + str(accuracy_score(allDF["Risk"], allDF["NS Alerts"])))
+        st.sidebar.header(
+            "Kappa: " + str(cohen_kappa_score(allDF["Risk"], allDF["NS Alerts"])))
+        st.sidebar.header(
+            "Precision: " + str(precision_score(allDF["Risk"], allDF["NS Alerts"])))
+        st.sidebar.header(
+            "Recall: " + str(recall_score(allDF["Risk"], allDF["NS Alerts"])))

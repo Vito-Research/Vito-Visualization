@@ -6,12 +6,13 @@ def about():
     with st.expander("Why It Matters"):
         st.write("""
                  The lead developer and founder of Vito, Andreas Ink, envisions more access and understanding of health.  
+                 
                  Andreas's Dad and Aunt's diagnosis of Parkinson's and a combination of other conditions, resulted in his 
                  two relatives having a weakened immune system, leading Andreas to brainstorm solutions to combat the risk 
-                 of infectious diseases.  
+                 of infectious diseases.  In the final months of 2021, Andreas's Aunt became infected with COVID-19 and died a few months later.  We must create technology and other solutions to reduce the chances of this occuring to other families.
                  
                  In an effort to reduce transmission of infectious diseases from the university where Andreas studies to 
-                 home where his immuno-compromised Dad is, Andreas, Mohamed Elbatouty, and Muhib Sheikh created Vito.
+                 home where his immuno-compromised Dad is, Andreas, among other students created Vito.
                  Vito is an app that empowers people to make more informed decisions on visiting immunocompromised 
                  individuals like Andreas's Dad and Aunt and venturing to high-risk areas for infectious disease 
                  transmission.
@@ -56,17 +57,17 @@ def about():
         link = '[UW Study](https://newsroom.uw.edu/news/covid-19-mortality-linked-signs-easily-measured-home)'
         st.markdown(link, unsafe_allow_html=True)
 
-    with st.expander("Risk Documentation (Heartrate)"):
-        st.write(
-            "1) Get active energy when its below or equal to 1  (indicates you are asleep) ")
-        st.write(
-            "2) Get average heartrate from the start date of the active energy below and end date")
-        st.write("3) Filter the averages into days")
-        st.write(
-            "4) Get average for each day (expect for the last/current) day store in an array")
-        st.write(
-            "5) If the median + 3 is less than average for last night/current day then the day is categorized as red")
-        st.write("6) If two consecutive days are in red, then an alert is sent")
+    # with st.expander("Risk Documentation (Heartrate)"):
+    #     st.write(
+    #         "1) Get active energy when its below or equal to 1  (indicates you are asleep) ")
+    #     st.write(
+    #         "2) Get average heartrate from the start date of the active energy below and end date")
+    #     st.write("3) Filter the averages into days")
+    #     st.write(
+    #         "4) Get average for each day (expect for the last/current) day store in an array")
+    #     st.write(
+    #         "5) If the median + 3 is less than average for last night/current day then the day is categorized as red")
+    #     st.write("6) If two consecutive days are in red, then an alert is sent")
 
     with st.expander("Github Links"):
         col1, col2, col3 = st.columns(3)
