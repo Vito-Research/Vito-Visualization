@@ -11,7 +11,7 @@ from sklearn.metrics import recall_score
 
 import nightsignal as ns
 
-
+from analysis import analysis
 def add_blank_rows(df, no_rows):
     df_new = pd.DataFrame(columns=df.columns)
     for idx in range(len(df)):
@@ -198,6 +198,7 @@ def analyze():
                     processData(os.path.join(folder_path, file))
                 except:
                     print()
+    analysis()
     if st.button("Process All"):
         processAll(type="Healthv8")
         col1, col2 = st.columns(2)
