@@ -1,7 +1,3 @@
-#!/Users/ethancloin/Developer/VSCodeProjects/Vito/Vito-Visualization/venv/bin/python3.9
-# code: utf-8
-
-
 import streamlit as st
 
 

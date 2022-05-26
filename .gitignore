@@ -1,6 +1,6 @@
 # -- custom -- #
 *.DS_Store
-venv/
+.idea/
 
 # -- from GitHub Template -- #
 # Byte-compiled / optimized / DLL files

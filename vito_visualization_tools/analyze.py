@@ -1,17 +1,15 @@
-from numpy import average
-from pandas.core.frame import DataFrame
-import streamlit as st
-import pandas as pd
-import nightsignal as ns
 import json
-import datetime
 import os
-import time
-import statistics
+
+import pandas as pd
+import streamlit as st
+from pandas.core.frame import DataFrame
+from sklearn.metrics import accuracy_score
 from sklearn.metrics import cohen_kappa_score
 from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
-from sklearn.metrics import accuracy_score
+
+import nightsignal as ns
 
 
 def add_blank_rows(df, no_rows):
@@ -189,7 +187,7 @@ def analyze():
         selected_filename = st.selectbox('Select ' + type, csvFiles)
         return os.path.join(folder_path, selected_filename)
 
-    def processAll(folder_path='./sample_data/', type="Healthv6v2"):
+    def processAll(folder_path='sample_data_from_main/', type="Healthv6v2"):
         folder_path = folder_path + type
         filenames = os.listdir(folder_path)
         csvFiles = []

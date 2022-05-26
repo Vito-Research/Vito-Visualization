@@ -1,21 +1,15 @@
-import glob, os, getopt, sys
-import csv, json
-from os import walk
-import statistics
-from unittest import expectedFailure
-import pandas as pd
-import numpy as np
-import matplotlib.pylab as plt
-import datetime
 import collections
-from collections import deque
+import datetime
+import getopt
+import json
+import os
+import statistics
+import sys
 from collections import OrderedDict
-from itertools import tee, groupby
-from matplotlib import pyplot as plt
+from itertools import groupby
 from operator import itemgetter
-from datetime import date, timedelta
-import streamlit as st
 
+from matplotlib import pyplot as plt
 
 
 ### EXAMPLE RUN: python3 nighsignal.py --device=AppleWatch --heartrate=P355472-AppleWatch-hr.csv  --step=P355472-AppleWatch-st.csv

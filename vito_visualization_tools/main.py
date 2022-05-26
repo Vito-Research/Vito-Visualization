@@ -1,11 +1,8 @@
 
 import streamlit as st
 
-from analyze import analyze
-
 from about import about
-
-import os
+from analyze import analyze
 
 ##########################################
 if 'learnMore' not in st.session_state:
