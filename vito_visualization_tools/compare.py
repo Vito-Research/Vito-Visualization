@@ -1,146 +1,60 @@
 
-import datetime
-import json
-import os
-
-import pandas as pd
-import requests
 import streamlit as st
-from pandas.core.frame import DataFrame
-
-import nightsignal as ns
-
-
+import pandas as pd 
+import numpy as np 
+import datetime
+import random
+from random import seed
+from random import randint
+from dataclasses import make_dataclass
 def compare():
-    
-    st.header("Add Your File")
-    
-    HRFile = st.file_uploader("Upload Heartrate Data", type=("csv"))
+    seed(1)
+    st.title('Random test values')
 
-    #StepFile = st.file_uploader("Upload Step Data", type=("csv"))
 
-    HRFileName = ""
-    RiskFileName = ""
-    #RiskFile = st.file_uploader("Upload Risk Data", type=("csv"))
 
-    def processData(HRFile, RiskFile):
-        df = pd.read_csv(HRFile)
-        df.to_csv("/tmp/tmp.csv")
-        count = df.shape[0]
-        devices = []
-        for i in range(count):
-            devices.append("HK Apple Watch")
-        df.insert(0, "Device", devices, True)
-    
-        df2 = DataFrame()
-        i = 0
-        steps = []
-        start_time = []
-        end_time = []
-        end_date = []
-        start_date = []
-        for i in range(count):
+    today = datetime.date.today()
+    symptom1 = today + datetime.timedelta(days=1)
+    symptom2= today + datetime.timedelta(days=1)
+    tomorrow = today + datetime.timedelta(days=1)
+    start_date = st.date_input('Start date', today)
+    symptom_dateStart = st.date_input('symptom date', symptom1)
+    symptom_dateFinish = st.date_input('symptom date Finish', symptom2)
+    end_date = st.date_input('End date', tomorrow)
+    if start_date < end_date:
+        st.success('Start date: `%s`\n\nSymptom date start: `%s`\n\nSymptom date Finish: `%s`\n\nEnd date:`%s`' % (start_date,symptom_dateStart,symptom_dateFinish, end_date))
+        days_betweenstarttoend=end_date-start_date
+        days_betweenstarttofirst=symptom_dateStart-start_date
+        days_betweenstarttolast=symptom_dateFinish-start_date
+    else:
+        st.error('Error: End date must fall after start date.')
+    rows, cols = (days_betweenstarttoend.days+2, 1)
+    #Date=[]
+    for i in range(rows):
+        col=[]
+        for j in range(cols):
+            Da=today + datetime.timedelta(days=i-1)
+            date_strf=Da.strftime("%m/%d/%Y")
+        # Date.append(date_strf)
+            if i==0:
+            #df=pd.DataFrame([[1, 2]],columns=list('DB'),index=['x'])
             
-            row = df.iloc[i]
+                df=pd.DataFrame([[date_strf,randint(60,61)]],columns=list('DB'),index=['x'])
+
+                continue
+            #    
+            if  i<=days_betweenstarttolast.days and i>=days_betweenstarttofirst.days:
+                df2= pd.DataFrame([[date_strf,randint(65,66)]],columns=list('DB'),index=['x']) 
+                df=df.append(df2)
             
-            start = datetime.datetime.strptime( row.Start_Time, '%H:%M:%S' )
-            endTime = start + datetime.timedelta(minutes=30)
-            start = start - datetime.timedelta(minutes=30)
-            
-                        
-            end = datetime.datetime.strptime(endTime.strftime("%H:%M:%S"), '%H:%M:%S' )
-            start_time.append(start.strftime("%H:%M:%S"))
-            end_time.append(endTime.strftime("%H:%M:%S"))
-            steps.append(0)
-            start_date.append(row.Start_Date)
-            end_date.append(row.Start_Date)
-
-            i += 1
-            
-        df2.insert(0, "Steps", steps, True)
-        df2.insert(0, "Start_Date", start_date, True)
-        df2.insert(0, "Start_Time", start_time, True)
-        df2.insert(0, "End_Date", start_date, True)
-        df2.insert(0, "End_Time", end_time, True)
-        df2.to_csv("/tmp/tmp2.csv")
-        
-        ns.getScore("/tmp/tmp.csv", "/tmp/tmp2.csv")
-
-        
-
-        
-        f = open('/tmp/NS-signals.json',)
-    
-    # returns JSON object as
-    # a dictionary
-        data = json.load(f)
-        
-        #st.write(data)
-        alerts = data['nightsignal']
-        if RiskFile is not None:
-            alertVals = []
-            allAlertVals = []
-            allDates = []
-            for item in alerts:
-                #st.write(item["val"])
-                allAlertVals.append(item["val"])
-                allDates.append(item["date"])
-                if int(item["val"]) > 0:
-                    
-                    alertVals.append(item["val"])
-        
-            nsAlertCount = len(alertVals)
-            df = pd.read_csv(RiskFile)
-            vitoAlertCount = len(df[df['Risk'] == 1])
-            
-            # st.write(nsAlertCount)
-            # st.write(vitoAlertCount)
-            col1, col2 = st.columns(2)
-            col1.subheader("Vito Alerts: " + str(vitoAlertCount)) 
-            col2.subheader("NightSignal Alerts: " + str(nsAlertCount)) 
-            if nsAlertCount == vitoAlertCount:
-                st.balloons()
-                st.success("ALGORITHMS MATCH!!!!!!!!")
-                #playsound("success.mp4")
-            else:
-                st.error("No Match")
-
-        col1, col2 = st.columns(2)
-
-        df = DataFrame()
-        df.insert(0, "Date", allDates, True)
-        df.insert(0, "Value", allAlertVals, True)
-        col1.bar_chart(df.set_index('Value'))
-            
-    
-        col2.table(alerts)
-
-    def file_selector(folder_path='.', type="Heartrate"):
-        filenames = os.listdir(folder_path)
-        csvFiles = []
-        for file in filenames:
-            if "csv" in file:
-                csvFiles.append(file)
-        selected_filename = st.selectbox('Select ' + type, csvFiles)
-        return os.path.join.join(folder_path, selected_filename)
-
-
-    if HRFile is None:
-        st.header("Or Select A File")
-        HRFileName = file_selector(type="Health")
-        st.write('HR File `%s`' % HRFileName)
-        if RiskFileName:
-            processData(HRFileName, RiskFileName)
-            
-  
-
-
-
-        
-
-
-    r = requests.get('https://api.github.com/user').json()            
-    f = open('/tmp/RiskFile.txt',)
-    if HRFile and f:
-        f.write(r)
-        processData(HRFile, f)
+            # col.append(randint(65,66))
+            # Date.append(col) 
+                continue
+            if i<=days_betweenstarttofirst.days or i>=days_betweenstarttolast.days: 
+                df3= pd.DataFrame([[date_strf,randint(60,61)]],columns=list('DB'),index=['x']) 
+            # df=df.append(df3)
+                df= df.append(df3)
+            # st.write(df)
+            # col.append(randint(60,61))
+            # Date.append(col)    
+    st.write(df)

@@ -3,12 +3,13 @@ import streamlit as st
 
 from about import about
 from analyze import analyze
-
+from compare import compare
 ##########################################
 if 'learnMore' not in st.session_state:
     st.session_state.learnMore = True
 
-
+if 'compare' not in st.session_state:
+    st.session_state.compare = False
     
 if 'count2' not in st.session_state:
     st.session_state.count2 = 0
@@ -25,7 +26,7 @@ if 'count3' not in st.session_state:
 ###############################################################
 st.image("../Vito.png")
 st.title("Vito")
-st.subheader("Detecting Infectious Diseases With Wearables")
+st.subheader("Detecting Infection With Wearables")
 ###############################################################
 
 
@@ -45,6 +46,7 @@ st.caption(
 col1, col2, col3 = st.columns(3)
 
 start = col1.button("Analyze")
+st.session_state.compare = col2.button("Compare")
 ##################################
 
 
@@ -52,11 +54,14 @@ start = col1.button("Analyze")
 if start:
     st.session_state.learnMore = False
 
-st.session_state.learnMore = col2.button("About")
+st.session_state.learnMore = col3.button("About")
 
 if st.session_state.learnMore:
     about()
 
 else:
-    analyze()
+    if st.session_state.compare:
+        compare()
+    else:
+        analyze()
 ##################################################
