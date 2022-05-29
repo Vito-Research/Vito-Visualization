@@ -24,4 +24,5 @@
 4. Run the project using `streamlit run vito_visualization_tools/main.py`
 
 
-![Group 59 1](https://user-images.githubusercontent.com/67549402/170885320-0bb050c4-d5c9-4188-ab23-fa9b36bd758f.png)
+![VitoModel](https://user-images.githubusercontent.com/67549402/170885361-98da829f-28d6-4dbd-8027-883a9bdbf2c2.png)
+
