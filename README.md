@@ -22,3 +22,4 @@
 2. If your IDE does not do this for you, create a Virtual Environment using `python3 -m venv {your-env-name}`
 3. Install the project dependencies using `pip install -r requirements.txt`
 4. Run the project using `streamlit run vito_visualization_tools/main.py`
+![Group 59](https://user-images.githubusercontent.com/67549402/170885300-157a1e43-11dc-42d8-986c-d63c4b1a972c.png)
