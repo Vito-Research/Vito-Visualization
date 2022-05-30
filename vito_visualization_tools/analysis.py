@@ -10,7 +10,7 @@ def analysis():
     date_time_obj = datetime.datetime.strptime(date_time_str, '%Y-%m-%d %H:%M:%S.%f').date()
 
     def analyze(file, unit):
-        df = pd.read_excel("../sample_data/" + file + ".xlsx")
+        df = pd.read_excel("./sample_data/" + file + ".xlsx")
         df["startTime"] = pd.to_datetime(df["startDate"]).dt.hour
         df["startDate"] = pd.to_datetime(df["startDate"]).dt.date
         df["startWeek"] = pd.to_datetime(df["startDate"]).dt.week
