@@ -4,9 +4,11 @@ import pandas as pd
 import numpy as np 
 import datetime
 import random
+import json
 from random import seed
 from random import randint
 from dataclasses import make_dataclass
+import requests
 def compare():
     seed(1)
     st.title('Random test values')
@@ -58,3 +60,9 @@ def compare():
             # col.append(randint(60,61))
             # Date.append(col)    
     st.write(df)
+    # csv = 'report.csv'
+    # df.to_csv(csv)
+    # url = "http://127.0.0.1:8081"
+
+    # r = requests.post(url, json= json.dumps(df.values.tolist()))
+    # st.write(r)

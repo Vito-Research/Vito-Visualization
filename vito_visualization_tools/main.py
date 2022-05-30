@@ -24,7 +24,7 @@ if 'count3' not in st.session_state:
 
 
 ###############################################################
-st.image("../Vito.png")
+st.image("./Vito.png")
 st.title("Vito")
 st.subheader("Detecting Infection With Wearables")
 ###############################################################
