@@ -81,7 +81,7 @@ def compare():
     
         st.write(r.text)
     
-        df.to_csv("tmp.csv")
+        df.to_csv("/tmp/tmp.csv")
         count = df.shape[0]
         devices = []
         for i in range(count):
