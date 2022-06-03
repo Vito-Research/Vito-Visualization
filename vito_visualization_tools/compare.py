@@ -81,7 +81,7 @@ def compare():
     
         st.write(r.text)
     
-        df.to_csv(os.path.join("tmp.csv"))
+        df.to_csv("tmp.csv")
         count = df.shape[0]
         devices = []
         for i in range(count):
@@ -103,9 +103,9 @@ def compare():
         dfSteps.insert(0, "End_Time", end_time, True)
         dfSteps.to_csv(os.path.join("/tmp/tmp2.csv"))
 
-        ns.getScore(os.path.join("/tmp/tmp.csv"), "/tmp/tmp2.csv")
+        ns.getScore("/tmp/tmp.csv", "/tmp/tmp2.csv")
         
-        with open(os.path.join('/tmp/NS-signals.json'), "r") as f:
+        with open('/tmp/NS-signals.json', "r") as f:
 
                 data = json.load(f)
                 os.system("rm " + os.path.join("/tmp/NS-signals.json"))
