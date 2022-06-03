@@ -11,7 +11,7 @@ from operator import itemgetter
 
 from matplotlib import pyplot as plt
 
-
+import streamlit as st
 ### EXAMPLE RUN: python3 nighsignal.py --device=AppleWatch --heartrate=P355472-AppleWatch-hr.csv  --step=P355472-AppleWatch-st.csv
 ### EXAMPLE RUN: python3 nighsignal.py --device=Fitbit --restinghr=P682517-Fitbit-rhr.csv
 
@@ -315,7 +315,7 @@ def getScore(heartrate_file, step_file):
         #                 rhrFile.write(device + "," + hr_start_date + "," + hr_start_time + "," + hr_value + "\n")
 
 
-        with open(os.path.join('/tmp/tmp.csv'), "r") as hrFile:
+        with open(heartrate_file, "r") as hrFile:
             records = hrFile.readlines()
 
         date_hrs_dic = {}
@@ -343,7 +343,7 @@ def getScore(heartrate_file, step_file):
                 try:
                     AVGHR = int(float(hr))
                 except:
-                    print()
+                    st.error("")
             AVGHR = int(AVGHR/numOfHRs)
             date_hr_avgs_dic[key] = AVGHR
         
@@ -356,14 +356,14 @@ def getScore(heartrate_file, step_file):
                     today = datetime.datetime.strptime(sorted_keys[i] , "%Y-%m-%d")
                     nextDay = datetime.datetime.strptime(sorted_keys[i+1] , "%Y-%m-%d")
                     prevDay = datetime.datetime.strptime(sorted_keys[i-1] , "%Y-%m-%d")
-                except:
-                    print()
-                if ( (nextDay-today).days==1 and (today-prevDay).days==2):
-                    missDate = today - datetime.timedelta(days=1)
-                    try:
+                
+                    if ( (nextDay-today).days==1 and (today-prevDay).days==2):
+                        missDate = today - datetime.timedelta(days=1)
+                        
                         missed_days_avg_dic[missDate.strftime("%Y-%m-%d")] = round((date_hr_avgs_dic[sorted_keys[i]] + date_hr_avgs_dic[sorted_keys[i-1]])/2 , 1)
-                    except:
-                        print()
+                       
+                except:
+                   st.error("OOOof")
         for key in missed_days_avg_dic:
             if key not in date_hr_avgs_dic:
                 date_hr_avgs_dic[key] = missed_days_avg_dic[key]
