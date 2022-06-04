@@ -9,7 +9,7 @@ from sklearn.metrics import cohen_kappa_score
 from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
 
-from . import nightsignal as ns
+from vito_algorithms import nightsignal as ns
 
 from .analysis import analysis
 def add_blank_rows(df, no_rows):

@@ -6,7 +6,7 @@ import json
 from random import seed
 from random import randint
 import requests
-from . import nightsignal as ns
+from vito_algorithms import nightsignal as ns
 import os
 from sklearn.metrics import accuracy_score
 
