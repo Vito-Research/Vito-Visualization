@@ -1,15 +1,12 @@
 
 import streamlit as st
 import pandas as pd 
-import numpy as np 
 import datetime
-import random
 import json
 from random import seed
 from random import randint
-from dataclasses import make_dataclass
 import requests
-import nightsignal as ns
+from . import nightsignal as ns
 import os
 from sklearn.metrics import accuracy_score
 
