@@ -37,7 +37,7 @@ def analyze():
     st.header("Add Your File")
 
     HRFile = st.file_uploader("Upload Heartrate Data", type=("csv"))
-
+   
     HRFileName = ""
     RiskFileName = ""
 
@@ -173,6 +173,11 @@ def analyze():
         df = DataFrame()
         df.insert(0, "Start_Date_Risk", allDates, True)
         df.insert(0, "Value", allAlertVals, True)
+
+
+    if HRFile is not None:
+        processData(HRFile)
+
 
     def file_selector(folder_path="./sample_data/", type="Health3"):
         folder_path = folder_path + type
