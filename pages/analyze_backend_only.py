@@ -49,24 +49,8 @@ def analyze():
         provided_hr_data.to_csv(os.path.join("/tmp/tmp.csv"))
         count = provided_hr_data.shape[0]
 
-        # devices = []
-        # for i in range(count):
-        #     devices.append("HK Apple Watch")
         devices = ["HK Apple Watch" for _ in range(count)]
         provided_hr_data.insert(0, "Device", devices, True)
-
-        # i = 0
-        # steps = []
-        # start_time = []
-        # end_time = []
-        # end_date = []
-        # start_date = []
-        # dfSteps = DataFrame()
-        # dfSteps.insert(0, "Steps", steps, True)
-        # dfSteps.insert(0, "Start_Date", start_date, True)
-        # dfSteps.insert(0, "Start_Time", start_time, True)
-        # dfSteps.insert(0, "End_Date", start_date, True)
-        # dfSteps.insert(0, "End_Time", end_time, True)
 
         # creating empty dataframe with given col names
         step_data = pd.DataFrame(
@@ -87,28 +71,16 @@ def analyze():
         ns_output_json = "/tmp/NS-signals.json"
         with open(os.path.join(ns_output_json), "r") as f:
             ns_output: dict = json.load(f)
-            # os.system("rm " + os.path.join(ns_output_json))
-            # os.system("rm " + os.path.join("/tmp/tmp.csv"))
             os.remove(os.path.join(ns_output_json))
             os.remove(os.path.join("/tmp/tmp.csv"))
 
         ns_alerts = ns_output["nightsignal"]
 
-        # HRFile is a required param, will never be None
-        # if HRFile is not None:
-        # high_alert_vals = []
-        # all_alert_vals = []
-        # all_dates = []
-        #
-        # for alert in ns_alerts:
-        #     all_alert_vals.append(alert["val"])
-        #     all_dates.append(alert["date"])
-        #     if int(alert["val"]) > 1:
-        #         high_alert_vals.append(alert["val"])
         all_alert_vals = [alert["val"] for alert in ns_alerts]
-        alert_dates = [alert["date"] for alert in ns_alerts]
+        all_dates = [alert["date"] for alert in ns_alerts]
         high_alert_vals = [val for val in all_alert_vals if int(val) > 1]
 
+        # -- Bookmark -- #
         nsAlertCount = len(high_alert_vals)  # unused var
         vitoAlertCount = len(
             provided_hr_data[provided_hr_data["Risk"] > 0.9]
