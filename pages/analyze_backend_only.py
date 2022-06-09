@@ -38,7 +38,7 @@ def analyze():
     # [UI]
     # st.header("Add Your File")
     # HRFile = st.file_uploader("Upload Heartrate Data", type="csv")
-    HRFile = '/Users/ethancloin/PycharmProjects/Vito-Visualization/sample_data/Healthv6v2/Vito_Health_Data0.csv'
+    HRFile = "/Users/ethancloin/PycharmProjects/Vito-Visualization/sample_data/Healthv6v2/Vito_Health_Data0.csv"
     HRFileName = ""  # unused var
     RiskFileName = ""  # unused var
 
@@ -55,7 +55,6 @@ def analyze():
         devices = ["HK Apple Watch" for _ in range(count)]
         provided_hr_data.insert(0, "Device", devices, True)
 
-
         # i = 0
         # steps = []
         # start_time = []
@@ -70,8 +69,9 @@ def analyze():
         # dfSteps.insert(0, "End_Time", end_time, True)
 
         # creating empty dataframe with given col names
-        step_data = pd.DataFrame(columns=['Steps', 'Start_Date', 'Start_Time', 'End_Date',
-                                        'End_Time'])
+        step_data = pd.DataFrame(
+            columns=["Steps", "Start_Date", "Start_Time", "End_Date", "End_Time"]
+        )
 
         tmp_step_file = "/tmp/tmp2.csv"
         step_data.to_csv(os.path.join(tmp_step_file))
@@ -92,24 +92,27 @@ def analyze():
             os.remove(os.path.join(ns_output_json))
             os.remove(os.path.join("/tmp/tmp.csv"))
 
-        alerts = ns_output["nightsignal"]
+        ns_alerts = ns_output["nightsignal"]
 
-        if HRFile is not None:
-            alertVals = []
-            allAlertVals = []
-            allDates = []
-            for item in alerts:
+        # HRFile is a required param, will never be None
+        # if HRFile is not None:
+        # high_alert_vals = []
+        # all_alert_vals = []
+        # all_dates = []
+        #
+        # for alert in ns_alerts:
+        #     all_alert_vals.append(alert["val"])
+        #     all_dates.append(alert["date"])
+        #     if int(alert["val"]) > 1:
+        #         high_alert_vals.append(alert["val"])
+        all_alert_vals = [alert["val"] for alert in ns_alerts]
+        alert_dates = [alert["date"] for alert in ns_alerts]
+        high_alert_vals = [val for val in all_alert_vals if int(val) > 1]
 
-                allAlertVals.append(item["val"])
-
-                allDates.append(item["date"])
-                if int(item["val"]) > 1:
-
-                    alertVals.append(item["val"])
-
-            nsAlertCount = len(alertVals)  # unused var
-
-            vitoAlertCount = len(provided_hr_data[provided_hr_data["Risk"] > 0.9])  # unused var
+        nsAlertCount = len(high_alert_vals)  # unused var
+        vitoAlertCount = len(
+            provided_hr_data[provided_hr_data["Risk"] > 0.9]
+        )  # unused var
 
         # [UI]
         # col1, col2 = st.columns(2)
@@ -117,15 +120,15 @@ def analyze():
         newDates = []
         newAlerts = []
         df2 = DataFrame()
-        for i in range(len(allDates)):
+        for i in range(len(all_dates)):
 
             targetDates = []
             for date in provided_hr_data["Start_Date"]:
                 targetDates.append(date)
 
-            if allDates[i] in targetDates:
-                newDates.append(allDates[i])
-                newAlerts.append(allAlertVals[i])
+            if all_dates[i] in targetDates:
+                newDates.append(all_dates[i])
+                newAlerts.append(all_alert_vals[i])
 
         df2.insert(0, "Start_Date_Risk", newDates, True)
         df2.insert(0, "NS Alerts", newAlerts, True)
@@ -196,8 +199,8 @@ def analyze():
         #     st.table(df_merged)
 
         provided_hr_data = DataFrame()
-        provided_hr_data.insert(0, "Start_Date_Risk", allDates, True)
-        provided_hr_data.insert(0, "Value", allAlertVals, True)
+        provided_hr_data.insert(0, "Start_Date_Risk", all_dates, True)
+        provided_hr_data.insert(0, "Value", all_alert_vals, True)
 
     if HRFile is not None:
         processData(HRFile)
