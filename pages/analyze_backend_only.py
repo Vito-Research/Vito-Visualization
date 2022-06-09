@@ -2,7 +2,6 @@ import json
 import os
 
 import pandas as pd
-import streamlit as st
 from pandas.core.frame import DataFrame
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import cohen_kappa_score
@@ -37,8 +36,9 @@ def analyze():
     all = {"all": pd.DataFrame()}
 
     # [UI]
-    st.header("Add Your File")
-    HRFile = st.file_uploader("Upload Heartrate Data", type="csv")
+    # st.header("Add Your File")
+    # HRFile = st.file_uploader("Upload Heartrate Data", type="csv")
+    HRFile = '/Users/ethancloin/PycharmProjects/Vito-Visualization/sample_data/Healthv6v2/Vito_Health_Data0.csv'
     HRFileName = ""  # unused var
     RiskFileName = ""  # unused var
 
@@ -49,39 +49,51 @@ def analyze():
         provided_hr_data.to_csv(os.path.join("/tmp/tmp.csv"))
         count = provided_hr_data.shape[0]
 
-        # looping based on 'shape' of dataframe
-        devices = []
-        for i in range(count):
-            devices.append("HK Apple Watch")
+        # devices = []
+        # for i in range(count):
+        #     devices.append("HK Apple Watch")
+        devices = ["HK Apple Watch" for _ in range(count)]
         provided_hr_data.insert(0, "Device", devices, True)
 
-        dfSteps = DataFrame()
-        i = 0
-        steps = []
-        start_time = []
-        end_time = []
-        end_date = []
-        start_date = []
 
-        dfSteps.insert(0, "Steps", steps, True)
-        dfSteps.insert(0, "Start_Date", start_date, True)
-        dfSteps.insert(0, "Start_Time", start_time, True)
-        dfSteps.insert(0, "End_Date", start_date, True)
-        dfSteps.insert(0, "End_Time", end_time, True)
-        dfSteps.to_csv(os.path.join("/tmp/tmp2.csv"))
+        # i = 0
+        # steps = []
+        # start_time = []
+        # end_time = []
+        # end_date = []
+        # start_date = []
+        # dfSteps = DataFrame()
+        # dfSteps.insert(0, "Steps", steps, True)
+        # dfSteps.insert(0, "Start_Date", start_date, True)
+        # dfSteps.insert(0, "Start_Time", start_time, True)
+        # dfSteps.insert(0, "End_Date", start_date, True)
+        # dfSteps.insert(0, "End_Time", end_time, True)
+
+        # creating empty dataframe with given col names
+        step_data = pd.DataFrame(columns=['Steps', 'Start_Date', 'Start_Time', 'End_Date',
+                                        'End_Time'])
+
+        tmp_step_file = "/tmp/tmp2.csv"
+        step_data.to_csv(os.path.join(tmp_step_file))
 
         # [UI]
-        col1, col2, col3 = st.columns(3)
+        # col1, col2, col3 = st.columns(3)
 
-        ns.getScore(os.path.join("/tmp/tmp.csv"), "/tmp/tmp2.csv")
+        # TODO: ns.getScore writes to /tmp/NS-signals.json, consider refactoring
+        #   to returning a json string or dict instead
+        ns.getScore(os.path.join("/tmp/tmp.csv"), tmp_step_file)
 
-        with open(os.path.join("/tmp/NS-signals.json"), "r") as f:
+        # deleting
+        ns_output_json = "/tmp/NS-signals.json"
+        with open(os.path.join(ns_output_json), "r") as f:
+            ns_output: dict = json.load(f)
+            # os.system("rm " + os.path.join(ns_output_json))
+            # os.system("rm " + os.path.join("/tmp/tmp.csv"))
+            os.remove(os.path.join(ns_output_json))
+            os.remove(os.path.join("/tmp/tmp.csv"))
 
-            data = json.load(f)
-            os.system("rm " + os.path.join("/tmp/NS-signals.json"))
-            os.system("rm " + os.path.join("/tmp/tmp.csv"))
+        alerts = ns_output["nightsignal"]
 
-        alerts = data["nightsignal"]
         if HRFile is not None:
             alertVals = []
             allAlertVals = []
@@ -100,7 +112,7 @@ def analyze():
             vitoAlertCount = len(provided_hr_data[provided_hr_data["Risk"] > 0.9])  # unused var
 
         # [UI]
-        col1, col2 = st.columns(2)
+        # col1, col2 = st.columns(2)
 
         newDates = []
         newAlerts = []
@@ -139,10 +151,10 @@ def analyze():
         ns_count = df_merged[df_merged["NS Alerts"] == 1].shape[0]
 
         # [UI]
-        col1, col2 = st.columns(2)
-        col1.subheader("Vito Alerts: " + str(vitoCount))
+        # col1, col2 = st.columns(2)
+        # col1.subheader("Vito Alerts: " + str(vitoCount))
         vitoTotal["vitoTotal"] += vitoCount
-        col2.subheader("NightSignal Alerts: " + str(ns_count))
+        # col2.subheader("NightSignal Alerts: " + str(ns_count))
         ns_total["ns_total"] += ns_count
 
         df_merged["correct"] = df_merged["Risk"] == df_merged["NS Alerts"]
@@ -168,20 +180,20 @@ def analyze():
                 recallArr["recall"].append(recall)
 
                 # [UI]
-                st.header(kap)
+                # st.header(kap)
         df_merged.to_csv(os.path.join("/tmp/Vito_Alert_Statistics.csv"))
 
         # [UI]
-        with open(os.path.join("/tmp/Vito_Alert_Statistics.csv"), "rb") as file:
-            st.download_button(
-                "Download Alert Statistics",
-                file,
-                file_name=os.path.join("/tmp/Vito_Alert_Statistics.csv"),
-                on_click=st.balloons,
-            )
-        with st.expander("See full data"):
-            col, col2 = st.columns(2)
-            st.table(df_merged)
+        # with open(os.path.join("/tmp/Vito_Alert_Statistics.csv"), "rb") as file:
+        #     st.download_button(
+        #         "Download Alert Statistics",
+        #         file,
+        #         file_name=os.path.join("/tmp/Vito_Alert_Statistics.csv"),
+        #         on_click=st.balloons,
+        #     )
+        # with st.expander("See full data"):
+        #     col, col2 = st.columns(2)
+        #     st.table(df_merged)
 
         provided_hr_data = DataFrame()
         provided_hr_data.insert(0, "Start_Date_Risk", allDates, True)
@@ -190,15 +202,15 @@ def analyze():
     if HRFile is not None:
         processData(HRFile)
 
-    def file_selector(folder_path="./sample_data/", type="Health3"):
-        folder_path = folder_path + type
-        filenames = os.listdir(folder_path)
-        csvFiles = []
-        for file in filenames:
-            if "csv" in file:
-                csvFiles.append(file)
-        selected_filename = st.selectbox("Select " + type, csvFiles)
-        return os.path.join(folder_path, selected_filename)
+    # def file_selector(folder_path="./sample_data/", type="Health3"):
+    #     folder_path = folder_path + type
+    #     filenames = os.listdir(folder_path)
+    #     csvFiles = []
+    #     for file in filenames:
+    #         if "csv" in file:
+    #             csvFiles.append(file)
+    #     # selected_filename = st.selectbox("Select " + type, csvFiles)
+    #     return os.path.join(folder_path, selected_filename)
 
     def processAll(folder_path="../sample_data_from_main/", type="Healthv6v2"):
         folder_path = folder_path + type
@@ -213,28 +225,34 @@ def analyze():
                     print()
 
     # analysis()
-    if st.button("Process All"):
+    # if st.button("Process All"):
+    COND = True
+    if COND:
         processAll(type="Healthv8")
-        col1, col2 = st.columns(2)
+        # col1, col2 = st.columns(2)
 
-        col1.subheader("Vito Alerts: " + str(vitoTotal))
+        # col1.subheader("Vito Alerts: " + str(vitoTotal))
 
-        col2.subheader("NightSignal Alerts: " + str(ns_total))
+        # col2.subheader("NightSignal Alerts: " + str(ns_total))
 
         allDF = all["all"]
-
-        st.sidebar.header(
-            "Accuracy: " + str(accuracy_score(allDF["Risk"], allDF["NS Alerts"]))
-        )
-        st.sidebar.header(
-            "Kappa: " + str(cohen_kappa_score(allDF["Risk"], allDF["NS Alerts"]))
-        )
-        st.sidebar.header(
-            "Precision: " + str(precision_score(allDF["Risk"], allDF["NS Alerts"]))
-        )
-        st.sidebar.header(
-            "Recall: " + str(recall_score(allDF["Risk"], allDF["NS Alerts"]))
-        )
+        # four accuracy scores
+        print(str(accuracy_score(allDF["Risk"], allDF["NS Alerts"])))
+        print(str(cohen_kappa_score(allDF["Risk"], allDF["NS Alerts"])))
+        print(str(cohen_kappa_score(allDF["Risk"], allDF["NS Alerts"])))
+        print(str(recall_score(allDF["Risk"], allDF["NS Alerts"])))
+        # st.sidebar.header(
+        #     "Accuracy: " + str(accuracy_score(allDF["Risk"], allDF["NS Alerts"]))
+        # )
+        # st.sidebar.header(
+        #     "Kappa: " + str(cohen_kappa_score(allDF["Risk"], allDF["NS Alerts"]))
+        # )
+        # st.sidebar.header(
+        #     "Precision: " + str(precision_score(allDF["Risk"], allDF["NS Alerts"]))
+        # )
+        # st.sidebar.header(
+        #     "Recall: " + str(recall_score(allDF["Risk"], allDF["NS Alerts"]))
+        # )
 
 
 # -- Execution -- #
