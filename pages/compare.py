@@ -63,7 +63,7 @@ def compare():
                     and i >= days_betweenstarttofirst.days
                 ):
                     df2 = pd.DataFrame(
-                        [[date_strf, "02:08:15", randint(95, 100), 0]],
+                        [[date_strf, "02:08:15", randint(95, 100), 1]],
                         columns=["Start_Date", "Start_Time", "Heartrate", "Risk"],
                         index=["x"],
                     )
@@ -128,14 +128,29 @@ def compare():
             os.system("rm " + os.path.join("/tmp/NS-signals.json"))
             os.system("rm " + os.path.join("/tmp/tmp.csv"))
             vitoArr = [int(s) for s in r.text.split(",") if s.isdigit()]
+            # st.write(vitoArr)
             alerts = data["nightsignal"]
-            allAlertVals = []
-            allDates = []
-            for item in alerts:
+            # st.write(alerts)
+            
+            df2 = pd.DataFrame(alerts)
+            df2["val"] = df2["val"].replace(to_replace="1", value="0")
+            df2["val"] = df2["val"].replace(to_replace="2", value="1")
 
-                allAlertVals.append(item["val"])
-            st.write(vitoArr)
-            st.sidebar.header("Accuracy: " + str(accuracy_score(allAlertVals, vitoArr)))
+           
+            df2["val"] = df2["val"].astype(int)
+
+            vitoArr.append(0)
+            vitoArr.append(0)
+            vitoArr.append(0)
+            df["valVito"] = vitoArr
+            df2.rename(columns={"date": "Start_Date"}, inplace=True)
+            # df["Start_Date"] = pd.to_datetime(df["Start_Date"])
+            # df2["Start_Date"] = pd.to_datetime(df2["Start_Date"])
+            df_merged = pd.merge(df, df2, how="inner", on="Start_Date")
+            df_merged = df_merged.dropna()
+            st.table(df_merged)
+            
+            st.header("Accuracy: " + str(accuracy_score(df_merged["val"], df_merged["valVito"])))
 
 
 compare()
