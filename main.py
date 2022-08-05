@@ -15,6 +15,12 @@ def landing_page():
     
                     """
     )
+    st.image("./Overview.png")
+    st.markdown(
+        "- This web app is designed to illustrate how Vito works\n"
+        "- We are a group of students developing open-source tools to fight pandemics\n"
+        "- If you'd like to contribute... [click here](https://github.com/Vito-Research/Vito-Visualization)"
+    )
 
 
 if __name__ == "__main__":
