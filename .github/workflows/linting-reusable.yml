@@ -15,5 +15,9 @@ on:
 #################################################################################################
 jobs:
   Linting:
-    name: Reusable Linting Workflow
-    uses: Vito-Research/Vito-Website/.github/workflows/Linting.yml@CICD-TEST
+    name: CI
+    runs-on: ubuntu-latest
+    steps:
+    - name: Reusable Linting Workflow
+      uses: Vito-Research/Vito-Website/.github/workflows/Linting.yml@CICD-TEST
+    
