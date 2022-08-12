@@ -16,4 +16,4 @@ on:
 jobs:
   Linting:
     name: Reusable Linting Workflow
-    uses: Vito-Research/Vito-Website/.github/workflows/Linting.yml@main
+    uses: Vito-Research/Vito-Website/.github/workflows/Linting.yml@CICD-TEST
