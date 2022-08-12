@@ -15,4 +15,5 @@ on:
 #################################################################################################
 jobs:
   Linting:
+    name: Reusable Linting Workflow
     uses: Vito-Research/Vito-Website/.github/workflows/Linting.yml/@main
