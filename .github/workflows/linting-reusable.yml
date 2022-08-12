@@ -1,0 +1,18 @@
+#################################################################################################
+# Beginning of the YML file                                                                     #
+# documentation can be found here: https://yaml.org/spec/1.2.2/#chapter-1-introduction-to-yaml) #
+#################################################################################################
+name: VitoCI
+on:
+  workflow_dispatch:
+  pull_request:  
+  workflow_call:
+
+
+#################################################################################################
+#Reusing the workflow from Vito-Website main branch                                             #
+#https://github.com/Vito-Research/Vito-Website/blob/CICD-TEST/.github/workflows/Linting.yml     #                                                                                           #
+#################################################################################################
+jobs:
+  Linting:
+    uses: Vito-Research/Vito-Website/.github/workflows/Linting.yml/@main
