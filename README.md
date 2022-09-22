@@ -1,5 +1,5 @@
 # Vito Visualization
-[![VitoCI](https://github.com/Vito-Research/Vito-Website/actions/workflows/Linting.yml/badge.svg)](https://github.com/Vito-Research/Vito-Website/actions/workflows/Linting.yml)
+[![Vito-Visualization](https://github.com/Vito-Research/Vito-Visualization/actions/workflows/Greet.yml/badge.svg)](https://github.com/Vito-Research/Vito-Visualization/actions/workflows/Greet.yml)
 ![GitHub commits](https://badgen.net/github/commits/Vito-Research/Vito-Visualization/main)
 
 
