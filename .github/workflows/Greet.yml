@@ -3,7 +3,7 @@
 # documentation can be found here: https://yaml.org/spec/1.2.2/#chapter-1-introduction-to-yaml) #
 # This greets a first time user when pull, issues, or pushing to the repo                       #
 #################################################################################################
-name: Greetings First Timers
+name: Vito-Visualization
 
 on:
   workflow_dispatch: #allows you use run the workflow manually in github actions
